@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -5 260 260" fill="none">
+  <style>
+    .doc { stroke: #111; }
+    @media (prefers-color-scheme: dark) { .doc { stroke: #fff; } }
+  </style>
+  <g class="doc" stroke-width="28" stroke-linejoin="round">
+    <path d="M46 181H32Q18 181 18 167V31Q18 17 32 17H145L172 44" />
+    <path d="M94 68H205L240 103V216Q240 230 226 230H94Q80 230 80 216V82Q80 68 94 68Z" />
+  </g>
+  <path d="M115 160L145 192L205 122" stroke="#D9452F" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
