@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import ImageSlot from './ImageSlot';
+import Logo from '../Logo';
 import s from './styles.module.css';
 import {
   Y, G, RED, MUTED, WHO, GRAD, SIGNALS, ENEMY, ENEMY_X, MIN, MIN_G, MIN_DIAG, TACTICS, TAC_BOLSO, TAC_IMG,
@@ -235,8 +236,7 @@ export default function BolsonaroHipotetico() {
         <div style={{ height: 4, background: 'rgba(255,255,255,.08)' }}><div data-progress="1" style={{ height: '100%', width: 0, background: Y }} /></div>
         <div className={s.topbar} style={{ maxWidth: 1320, margin: '0 auto', padding: '14px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
           <Link href="/" aria-label="Contraprova" style={{ pointerEvents: 'auto', flex: 'none', display: 'flex', alignItems: 'center', gap: 10, color: '#fff', textDecoration: 'none', background: 'rgba(7,28,77,.78)', backdropFilter: 'blur(8px)', padding: '8px 14px 8px 10px', borderRadius: 99 }}>
-            <span style={{ width: 14, height: 14, background: Y, transform: 'rotate(45deg)' }} />
-            <span className={s.brandText} style={{ fontSize: 15, fontWeight: 800, fontStretch: '110%' }}>Contraprova</span>
+            <Logo size={22} wordmarkClassName={s.brandText} />
           </Link>
           <nav className={s.nav} style={{ pointerEvents: 'auto', display: 'flex', gap: 2, background: 'rgba(7,28,77,.78)', backdropFilter: 'blur(8px)', padding: 5, borderRadius: 99, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <a href="#sinais" className={s.navLink}>4 sinais</a>
