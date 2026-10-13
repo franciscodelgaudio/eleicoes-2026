@@ -24,6 +24,34 @@
   background: rgba(255, 255, 255, 0.14) !important;
   color: #ffd21f !important;
 }
+
+/* No celular o menu fica numa linha só, ao lado do logo, com rolagem horizontal
+   (mesmo padrão do Bolsonaro Hipotético). */
+@media (max-width: 760px) {
+  .topbar {
+    flex-wrap: nowrap !important;
+    padding: 10px 12px !important;
+    gap: 10px !important;
+  }
+  .nav {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    min-width: 0;
+    gap: 2px !important;
+    padding-right: 24px;
+    scrollbar-width: none;
+    /* esmaece a borda direita para indicar que há mais itens */
+    mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  }
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+  .nav a {
+    font-size: 13px !important;
+    padding: 6px 10px !important;
+    white-space: nowrap;
+  }
+}
 .lift:hover {
   transform: translateY(-2px);
   color: #0b2a6f !important;

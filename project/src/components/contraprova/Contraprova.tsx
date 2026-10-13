@@ -84,11 +84,11 @@ const NAV: [string, string, boolean?][] = [['#comparacao', 'Comparação'], [HIP
 function Header() {
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 10, background: B, color: '#fff' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '14px 28px', display: 'flex', flexWrap: 'wrap', gap: '12px 28px', alignItems: 'center', justifyContent: 'space-between' }}>
-        <a href="#topo" aria-label="Contraprova" style={{ display: 'flex', alignItems: 'center', color: '#fff', textDecoration: 'none' }}>
+      <div className={s.topbar} style={{ maxWidth: 1240, margin: '0 auto', padding: '14px 28px', display: 'flex', flexWrap: 'wrap', gap: '12px 28px', alignItems: 'center', justifyContent: 'space-between' }}>
+        <a href="#topo" aria-label="Contraprova" style={{ display: 'flex', alignItems: 'center', flex: 'none', color: '#fff', textDecoration: 'none' }}>
           <Logo size={24} />
         </a>
-        <nav style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        <nav className={s.nav} style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
           {NAV.map(([href, label, hi]) => {
             const style: CSSProperties = { color: hi ? Y : '#fff', textDecoration: 'none', padding: '8px 14px', borderRadius: 99, fontSize: 15, fontWeight: hi ? 700 : 600 };
             return hi
