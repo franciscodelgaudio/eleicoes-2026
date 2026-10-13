@@ -54,7 +54,7 @@ export const GRAD: Record<string, Grad> = {
 };
 
 export const SIGNALS: Signal[] = [
-  { n: '1', title: 'Rejeitar as regras do jogo democrático', def: 'Questionar eleições sem provas, sugerir medidas fora da Constituição, tentar anular resultados.', mediaKind: 'VÍDEO A INSERIR', media: 'Reunião com embaixadores, Palácio da Alvorada, 18/jul/2022', flavio: 'Não encontramos questionamento às urnas nas falas de Flávio que reunimos. Ele propõe anular, por anistia ou indulto, a condenação definitiva do pai por tentativa de golpe.', ev: [
+  { n: '1', title: 'Rejeitar as regras do jogo democrático', def: 'Questionar eleições sem provas, sugerir medidas fora da Constituição, tentar anular resultados.', mediaKind: 'VÍDEO', media: 'Reunião com embaixadores, Palácio da Alvorada, 18/jul/2022', flavio: 'Não encontramos questionamento às urnas nas falas de Flávio que reunimos. Ele propõe anular, por anistia ou indulto, a condenação definitiva do pai por tentativa de golpe.', ev: [
     { who: 'Jair', date: '1999', text: 'Disse à TV Bandeirantes que fecharia o Congresso se fosse presidente e que o país só mudaria com uma guerra civil.', src: 'Programa Câmera Aberta, TV Bandeirantes' },
     { who: 'Jair', date: 'set 2018', text: '“Não aceito resultado diferente da minha eleição”, disse em entrevista na reta final da campanha.', src: 'Entrevista à TV Band, 28/set/2018' },
     { who: 'Jair', date: 'abr 2020', text: 'Discursou em ato em frente ao Quartel-General do Exército, em Brasília, onde manifestantes pediam intervenção militar e o fechamento do Congresso e do STF.', src: 'STF, Inq 4828' },
@@ -202,6 +202,11 @@ export const FLAVIO: FlavioItem[] = [
 ];
 
 export const SIG_MEDIA: Record<string, string> = { '3': 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio', '4': 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio' };
+// Vídeos tocados no próprio card: arquivo no Wikimedia Commons, começando no trecho citado (start em segundos).
+export type SigVideo = { src: string; start: number; page: string; credit: string };
+export const SIG_VIDEO: Record<string, SigVideo> = {
+  '1': { src: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1c/Negacionismo_eleitoral_no_Alvorada_em_2022.webm/Negacionismo_eleitoral_no_Alvorada_em_2022.webm.720p.vp9.webm', start: 2230, page: 'https://commons.wikimedia.org/wiki/File:Negacionismo_eleitoral_no_Alvorada_em_2022.webm', credit: 'TV BrasilGov · CC BY 3.0 · via Wikimedia Commons' }
+};
 export const F_IMG: Record<number, Img3> = {
   0: ['https://commons.wikimedia.org/wiki/Special:FilePath/Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_%28v._AgSen%29.jpg?width=1600', 'Retrato oficial de senador, fev/2019 · Agência Senado', 'https://www25.senado.leg.br/web/senadores/senador/-/perfil/5894'],
   2: ['https://imagens.ebc.com.br/lXEDhQ5mhlsEuLSFqvdf1dX92S4=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/manifestacao_mcamgo_abr_080120231818-11.jpg?itok=ZbPOzKMu', 'Marcelo Camargo/Agência Brasil · CC BY 3.0 BR · 8/jan/2023', 'https://agenciabrasil.ebc.com.br/foto/2023-01/manifestantes-invadem-congresso-stf-e-palacio-do-planalto-1673209159'],

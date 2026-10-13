@@ -8,13 +8,14 @@ type Props = {
   placeholder?: string;
   shape?: 'rect' | 'circle';
   fit?: 'cover' | 'contain';
+  compact?: boolean;
   style?: CSSProperties;
 };
 
 // Versão somente leitura do <image-slot> do Claude Design: imagem em "cover",
 // crédito no canto inferior esquerdo e legenda quando não há foto.
-// Em fit="contain" (logotipos), o crédito fica no title da imagem.
-export default function ImageSlot({ src, credit, creditHref, placeholder, shape = 'rect', fit = 'cover', style }: Props) {
+// Em quadros pequenos (compact), o crédito fica só no title da imagem.
+export default function ImageSlot({ src, credit, creditHref, placeholder, shape = 'rect', fit = 'cover', compact = false, style }: Props) {
   const radius = shape === 'circle' ? '50%' : undefined;
   const href = creditHref && /^https?:\/\//.test(creditHref) ? creditHref : undefined;
   return (
@@ -27,7 +28,7 @@ export default function ImageSlot({ src, credit, creditHref, placeholder, shape 
           <div className={s.slotEmpty}>{placeholder}</div>
         )}
       </div>
-      {src && credit && fit === 'cover' ? (
+      {src && credit && !compact ? (
         <span className={s.credit}>
           {href ? <a href={href} target="_blank" rel="noopener">{credit}</a> : credit}
         </span>

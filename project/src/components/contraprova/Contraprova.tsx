@@ -8,7 +8,7 @@ import Fonte from '../Fonte';
 import WordSphere from './WordSphere';
 import s from './styles.module.css';
 import {
-  Y, B, G, GOVS, AREAS, BANDS, BAND_BG, IND, MEAS, TONE, STANCE, LOGOS, CRISES, PANDEMIC_TL, COVID_WORLD,
+  Y, B, G, GOVS, AREAS, BANDS, BAND_BG, IND, MEAS, TONE, STANCE, LOGOS, PHOTOS, CRISES, PANDEMIC_TL, COVID_WORLD,
   PLN, MODS, THEME_SHORT, nf, fmtI, ranksOf, rankBg,
   type Gov, type Ex, type Plans, type PlanKey, type Mod,
 } from './data';
@@ -407,7 +407,7 @@ function Comparacao() {
               {items.map(i => (
                 <article key={i.id} style={{ background: '#fff', borderRadius: 18, overflow: 'hidden', display: 'grid', gridTemplateColumns: '96px minmax(0,1fr)' }}>
                   <div style={{ position: 'relative', background: '#F3EFE3', minHeight: 96 }}>
-                    <ImageSlot src={LOGOS[i.name]?.[0]} credit={LOGOS[i.name]?.[1]} creditHref={LOGOS[i.name]?.[2]} fit="contain" placeholder={'Logo: ' + i.name} style={{ position: 'absolute', inset: 8, width: 'auto', height: 'auto' }} />
+                    <ImageSlot src={(LOGOS[i.name] || PHOTOS[i.name])?.[0]} credit={(LOGOS[i.name] || PHOTOS[i.name])?.[1]} creditHref={(LOGOS[i.name] || PHOTOS[i.name])?.[2]} fit={LOGOS[i.name] ? 'contain' : 'cover'} compact placeholder={i.name} style={{ position: 'absolute', inset: LOGOS[i.name] || !PHOTOS[i.name] ? 8 : 0, width: 'auto', height: 'auto' }} />
                   </div>
                   <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}><YearChip y={i.y} /><span style={{ fontSize: 18, fontWeight: 900, lineHeight: 1.2 }}>{i.name}</span><ToneBadge tone={i.tone} /></div>
@@ -420,7 +420,7 @@ function Comparacao() {
             </div>
           ))}
         </div>
-        <div style={{ fontSize: 13, color: MUTED, marginTop: 14 }}>Logotipos de acervo oficial do governo federal, quando disponíveis.</div>
+        <div style={{ fontSize: 13, color: MUTED, marginTop: 14 }}>Logotipos e fotos de acervos oficiais. Passe o mouse sobre a imagem para ver o crédito.</div>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@ import Logo from '../Logo';
 import s from './styles.module.css';
 import {
   Y, G, RED, MUTED, WHO, GRAD, SIGNALS, ENEMY, ENEMY_X, MIN, MIN_G, MIN_DIAG, TACTICS, TAC_BOLSO, TAC_IMG,
-  FLAVIO, F_IMG, SIG_MEDIA, SIG_RANK, SIG_SHOW, YANO, whoKey, yr,
+  FLAVIO, F_IMG, SIG_MEDIA, SIG_VIDEO, SIG_RANK, SIG_SHOW, YANO, whoKey, yr,
 } from './data';
 
 const NAVY = '#071C4D';
@@ -140,6 +140,7 @@ export default function BolsonaroHipotetico() {
   const [tac, setTac] = useState('ele');
   const [shared, setShared] = useState(false);
   const [exp, setExp] = useState<Record<string, boolean>>({});
+  const [playing, setPlaying] = useState<Record<string, boolean>>({});
 
   const rootRef = useRef<HTMLDivElement>(null);
   const onScrollRef = useRef<(() => void) | null>(null);
@@ -311,6 +312,7 @@ export default function BolsonaroHipotetico() {
               const more = sig.ev.length > SIG_SHOW;
               const ev = open || !more ? ord : ord.slice(0, SIG_SHOW);
               const mediaUrl = SIG_MEDIA[sig.n];
+              const video = SIG_VIDEO[sig.n];
               return (
                 <article key={sig.n} style={{ background: '#0B2A6F', borderRadius: 28, padding: 'clamp(22px,3.5vw,44px)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,360px),1fr))', gap: 36 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -320,11 +322,16 @@ export default function BolsonaroHipotetico() {
                     </div>
                     <h3 style={{ fontSize: 'clamp(26px,2.8vw,36px)', lineHeight: 1.08, margin: 0, fontWeight: 900, textWrap: 'balance' }}>{sig.title}</h3>
                     <p style={{ fontFamily: SERIF, fontSize: 18, lineHeight: 1.55, margin: 0, color: '#C9D2E8', textWrap: 'pretty' }}>{sig.def}</p>
-                    <div style={{ position: 'relative', aspectRatio: '16/9', borderRadius: 18, overflow: 'hidden', background: 'repeating-linear-gradient(135deg,#0F3380 0 12px,#0D2E74 12px 24px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 16 }}>
-                      <div style={{ fontFamily: MONO, fontSize: 12, color: '#C9D2E8' }}>{sig.mediaKind}</div>
-                      <div style={{ alignSelf: 'center', width: 64, height: 64, borderRadius: '50%', background: 'rgba(255,210,31,.95)', display: 'grid', placeItems: 'center' }}><div style={{ width: 0, height: 0, borderLeft: `20px solid ${NAVY}`, borderTop: '12px solid transparent', borderBottom: '12px solid transparent', marginLeft: 6 }} /></div>
-                      <div style={{ fontFamily: MONO, fontSize: 12, color: '#C9D2E8', textWrap: 'pretty' }}>{sig.media}</div>
-                    </div>
+                    {video && playing[sig.n] ? (
+                      <video src={`${video.src}#t=${video.start}`} controls autoPlay playsInline preload="metadata" style={{ width: '100%', aspectRatio: '16/9', borderRadius: 18, background: '#000', display: 'block' }} />
+                    ) : (
+                      <div onClick={video ? () => setPlaying(x => ({ ...x, [sig.n]: true })) : undefined} onKeyDown={video ? e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPlaying(x => ({ ...x, [sig.n]: true })); } } : undefined} role={video ? 'button' : undefined} tabIndex={video ? 0 : undefined} aria-label={video ? `Assistir: ${sig.media}` : undefined} style={{ position: 'relative', aspectRatio: '16/9', borderRadius: 18, overflow: 'hidden', background: 'repeating-linear-gradient(135deg,#0F3380 0 12px,#0D2E74 12px 24px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 16, cursor: video ? 'pointer' : undefined }}>
+                        <div style={{ fontFamily: MONO, fontSize: 12, color: '#C9D2E8' }}>{video ? `${sig.mediaKind} · a partir de ${Math.floor(video.start / 60)}:${String(video.start % 60).padStart(2, '0')}` : sig.mediaKind}</div>
+                        <div style={{ alignSelf: 'center', width: 64, height: 64, borderRadius: '50%', background: 'rgba(255,210,31,.95)', display: 'grid', placeItems: 'center' }}><div style={{ width: 0, height: 0, borderLeft: `20px solid ${NAVY}`, borderTop: '12px solid transparent', borderBottom: '12px solid transparent', marginLeft: 6 }} /></div>
+                        <div style={{ fontFamily: MONO, fontSize: 12, color: '#C9D2E8', textWrap: 'pretty' }}>{sig.media}</div>
+                      </div>
+                    )}
+                    {video ? <a href={video.page} target="_blank" rel="noopener" style={{ fontFamily: MONO, fontSize: 12, color: MUTED, marginTop: -6 }}>{video.credit} ↗</a> : null}
                     {mediaUrl ? <a href={mediaUrl} target="_blank" rel="noopener" className={s.yellowBtn} style={{ alignSelf: 'flex-start', fontSize: 14, padding: '10px 16px' }}>Assistir na fonte ↗</a> : null}
                     <div style={{ background: 'rgba(255,255,255,.07)', borderRadius: 16, padding: '14px 16px' }}>
                       <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase', color: Y }}>Em falas do próprio Flávio</div>

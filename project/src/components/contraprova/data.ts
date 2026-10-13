@@ -178,6 +178,9 @@ export const LOGOS: Record<string, [string, string, string]> = {
   'Pé-de-Meia': ['https://commons.wikimedia.org/wiki/Special:FilePath/Logo_P%C3%A9-de-Meia.png?width=600', 'Governo Federal/Caixa', 'https://commons.wikimedia.org/wiki/File:Logo_P%C3%A9-de-Meia.png'],
   'UPAs 24h': ['https://commons.wikimedia.org/wiki/Special:FilePath/Logo_UPA_24h_Vertical_Cores_Vetorial.svg?width=600', 'Ministério da Saúde', 'https://commons.wikimedia.org/wiki/File:Logo_UPA_24h_Vertical_Cores_Vetorial.svg'],
 };
+// Fotos de acervos oficiais para as medidas sem logotipo: [imagem, crédito, página de origem].
+export const PHOTOS: Record<string, [string, string, string]> = {
+};
 export const TONE: Record<Tone, [string, string, string]> = { pos: ['▲ Ponto positivo', '#E3F2E8', '#0B6B33'], neg: ['▼ Ponto negativo', '#FBE3E3', '#A3121F'], mix: ['◆ Misto', '#FFF2C2', '#7A5C00'] };
 export const STANCE: Record<string, [Tone, string]> = {
   'Bolsa Família': ['pos', 'Iniciativa do governo no primeiro ano; virou o principal programa social do país.'],
