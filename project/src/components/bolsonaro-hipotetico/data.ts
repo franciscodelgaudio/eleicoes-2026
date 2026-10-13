@@ -12,7 +12,7 @@ export type Enemy = { y: string; where: string; enemy: string; title: string; te
 export type EnemyExtra = { accuser: string; after: string; ph?: string; img?: Img3; pos?: string };
 export type MinItem = { g: string; k: 'f' | 'a'; who: string; date: string; text: string; src: string; status?: string };
 export type Tactic = { id: string; label: string; cases: Row4[]; bolso?: number[]; bolsoJud?: boolean };
-export type FlavioItem = { date: string; tag: string; title: string; text: string; src: string; ph: string; link?: string; audio?: string };
+export type FlavioItem = { date: string; tag: string; title: string; text: string; src: string; ph: string; link?: string; audio?: string; clip?: string };
 export type MinDiag = {
   big: string; caption: string; n: number; s: string; r: string; gap: string; color?: string; hi?: number;
   names?: string[]; colors?: string[]; legend: [string, string][]; src: string; side: [string, string, string];
@@ -70,18 +70,18 @@ export const SIGNALS: Signal[] = [
     { who: 'Flávio', date: 'set 2025', text: 'Sobre a condenação do pai: um processo cujo resultado todos conheciam antes de começar.', src: 'Publicação no X, 11/set/2025' },
     { who: 'Flávio', date: 'ago 2026', text: 'Perguntado sobre garantias à democracia, chamou o julgamento de “uma grande farsa orquestrada” e os ministros de “inimigos”.', src: 'TV Globo, sabatina de 28/ago/2026; Euronews, 29/ago/2026' }
   ]},
-  { n: '3', title: 'Tolerar ou encorajar a violência', def: 'Elogiar ou perdoar atos violentos de aliados, ou se recusar a condená-los.', mediaKind: 'ÁUDIO A INSERIR', media: '“Vou dar indulto para todo mundo” · SBT News, 29/set/2026', flavio: 'Registrado. Promete anistia ou indulto a todos os condenados pelo 8 de janeiro e pela trama golpista.', ev: [
+  { n: '3', title: 'Tolerar ou encorajar a violência', def: 'Elogiar ou perdoar atos violentos de aliados, ou se recusar a condená-los.', mediaKind: 'VÍDEO', media: '“Vou dar indulto para todo mundo” · SantoFlow Podcast, 29/set/2026', flavio: 'Registrado. Promete anistia ou indulto a todos os condenados pelo 8 de janeiro e pela trama golpista.', ev: [
     { who: 'Jair', date: '1999', text: 'Disse que a ditadura deveria ter matado “uns 30 mil”.', src: 'Programa Câmera Aberta, TV Bandeirantes' },
     { who: 'Jair', date: 'abr 2016', text: 'Dedicou o voto no impeachment ao coronel Ustra, reconhecido pela Justiça como torturador.', src: 'Câmara, notas taquigráficas de 17/abr/2016; TJSP, 2008' },
     { who: 'Jair', date: 'set 2018', text: '“Vamos fuzilar a petralhada aqui do Acre”, em comício em Rio Branco.', src: 'Comício em Rio Branco, 1º/set/2018' },
     { who: 'Jair', date: 'abr 2022', text: 'Concedeu perdão ao deputado Daniel Silveira um dia após o STF condená-lo por ameaças a ministros. O STF anulou o perdão em 2023.', src: 'STF, ADPF 964' },
-    { who: 'Flávio', date: 'set 2026', text: '“Tem gente que está presa sem ter feito nada.” Promete indulto “para todo mundo” se a anistia não passar.', src: 'SBT News, 29/set/2026' }
+    { who: 'Flávio', date: 'set 2026', text: '“Tem gente que está preso no presídio ainda, mesmo sem ter feito nada.” Promete indulto “para todo mundo” se a anistia não passar.', src: 'SantoFlow Podcast #471, 29/set/2026' }
   ]},
-  { n: '4', title: 'Restringir liberdades de opositores, imprensa e Judiciário', def: 'Ameaçar críticos, controlar tribunais, limitar a imprensa.', mediaKind: 'VÍDEO A INSERIR', media: '“Vou ter um Supremo nosso” · SBT News, set/2026', flavio: 'Registrado. Promete “um Supremo nosso” e defende o impeachment de Alexandre de Moraes. Diz que “nosso” significa “da Constituição”.', ev: [
+  { n: '4', title: 'Restringir liberdades de opositores, imprensa e Judiciário', def: 'Ameaçar críticos, controlar tribunais, limitar a imprensa.', mediaKind: 'VÍDEO', media: '“Vou ter um Supremo nosso” · SantoFlow Podcast, 29/set/2026', flavio: 'Registrado. Promete “um Supremo nosso” e defende o impeachment de Alexandre de Moraes. Diz que “nosso” significa “da Constituição”.', ev: [
     { who: 'Eduardo', date: 'out 2019', text: 'Disse que, se a esquerda “radicalizar”, a resposta poderia vir “via um novo AI-5”.', src: 'Câmara, Representação 11/2019 (Eduardo Bolsonaro)' },
     { who: 'Jair', date: '2020', text: 'Foi o autor de 175 dos 428 ataques a jornalistas registrados no ano pela Federação Nacional dos Jornalistas.', src: 'Fenaj, Relatório da Violência contra Jornalistas 2020' },
     { who: 'Jair', date: 'set 2021', text: 'Disse na Avenida Paulista que não cumpriria mais decisões de Alexandre de Moraes. Recuou dois dias depois.', src: 'PGR, denúncia na Pet 12.100 (18/fev/2025)' },
-    { who: 'Flávio', date: 'set 2026', text: '“Vou ter um Supremo nosso, quando digo nosso é da Constituição!”', src: 'SBT News, 29/set/2026; CartaCapital, out/2026' }
+    { who: 'Flávio', date: 'set 2026', text: '“E vou ter um Supremo nosso, nosso sentido da Constituição, um Supremo que mostra que não tem perseguição, um Supremo que respeite a lei.”', src: 'SantoFlow Podcast #471, 29/set/2026' }
   ]}
 ];
 
@@ -180,9 +180,9 @@ export const TACTICS: Tactic[] = [
 ];
 export const TAC_BOLSO: Record<string, Row4[]> = {
   ele: [['Jair', 'set 2018', '“Não aceito resultado diferente da minha eleição.”', 'TV Band'], ['Jair', 'jul 2021', '“Ou fazemos eleições limpas no Brasil, ou não teremos eleições.”', 'Declaração a apoiadores'], ['Jair', 'jul 2022', 'Ataque às urnas diante de embaixadores; inelegível por oito anos.', 'TSE, AIJE 0600814-85 (30/jun/2023)'], ['PL', 'nov 2022', 'Pedido de invalidação de votos; multa de R$ 22,9 milhões.', 'TSE, decisão de 23/nov/2022; TSE, plenário, 15/dez/2022']],
-  jud: [['Jair', 'abr 2020', 'Discursou em ato que pedia o fechamento do STF e do Congresso.', 'STF, Inq 4828'], ['Jair', 'set 2021', 'Disse que não cumpriria decisões de Alexandre de Moraes.', 'PGR, denúncia na Pet 12.100 (18/fev/2025)'], ['Eduardo', '2018', '“Um soldado e um cabo” para fechar o STF.', 'Câmara, Representação 11/2019 (Eduardo Bolsonaro)'], ['Flávio', 'set 2026', '“Vou ter um Supremo nosso.” Defende o impeachment de Moraes.', 'SBT News, 29/set/2026']],
+  jud: [['Jair', 'abr 2020', 'Discursou em ato que pedia o fechamento do STF e do Congresso.', 'STF, Inq 4828'], ['Jair', 'set 2021', 'Disse que não cumpriria decisões de Alexandre de Moraes.', 'PGR, denúncia na Pet 12.100 (18/fev/2025)'], ['Eduardo', '2018', '“Um soldado e um cabo” para fechar o STF.', 'Câmara, Representação 11/2019 (Eduardo Bolsonaro)'], ['Flávio', 'set 2026', '“Vou ter um Supremo nosso.” Defende o impeachment de Moraes.', 'SantoFlow Podcast #471, 29/set/2026; SBT News, 29/set/2026']],
   ini: [['Jair', 'out 2018', '“Esses marginais vermelhos serão banidos de nossa pátria.”', 'Discurso de 21/out/2018'], ['Eduardo', 'out 2019', 'Se a esquerda “radicalizar”, um “novo AI-5”.', 'Câmara, Representação 11/2019 (Eduardo Bolsonaro)'], ['Flávio', 'ago 2026', 'Chamou os ministros do STF de “inimigos” e o julgamento do pai de “farsa”.', 'TV Globo, sabatina de 28/ago/2026; Euronews, 29/ago/2026']],
-  per: [['Jair', 'abr 2022', 'Perdão ao deputado Daniel Silveira um dia após a condenação no STF; anulado em 2023.', 'STF, ADPF 964'], ['Flávio', 'ago–set 2026', 'Promete anistia na transição ou indulto “para todo mundo” aos condenados da trama golpista e do 8 de janeiro.', 'TV Globo, sabatina de 28/ago/2026; SBT News, 29/set/2026']],
+  per: [['Jair', 'abr 2022', 'Perdão ao deputado Daniel Silveira um dia após a condenação no STF; anulado em 2023.', 'STF, ADPF 964'], ['Flávio', 'ago–set 2026', 'Promete anistia na transição ou indulto “para todo mundo” aos condenados da trama golpista e do 8 de janeiro.', 'TV Globo, sabatina de 28/ago/2026; SantoFlow Podcast #471, 29/set/2026']],
   vio: [['Jair', '1999', 'A ditadura deveria ter matado “uns 30 mil”.', 'TV Bandeirantes'], ['Jair', 'set 2018', '“Vamos fuzilar a petralhada aqui do Acre.”', 'Comício em Rio Branco'], ['Apoiadores', '8 jan 2023', 'Invasão e depredação das sedes dos Três Poderes.', 'STF, AP 2668 (condenação, 11/set/2025); Senado, Relatório final da CPMI do 8 de Janeiro (2023)']],
   min: [['Governo', '2019–2022', 'Nenhuma terra indígena homologada.', 'Funai; DOU, 28/abr/2023 (primeiras homologações de TIs desde 2018)'], ['Governo', '2019–2022', '570 crianças Yanomami mortas por causas evitáveis.', 'Sumaúma, 20/jan/2023 (dados do Ministério da Saúde via LAI)'], ['Jair', '2011–2019', 'Falas contra negros, indígenas, mulheres e LGBT+ (capítulo 04).', 'Capítulo 04']],
   imp: [['Jair', '2020', 'Autor de 175 dos 428 ataques a jornalistas registrados no ano.', 'Fenaj, Relatório da Violência contra Jornalistas 2020'], ['Jair', 'mai 2020', '“Cala a boca, não te perguntei nada!”, a um repórter da Folha de S.Paulo no Palácio da Alvorada.', 'Fenaj, Relatório da Violência contra Jornalistas 2020']]
@@ -196,17 +196,19 @@ export const FLAVIO: FlavioItem[] = [
   { date: 'mai 2026', tag: 'Campanha', title: 'O herdeiro', text: 'Já candidato do PL, Flávio promete que o pai “vai subir aquela rampa junto com a gente em 2027”.', src: 'Evento do PL, mai/2026', ph: 'Foto: Flávio em evento do PL', audio: 'Discurso em evento do PL, mai/2026' },
   { date: 'jun 2026', tag: 'Aliados', title: '“Mulheres votam mal”', text: 'O aliado Paulo Figueiredo ataca o voto feminino. Flávio repudia a fala; a deputada Julia Zanatta, do PL, diz que Figueiredo é seu amigo e que Flávio “não tem nada a ver com isso”.', src: 'CNN Brasil; Metrópoles, jul/2026', ph: 'Frame: transmissão de Paulo Figueiredo' },
   { date: 'ago 2026', tag: 'Sabatina', title: '“Uma grande farsa”', text: 'Na TV Globo, perguntado sobre garantias à democracia, chama o julgamento do pai de farsa e os ministros de inimigos. Promete trabalhar pela anistia ainda na transição.', src: 'TV Globo, sabatina de 28/ago/2026', ph: 'Frame da sabatina na TV Globo', link: 'Sinal 2 · Paralelo: Alemanha, 1924' },
-  { date: 'set 2026', tag: 'Promessa', title: 'Indulto “para todo mundo”', text: '“Se não acontecer, vou dar indulto para todo mundo.” Na mesma fala: “Vou ter um Supremo nosso”.', src: 'SBT News, 29/set/2026', ph: 'Frame da entrevista ao SBT News', audio: 'Trecho da entrevista ao SBT News', link: 'Sinais 3 e 4 · Paralelos: Brasil 1979, Argentina 1990, Venezuela 2004' },
+  { date: 'set 2026', tag: 'Promessa', title: 'Indulto “para todo mundo”', text: '“Se não acontecer, vou dar indulto para todo mundo.” Na mesma fala: “Vou ter um Supremo nosso”.', src: 'SantoFlow Podcast #471, 29/set/2026', ph: 'Frame do SantoFlow Podcast', audio: 'SantoFlow Podcast, a partir de 52:26', clip: 'https://www.youtube.com/watch?v=V4no0kRsngg&t=3146s', link: 'Sinais 3 e 4 · Paralelos: Brasil 1979, Argentina 1990, Venezuela 2004' },
   { date: '4 out 2026', tag: 'Urna', title: '47,03%', text: 'Flávio termina o primeiro turno à frente de Lula, com 45,16%. O PL elege 121 deputados federais e 19 dos 54 senadores em disputa, mais que qualquer outro partido, e terá a maior bancada da Câmara e 28 senadores. O segundo turno é em 25 de outubro.', src: 'TSE, Resultados 2026 (Presidente, 1º turno); TSE, Resultados 2026 (Câmara e Senado); Agência Brasil, bancadas do PL (out/2026)', ph: 'Foto: apuração do 1º turno' }
 ];
 
-export const SIG_MEDIA: Record<string, string> = { '3': 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio', '4': 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio' };
+export const SIG_MEDIA: Record<string, string> = {};
 // Vídeos tocados no próprio card, começando no trecho citado (start em segundos):
 // arquivo do Wikimedia Commons (src) ou vídeo do YouTube (yt = id do vídeo).
 export type SigVideo = { src?: string; yt?: string; start: number; page: string; credit: string };
 export const SIG_VIDEO: Record<string, SigVideo> = {
   '1': { src: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1c/Negacionismo_eleitoral_no_Alvorada_em_2022.webm/Negacionismo_eleitoral_no_Alvorada_em_2022.webm.720p.vp9.webm', start: 2230, page: 'https://commons.wikimedia.org/wiki/File:Negacionismo_eleitoral_no_Alvorada_em_2022.webm', credit: 'TV BrasilGov · CC BY 3.0 · via Wikimedia Commons' },
-  '2': { yt: 'PuETSRCWSS8', start: 57, page: 'https://www.youtube.com/watch?v=PuETSRCWSS8&t=57s', credit: 'g1 · sabatina da TV Globo, 28/ago/2026 · YouTube' }
+  '2': { yt: 'PuETSRCWSS8', start: 57, page: 'https://www.youtube.com/watch?v=PuETSRCWSS8&t=57s', credit: 'g1 · sabatina da TV Globo, 28/ago/2026 · YouTube' },
+  '3': { yt: 'V4no0kRsngg', start: 3143, page: 'https://www.youtube.com/watch?v=V4no0kRsngg&t=3143s', credit: 'SantoFlow Podcast #471, 29/set/2026 · YouTube' },
+  '4': { yt: 'V4no0kRsngg', start: 3154, page: 'https://www.youtube.com/watch?v=V4no0kRsngg&t=3154s', credit: 'SantoFlow Podcast #471, 29/set/2026 · YouTube' }
 };
 export const F_IMG: Record<number, Img3> = {
   1: ['https://commons.wikimedia.org/wiki/Special:FilePath/Edif%C3%ADcio_Sede_do_STJ_%2854058218219%29.jpg?width=1600', 'Sede do STJ, que anulou as provas do caso em 2021 · Rafael Luz/STJ · CC BY 2.0', 'https://commons.wikimedia.org/wiki/File:Edif%C3%ADcio_Sede_do_STJ_%2854058218219%29.jpg'],

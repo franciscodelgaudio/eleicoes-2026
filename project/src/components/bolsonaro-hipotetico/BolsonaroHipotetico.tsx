@@ -504,7 +504,7 @@ export default function BolsonaroHipotetico() {
             <div style={{ fontSize: 'clamp(32px,4.5vw,60px)', fontWeight: 900, fontStretch: '115%', lineHeight: 0.95, letterSpacing: '-0.02em' }}>“Vou dar indulto para todo mundo.”</div>
             <div>
               <div style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.45, textWrap: 'pretty' }}>Flávio Bolsonaro, sobre os condenados pelo 8 de janeiro e pela trama golpista, se a anistia não passar no Congresso.</div>
-              <Src src='SBT News, 29/set/2026' size={13} muted={NAVY} mt={12} style={{ color: NAVY, fontWeight: 800 }} />
+              <Src src='SantoFlow Podcast #471, 29/set/2026' size={13} muted={NAVY} mt={12} style={{ color: NAVY, fontWeight: 800 }} />
             </div>
           </div>
         </div>
@@ -696,7 +696,7 @@ export default function BolsonaroHipotetico() {
                   {f.audio ? (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(255,255,255,.08)', borderRadius: 99, padding: '8px 18px 8px 8px' }}>
                       <div style={{ width: 40, height: 40, borderRadius: '50%', background: Y, display: 'grid', placeItems: 'center', flex: 'none' }}><div style={{ width: 0, height: 0, borderLeft: `13px solid ${NAVY}`, borderTop: '8px solid transparent', borderBottom: '8px solid transparent', marginLeft: 4 }} /></div>
-                      <div style={{ fontFamily: MONO, fontSize: 12, color: '#C9D2E8' }}>ÁUDIO A INSERIR · {f.audio}</div>
+                      <div style={{ fontFamily: MONO, fontSize: 12, color: '#C9D2E8' }}>{f.clip ? <a href={f.clip} target="_blank" rel="noopener" style={{ color: 'inherit' }}>OUVIR TRECHO · {f.audio} ↗</a> : `ÁUDIO A INSERIR · ${f.audio}`}</div>
                     </div>
                   ) : null}
                   {f.link ? <div style={{ fontSize: 14, fontWeight: 700, color: Y }}>{f.link}</div> : null}
