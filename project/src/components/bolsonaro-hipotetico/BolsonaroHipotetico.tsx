@@ -8,7 +8,7 @@ import Logo from '../Logo';
 import s from './styles.module.css';
 import {
   Y, G, RED, MUTED, WHO, GRAD, SIGNALS, ENEMY, ENEMY_X, MIN, MIN_G, MIN_DIAG, TACTICS, TAC_BOLSO, TAC_IMG,
-  FLAVIO, F_IMG, SIG_MEDIA, SIG_RANK, SIG_SHOW, whoKey, yr,
+  FLAVIO, F_IMG, SIG_MEDIA, SIG_RANK, SIG_SHOW, YANO, whoKey, yr,
 } from './data';
 
 const NAVY = '#071C4D';
@@ -249,7 +249,7 @@ export default function BolsonaroHipotetico() {
       {/* Abertura */}
       <section style={{ position: 'relative', height: '100svh', minHeight: 560, overflow: 'hidden', background: '#04122F' }}>
         <div data-hero-img="1" style={{ position: 'absolute', inset: 0, transformOrigin: 'center' }}>
-          <ImageSlot src="https://commons.wikimedia.org/wiki/Special:FilePath/Ataque%20bolsonarista%20ao%20Congresso%20Nacional%20do%20Brasil.png?width=1920" credit="Wikimedia Commons · 8/jan/2023" creditHref="https://commons.wikimedia.org/wiki/File:Ataque_bolsonarista_ao_Congresso_Nacional_do_Brasil.png" placeholder="Foto de abertura: Praça dos Três Poderes, 8 de janeiro de 2023" />
+          <ImageSlot src="https://imagens.ebc.com.br/lXEDhQ5mhlsEuLSFqvdf1dX92S4=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/manifestacao_mcamgo_abr_080120231818-11.jpg?itok=ZbPOzKMu" credit="Marcelo Camargo/Agência Brasil · CC BY 3.0 BR · 8/jan/2023" creditHref="https://agenciabrasil.ebc.com.br/foto/2023-01/manifestantes-invadem-congresso-stf-e-palacio-do-planalto-1673209159" placeholder="Foto de abertura: Praça dos Três Poderes, 8 de janeiro de 2023" />
         </div>
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(180deg,rgba(4,18,47,.25) 0%,rgba(4,18,47,.35) 45%,rgba(7,28,77,.96) 100%)' }} />
         <div data-hero-title="1" style={{ position: 'absolute', left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
@@ -275,7 +275,7 @@ export default function BolsonaroHipotetico() {
 
       {/* 01 · Como as democracias morrem */}
       <section id="sinais" style={{ paddingTop: 80 }}>
-        <ChapterCover n="01" title="Como as democracias morrem" maxWidth={900} img={{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Brazilian%20National%20Congress.jpg?width=1920', credit: 'Wikimedia Commons', href: 'https://commons.wikimedia.org/wiki/File:Brazilian_National_Congress.jpg', ph: 'Foto: capa de Como as democracias morrem, ou retrato dos autores' }} />
+        <ChapterCover n="01" title="Como as democracias morrem" maxWidth={900} img={{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Imagens_de_Bras%C3%ADlia_-_Fachada_do_Pal%C3%A1cio_do_Congresso_Nacional_%2853457492293%29.jpg?width=1600', credit: 'Congresso Nacional · Agência Senado · CC BY 2.0', href: 'https://www.flickr.com/photos/agenciasenado/53457492293/', ph: 'Foto: capa de Como as democracias morrem, ou retrato dos autores' }} />
 
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '80px 24px 24px' }}>
           <p data-reveal="1" style={{ ...reveal(), fontFamily: SERIF, fontSize: 21, lineHeight: 1.6, margin: 0, color: '#E6EBF6', textWrap: 'pretty' }}>Em 2018, os professores de Harvard Steven Levitsky e Daniel Ziblatt publicaram um estudo sobre democracias que ruíram nos séculos 20 e 21. Desde o fim da Guerra Fria, mostram eles, a maioria das rupturas não veio de tanques, mas de líderes eleitos que esvaziaram as instituições por dentro, quase sempre com medidas legais, aprovadas pelo Parlamento ou aceitas pelos tribunais.</p>
@@ -414,9 +414,9 @@ export default function BolsonaroHipotetico() {
         <div style={{ maxWidth: 1120, margin: '0 auto', padding: '80px 24px 24px' }}>
           <div style={{ ...label('#FF8A8A', '.12em'), textAlign: 'center' }}>Os alvos · ação contra Moraes marcada para 15 de dezembro de 2022</div>
           <div className={s.targets} style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 'clamp(16px,4vw,56px)', marginTop: 48 }}>
-            <Target name="Lula" role="Presidente eleito" method="Envenenamento" img="https://commons.wikimedia.org/wiki/Special:FilePath/Foto%20oficial%20de%20Luiz%20In%C3%A1cio%20Lula%20da%20Silva%20(3x4%20cropped).jpg?width=600" credit="Foto: Ricardo Stuckert/PR" creditHref="https://commons.wikimedia.org/wiki/File:Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_(3x4_cropped).jpg" />
-            <Target name="Geraldo Alckmin" role="Vice eleito" method="Método não detalhado" img="https://commons.wikimedia.org/wiki/Special:FilePath/Vice%20Presidente%20da%20Rep%C3%BAblica%20do%20Brasil%2C%20Geraldo%20Alckmin%20em%202023.jpg?width=600" credit="Foto: Cadu Gomes/VPR" creditHref="https://commons.wikimedia.org/wiki/File:Vice_Presidente_da_Rep%C3%BAblica_do_Brasil%2C_Geraldo_Alckmin_em_2023.jpg" />
-            <Target name="Alexandre de Moraes" role="Presidente do TSE" method="Tiro, explosivo ou veneno" img="https://commons.wikimedia.org/wiki/Special:FilePath/Ministro%20Alexandre%20de%20Moraes%20como%20presidente%20do%20TSE.jpg?width=600" credit="Foto: Isac Nóbrega · CC BY 2.0" creditHref="https://commons.wikimedia.org/wiki/File:Ministro_Alexandre_de_Moraes_como_presidente_do_TSE.jpg" />
+            <Target name="Lula" role="Presidente eleito" method="Envenenamento" img="https://commons.wikimedia.org/wiki/Special:FilePath/Foto%20oficial%20de%20Luiz%20In%C3%A1cio%20Lula%20da%20Silva%20(3x4%20cropped).jpg?width=600" credit="Foto: Ricardo Stuckert/PR · CC BY 2.0" creditHref="https://commons.wikimedia.org/wiki/File:Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_(3x4_cropped).jpg" />
+            <Target name="Geraldo Alckmin" role="Vice eleito" method="Método não detalhado" img="https://commons.wikimedia.org/wiki/Special:FilePath/Vice%20Presidente%20da%20Rep%C3%BAblica%20do%20Brasil%2C%20Geraldo%20Alckmin%20em%202023.jpg?width=600" credit="Foto: Cadu Gomes/VPR · CC BY 2.0" creditHref="https://commons.wikimedia.org/wiki/File:Vice_Presidente_da_Rep%C3%BAblica_do_Brasil%2C_Geraldo_Alckmin_em_2023.jpg" />
+            <Target name="Alexandre de Moraes" role="Presidente do TSE" method="Tiro, explosivo ou veneno" img="https://commons.wikimedia.org/wiki/Special:FilePath/Ministro%20Alexandre%20de%20Moraes%20como%20presidente%20do%20TSE.jpg?width=600" credit="Foto: Isac Nóbrega/PR · CC BY 2.0" creditHref="https://commons.wikimedia.org/wiki/File:Ministro_Alexandre_de_Moraes_como_presidente_do_TSE.jpg" />
           </div>
         </div>
 
@@ -503,7 +503,7 @@ export default function BolsonaroHipotetico() {
       <section id="inimigo" style={{ background: '#2A0A0F' }}>
         <div data-parallax="0.18" style={{ position: 'relative', height: '62vh', minHeight: 420, overflow: 'hidden', marginBottom: 64 }}>
           <div data-par-inner="1" style={{ position: 'absolute', left: 0, right: 0, top: '-12%', bottom: '-12%', filter: 'grayscale(1) contrast(1.1)' }}>
-            <ImageSlot src="https://commons.wikimedia.org/wiki/Special:FilePath/Deposi%C3%A7%C3%A3o%20do%20Governo%20Jo%C3%A3o%20Goulart%20%E2%80%93%20Golpe%20de%201964%2015.tif?width=1920" credit="Correio da Manhã/Arquivo Nacional · tanques no Rio, 2/abr/1964" creditHref="https://commons.wikimedia.org/wiki/File:Deposi%C3%A7%C3%A3o_do_Governo_Jo%C3%A3o_Goulart_%E2%80%93_Golpe_de_1964_15.tif" placeholder="Foto: tanques no Rio, abril de 1964" />
+            <ImageSlot src="https://commons.wikimedia.org/wiki/Special:FilePath/Deposi%C3%A7%C3%A3o%20do%20Governo%20Jo%C3%A3o%20Goulart%20%E2%80%93%20Golpe%20de%201964%2015.tif?width=1920" credit="Correio da Manhã/Arquivo Nacional · domínio público · tanques no Rio, 2/abr/1964" creditHref="https://commons.wikimedia.org/wiki/File:Deposi%C3%A7%C3%A3o_do_Governo_Jo%C3%A3o_Goulart_%E2%80%93_Golpe_de_1964_15.tif" placeholder="Foto: tanques no Rio, abril de 1964" />
           </div>
           <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(180deg,rgba(42,10,15,.2) 0%,rgba(42,10,15,.95) 100%)' }} />
         </div>
@@ -552,7 +552,7 @@ export default function BolsonaroHipotetico() {
 
       {/* 04 · Minorias */}
       <section id="minorias" style={{ paddingTop: 120 }}>
-        <ChapterCover n="04" title="Minorias" maxWidth={1000} img={{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/CTEYANOMAMI%20-%20Comiss%C3%A3o%20Tempor%C3%A1ria%20Externa%20para%20acompanhar%20a%20situa%C3%A7%C3%A3o%20dos%20Yanomami%20e%20a%20sa%C3%ADda%20dos%20garimpeiros%20(52781830838).jpg?width=1920', credit: 'Geraldo Magela/Agência Senado · CC BY 2.0', href: 'https://commons.wikimedia.org/wiki/File:CTEYANOMAMI_-_Comiss%C3%A3o_Tempor%C3%A1ria_Externa_para_acompanhar_a_situa%C3%A7%C3%A3o_dos_Yanomami_e_a_sa%C3%ADda_dos_garimpeiros_(52781830838).jpg', ph: 'Foto: Terra Indígena Yanomami, janeiro de 2023' }} />
+        <ChapterCover n="04" title="Minorias" maxWidth={1000} img={{ src: YANO[0], credit: YANO[1], href: YANO[2], ph: 'Foto: Terra Indígena Yanomami, janeiro de 2023' }} />
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '80px 24px 24px' }}>
           <p data-reveal="1" style={{ ...reveal(), fontFamily: SERIF, fontSize: 21, lineHeight: 1.6, margin: 0, color: '#E6EBF6', textWrap: 'pretty' }}>Regimes autoritários costumam começar retirando direitos de quem tem menos voz. Abaixo, o que foi dito e o que foi feito entre 2019 e 2022, e o que figuras do PL disseram em 2026. Escolha um grupo e alterne entre falas e ações.</p>
         </div>
@@ -610,7 +610,7 @@ export default function BolsonaroHipotetico() {
 
       {/* 05 · No mundo */}
       <section id="mundo" style={{ paddingTop: 120 }}>
-        <ChapterCover n="05" title="O padrão na América Latina e no mundo" maxWidth={1000} img={{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Golpe%20de%20Estado%201973.jpg?width=1920', credit: 'Biblioteca del Congreso Nacional de Chile · Wikimedia Commons', href: 'https://commons.wikimedia.org/wiki/File:Golpe_de_Estado_1973.jpg', ph: 'Foto de arquivo: Palacio de La Moneda, Santiago, 11 de setembro de 1973' }} />
+        <ChapterCover n="05" title="O padrão na América Latina e no mundo" maxWidth={1000} img={{ src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Golpe%20de%20Estado%201973.jpg?width=1920', credit: 'Biblioteca del Congreso Nacional de Chile · CC BY 3.0 CL', href: 'https://commons.wikimedia.org/wiki/File:Golpe_de_Estado_1973.jpg', ph: 'Foto de arquivo: Palacio de La Moneda, Santiago, 11 de setembro de 1973' }} />
         <div style={{ maxWidth: 1320, margin: '0 auto', padding: '72px 24px 40px' }}>
           <div style={label(Y)}>Checklist 3 · Histórico</div>
           <div style={{ fontSize: 'clamp(28px,3vw,40px)', fontWeight: 900, lineHeight: 1.05, marginTop: 8, maxWidth: 820 }}>Sete táticas, de Vargas a Bukele. Escolha uma.</div>
@@ -665,7 +665,7 @@ export default function BolsonaroHipotetico() {
               <div style={{ position: 'relative', flex: 1, borderRadius: 24, overflow: 'hidden', background: '#04122F' }}>
                 {FLAVIO.map((f, i) => (
                   <div key={i} style={{ position: 'absolute', inset: 0, opacity: i === fi ? 1 : 0, transform: i === fi ? 'scale(1.04)' : 'scale(1)', transition: 'opacity .7s ease,transform 1.2s ease', pointerEvents: i === fi ? 'auto' : 'none' }}>
-                    <ImageSlot src={F_IMG[i]?.[0]} credit={F_IMG[i]?.[1]} placeholder={f.ph} />
+                    <ImageSlot src={F_IMG[i]?.[0]} credit={F_IMG[i]?.[1]} creditHref={F_IMG[i]?.[2]} placeholder={f.ph} />
                   </div>
                 ))}
                 <div style={{ position: 'absolute', left: 16, top: 16, pointerEvents: 'none', background: Y, color: NAVY, padding: '8px 14px', borderRadius: 99, fontSize: 15, fontWeight: 900 }}>{fNow.date}</div>

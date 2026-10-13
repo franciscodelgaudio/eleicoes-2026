@@ -20,12 +20,6 @@ export type MinDiag = {
 
 export const whoKey = (w: string) => Object.keys(WHO).find(k => w.startsWith(k)) || 'Aliado';
 export const yr = (d: string | undefined) => { const m = String(d || '').match(/(19|20)\d\d/); return m ? +m[0] : null; };
-export type LinkInfo = { url: string; hasUrl: boolean; noUrl: boolean };
-export const lk = (src: string | undefined): LinkInfo => {
-  const hit = src ? LINKS.find(([k]) => src.includes(k)) : null;
-  return hit ? { url: hit[1], hasUrl: true, noUrl: false } : { url: '', hasUrl: false, noUrl: !!src };
-};
-
 export const WHO: Record<string, [string, string]> = { Jair: [Y, '#071C4D'], 'Flávio': ['#fff', '#071C4D'], Eduardo: ['#C9D2E8', '#071C4D'], Governo: [G, '#071C4D'], PL: ['#FF8A8A', '#071C4D'], Aliado: ['rgba(255,255,255,.2)', '#fff'], Apoiadores: ['rgba(255,255,255,.2)', '#fff'] };
 
 export const GRAD: Record<string, Grad> = {
@@ -33,7 +27,7 @@ export const GRAD: Record<string, Grad> = {
     { date: 'abr 1964', title: 'O golpe e o primeiro Ato', text: 'Militares depõem João Goulart. O AI-1 permite cassar mandatos e suspender direitos políticos. O novo governo promete eleições presidenciais em 1965.', lost: 'Mandatos de opositores', src: 'Ato Institucional nº 1' },
     { date: 'out 1965', title: 'Fim da eleição direta', text: 'Depois de derrotas em eleições estaduais, o AI-2 extingue os partidos e torna indireta a eleição para presidente.', lost: 'Voto direto para presidente', src: 'Ato Institucional nº 2' },
     { date: 'fev 1966', title: 'Governadores indicados', text: 'O AI-3 estende a eleição indireta aos governadores e às capitais.', lost: 'Voto para governador', src: 'Ato Institucional nº 3' },
-    { date: 'mar 1967', title: 'Nova Constituição e Lei de Segurança Nacional', text: 'O regime incorpora os atos à Constituição e cria a Lei de Segurança Nacional para punir “inimigos internos”.', lost: 'Garantias contra perseguição política', src: 'Constituição de 1967; Decreto-Lei 314/1967' },
+    { date: 'mar 1967', title: 'Nova Constituição e Lei de Segurança Nacional', text: 'O regime incorpora os atos à Constituição e edita uma nova Lei de Segurança Nacional para punir “inimigos internos”.', lost: 'Garantias contra perseguição política', src: 'Constituição de 1967; Decreto-Lei 314/1967' },
     { date: 'dez 1968', title: 'AI-5', text: 'O Congresso é fechado, o habeas corpus é suspenso para crimes políticos e começa a censura prévia. Vale por dez anos.', lost: 'Congresso, habeas corpus, imprensa livre', src: 'Ato Institucional nº 5' }
   ]},
   de: { label: 'Alemanha 1933', intro: 'Hitler foi nomeado dentro das regras. Em seis meses, a Alemanha tinha um partido só.', steps: [
@@ -92,9 +86,9 @@ export const SIGNALS: Signal[] = [
 ];
 
 export const ENEMY: Enemy[] = [
-  { y: '1937', where: 'Brasil · Vargas', enemy: 'os comunistas', title: 'O Plano Cohen', text: 'Dois meses antes do golpe do Estado Novo, o governo divulgou um suposto plano comunista para tomar o poder. Era falso, redigido pelo capitão integralista Olímpio Mourão Filho. Em novembro, Vargas fechou o Congresso e cancelou as eleições.', src: 'CPDOC/FGV' },
+  { y: '1937', where: 'Brasil · Vargas', enemy: 'os comunistas', title: 'O Plano Cohen', text: 'Seis semanas antes do golpe do Estado Novo, o governo divulgou um suposto plano comunista para tomar o poder. Era falso, redigido pelo capitão integralista Olímpio Mourão Filho. Em novembro, Vargas fechou o Congresso e cancelou as eleições.', src: 'CPDOC/FGV, verbete “Plano Cohen” (DHBB); Constituição de 1937' },
   { y: '1933', where: 'Alemanha · nazismo', enemy: 'os comunistas', title: 'O incêndio do Reichstag', text: 'O governo de Hitler atribuiu o incêndio do Parlamento a um complô comunista. No dia seguinte suspendeu as liberdades civis; milhares de comunistas foram presos.', src: 'Bundesarchiv, Reichstagsbrandprozess; Bundestag, Kalenderblatt Reichstagsbrand (2023)' },
-  { y: '1964', where: 'Brasil · golpe militar', enemy: 'a ameaça vermelha', title: '“Salvar o Brasil do comunismo”', text: 'O golpe foi apresentado como reação a uma ameaça comunista. O mesmo Olímpio Mourão Filho, agora general, colocou as primeiras tropas na estrada em 31 de março.', src: 'Comissão Nacional da Verdade, 2014' },
+  { y: '1964', where: 'Brasil · golpe militar', enemy: 'a ameaça vermelha', title: '“Salvar o Brasil do comunismo”', text: 'O golpe foi apresentado como reação a uma ameaça comunista. O mesmo Olímpio Mourão Filho, agora general, colocou as primeiras tropas na estrada em 31 de março.', src: 'CNV, Relatório final (2014), vol. I, cap. 2-3; CPDOC/FGV, verbete “Olímpio Mourão Filho” (DHBB)' },
   { y: '1973', where: 'Chile · Pinochet', enemy: 'o Plano Z', title: 'O complô que justificou o golpe', text: 'A junta divulgou um suposto “Plano Z”, em que marxistas planejariam assassinar militares. A Comissão da Verdade chilena considerou o documento genérico e pouco realista, sem informação sobre seus autores, e concluiu que sua difusão serviu de justificativa para matar adversários.', src: 'Comisión Nacional de Verdad y Reconciliación (Rettig), Informe (1991)' },
   { y: '2017', where: 'Hungria · Orbán', enemy: 'George Soros', title: 'O inimigo estrangeiro', text: 'O governo espalhou cartazes pelo país contra o investidor George Soros, apresentado como ameaça à nação.', src: 'Governo da Hungria, Consulta Nacional sobre o “Plano Soros” (2017); TJUE, C-66/18 Comissão v. Hungria (2020)' },
   { y: '2018', where: 'Brasil · Jair Bolsonaro', enemy: 'a petralhada', title: '“Vamos fuzilar a petralhada”', text: 'Em comício em Rio Branco, no Acre, Jair Bolsonaro empunhou um tripé de câmera como se fosse uma metralhadora e disse: “Vamos fuzilar a petralhada aqui do Acre”. Depois afirmou que era uma brincadeira.', src: 'Comício em Rio Branco, 1º/set/2018' },
@@ -104,35 +98,35 @@ export const ENEMY: Enemy[] = [
 ];
 
 export const MIN: MinItem[] = [
-  { g: 'mulheres', k: 'f', who: 'Jair', date: '2003 e 2014', text: 'Disse à deputada Maria do Rosário que não a estupraria porque ela “não merece”. Foi condenado a indenizá-la.', src: 'STF, Inq 3932; STJ, 2017' },
-  { g: 'mulheres', k: 'f', who: 'Jair', date: 'abr 2017', text: '“Foram quatro homens, a quinta eu dei uma fraquejada e veio uma mulher”, sobre os filhos.', src: 'Palestra no Clube Hebraica, Rio, 3/abr/2017' },
-  { g: 'mulheres', k: 'f', who: 'Jair', date: 'fev 2020', text: 'Fez insinuação sexual contra a jornalista Patrícia Campos Mello. Foi condenado a indenizá-la.', src: 'TJSP, 2021' },
-  { g: 'mulheres', k: 'f', who: 'PL · Eduarda Campopiano', date: '2026', text: '“Eu não acho que feminicídio seja algo que exista.” Eleita a deputada estadual mais votada de São Paulo, com 1,96 milhão de votos, apresenta-se como “a maior inimiga das feministas de São Paulo”.', src: 'Programa Notícia iLtda., ep. 18; Folha de S.Paulo, out/2026' },
-  { g: 'mulheres', k: 'f', who: 'PL · Gilberto Cattani', date: 'out 2026', text: 'Deputado estadual em Mato Grosso, defendeu Campopiano dizendo que a filha “não foi assassinada por ser mulher”. O ex-marido dela foi condenado a 30 anos por feminicídio.', src: 'FolhaMax, 7/out/2026' },
+  { g: 'mulheres', k: 'f', who: 'Jair', date: '2003 e 2014', text: 'Disse à deputada Maria do Rosário que não a estupraria porque ela “não merece”. Foi condenado a indenizá-la.', src: 'STF, Inq 3932; STJ, REsp 1.642.310 (2017)' },
+  { g: 'mulheres', k: 'f', who: 'Jair', date: 'abr 2017', text: '“Foram quatro homens, a quinta eu dei uma fraquejada e veio uma mulher”, sobre os filhos.', src: 'STF, acórdão do Inq 4694 (transcreve a palestra no Clube Hebraica, 3/abr/2017)' },
+  { g: 'mulheres', k: 'f', who: 'Jair', date: 'fev 2020', text: 'Fez insinuação sexual contra a jornalista Patrícia Campos Mello. Foi condenado a indenizá-la; o TJSP confirmou a condenação em 2022.', src: 'TJSP, Apelação 1020260-77.2020.8.26.0100 (2022)' },
+  { g: 'mulheres', k: 'f', who: 'PL · Eduarda Campopiano', date: '2026', text: '“Eu não acho que feminicídio seja algo que exista.” Eleita a deputada estadual mais votada de São Paulo, com 1,96 milhão de votos, apresenta-se como “a maior inimiga das feministas de São Paulo”.', src: 'TSE, resultado deputado estadual SP 2026; Programa Notícia iLtda., ep. 18; Folha de S.Paulo, out/2026' },
+  { g: 'mulheres', k: 'f', who: 'PL · Gilberto Cattani', date: 'out 2026', text: 'Deputado estadual em Mato Grosso, defendeu Campopiano dizendo que a filha “não foi assassinada por ser mulher”. O ex-marido dela foi condenado a 30 anos por feminicídio.', src: 'TSE, resultado deputado estadual MT 2026; FolhaMax, 7/out/2026' },
   { g: 'mulheres', k: 'f', who: 'Aliado · Paulo Figueiredo', date: 'jun 2026', text: 'O influenciador, aliado da família, disse que mulheres “votam mal”, “especialmente as solteiras”. Flávio repudiou a fala. A deputada Julia Zanatta (PL-SC) minimizou: “Paulo Figueiredo é meu amigo. O Flávio não tem nada a ver com isso”.', src: 'CNN Brasil; Metrópoles, 1º/jul/2026' },
-  { g: 'mulheres', k: 'f', who: 'PL · Julia Zanatta', date: '2025–2026', text: 'A deputada Julia Zanatta (PL-SC), reeleita com 560 mil votos, votou contra acelerar a tramitação do projeto que criminaliza a misoginia.', src: 'Agência Pública, out/2026' },
-  { g: 'mulheres', k: 'a', who: 'Governo', date: 'out 2021', text: 'Vetou a distribuição gratuita de absorventes para estudantes e mulheres em situação de vulnerabilidade.', status: 'O Congresso derrubou o veto em março de 2022.', src: 'Lei 14.214/2021' },
+  { g: 'mulheres', k: 'f', who: 'PL · Julia Zanatta', date: 'jul 2026', text: 'A deputada Julia Zanatta (PL-SC), reeleita com 560 mil votos, a mais votada de Santa Catarina, votou contra acelerar a tramitação do projeto que criminaliza a misoginia.', src: 'TSE, resultado deputado federal SC 2026; Câmara, votação da urgência do PL 896/2023 (1º/jul/2026); Câmara, PL 896/2023' },
+  { g: 'mulheres', k: 'a', who: 'Governo', date: 'out 2021', text: 'Vetou a distribuição gratuita de absorventes para estudantes e mulheres em situação de vulnerabilidade.', status: 'O Congresso derrubou o veto em março de 2022.', src: 'Lei 14.214/2021; Agência Senado, 10/mar/2022' },
   { g: 'mulheres', k: 'a', who: 'Governo', date: 'out 2020', text: 'O Brasil aderiu à Declaração de Consenso de Genebra, aliança internacional contra o aborto.', status: 'O governo seguinte retirou a adesão em 2023.', src: 'Itamaraty' },
-  { g: 'negros', k: 'f', who: 'Jair', date: 'abr 2017', text: 'Sobre uma comunidade quilombola: “O afrodescendente mais leve lá pesava sete arrobas. Não fazem nada”. A PGR o denunciou por racismo.', status: 'O STF rejeitou a denúncia em 2018, por 3 votos a 2.', src: 'Palestra no Clube Hebraica; STF, Inq 4694' },
+  { g: 'negros', k: 'f', who: 'Jair', date: 'abr 2017', text: 'Sobre uma comunidade quilombola: “O afrodescendente mais leve lá pesava sete arrobas. Não fazem nada”. A PGR o denunciou por racismo.', status: 'O STF rejeitou a denúncia em 2018, por 3 votos a 2.', src: 'STF, acórdão do Inq 4694 (transcreve a palestra no Clube Hebraica, 3/abr/2017); STF, Inq 4694' },
   { g: 'negros', k: 'f', who: 'Jair', date: 'mar 2011', text: 'Perguntado pela cantora Preta Gil o que faria se um filho namorasse uma mulher negra, respondeu que não corria esse risco porque os filhos “foram muito bem educados”. Disse depois que entendeu errado a pergunta.', src: 'Programa CQC, TV Band' },
-  { g: 'negros', k: 'a', who: 'Governo', date: '2020', text: 'O presidente da Fundação Palmares, nomeado pelo governo para promover a cultura afro-brasileira, chamou o movimento negro de “escória maldita” em áudio de reunião.', status: 'Permaneceu no cargo até 2022.', src: 'Áudio divulgado em jun/2020' },
+  { g: 'negros', k: 'a', who: 'Governo', date: '2020', text: 'O presidente da Fundação Palmares, nomeado pelo governo para promover a cultura afro-brasileira, chamou o movimento negro de “escória maldita” em áudio de reunião.', status: 'Permaneceu no cargo até março de 2022.', src: 'Áudio divulgado em jun/2020; DOU, 31/mar/2022 (exoneração do presidente da Fundação Palmares)' },
   { g: 'indigenas', k: 'f', who: 'Jair', date: '1998', text: 'Disse que a cavalaria brasileira foi incompetente por não ter dizimado os índios, como fizeram os americanos.', src: 'Correio Braziliense, 12/abr/1998' },
-  { g: 'indigenas', k: 'f', who: 'Jair', date: '2017–2018', text: '“Não vai ter um centímetro demarcado para reserva indígena ou quilombola.”', src: 'Palestra no Clube Hebraica, 2017; campanha de 2018' },
-  { g: 'indigenas', k: 'a', who: 'Governo', date: '2019–2022', text: 'Nenhuma nova terra indígena foi homologada em quatro anos de governo.', src: 'Instituto Socioambiental; Funai' },
-  { g: 'indigenas', k: 'a', who: 'Governo', date: 'jan 2019', text: 'A Medida Provisória 870 transferiu a demarcação de terras indígenas para o Ministério da Agricultura.', status: 'O Congresso devolveu a atribuição à Funai.', src: 'MP 870/2019' },
-  { g: 'indigenas', k: 'a', who: 'Governo', date: 'fev 2020', text: 'Enviou ao Congresso projeto para liberar mineração e garimpo em terras indígenas.', status: 'Não foi aprovado.', src: 'PL 191/2020' },
-  { g: 'indigenas', k: 'a', who: 'Governo', date: '2019–2022', text: 'Com o território invadido por garimpeiros, 570 crianças Yanomami com menos de 5 anos morreram por causas evitáveis, 29% a mais que nos quatro anos anteriores.', status: 'Emergência em saúde pública decretada em janeiro de 2023.', src: 'Ministério da Saúde, via Lei de Acesso (Sumaúma, jan/2023)' },
+  { g: 'indigenas', k: 'f', who: 'Jair', date: 'abr 2017', text: '“Não vai ter um centímetro demarcado para reserva indígena ou quilombola.”', src: 'STF, acórdão do Inq 4694 (transcreve a palestra no Clube Hebraica, 3/abr/2017)' },
+  { g: 'indigenas', k: 'a', who: 'Governo', date: '2019–2022', text: 'Nenhuma nova terra indígena foi homologada em quatro anos de governo.', src: 'Funai; DOU, 28/abr/2023 (primeiras homologações de TIs desde 2018)' },
+  { g: 'indigenas', k: 'a', who: 'Governo', date: 'jan 2019', text: 'A Medida Provisória 870 transferiu a demarcação de terras indígenas para o Ministério da Agricultura.', status: 'O Congresso devolveu a atribuição à Funai; o STF barrou nova tentativa por MP.', src: 'MP 870/2019; Lei 13.844/2019' },
+  { g: 'indigenas', k: 'a', who: 'Governo', date: 'fev 2020', text: 'Enviou ao Congresso projeto para liberar mineração e garimpo em terras indígenas.', status: 'Não foi votado; foi retirado em 2023.', src: 'Câmara, PL 191/2020' },
+  { g: 'indigenas', k: 'a', who: 'Governo', date: '2019–2022', text: 'Com o território invadido por garimpeiros, 570 crianças Yanomami com menos de 5 anos morreram por causas evitáveis, 29% a mais que nos quatro anos anteriores.', status: 'Emergência em saúde pública decretada em janeiro de 2023.', src: 'Sumaúma, 20/jan/2023 (dados do Ministério da Saúde via LAI); Portaria GM/MS 28/2023' },
   { g: 'lgbt', k: 'f', who: 'Jair', date: 'jun 2011', text: 'Disse que seria incapaz de amar um filho homossexual e que preferiria que ele morresse num acidente.', src: 'Entrevista à revista Playboy, jun/2011' },
   { g: 'lgbt', k: 'f', who: 'Jair', date: 'abr 2019', text: '“O Brasil não pode ser o país do mundo gay, de turismo gay.”', src: 'Declaração a jornalistas, 25/abr/2019' },
   { g: 'lgbt', k: 'f', who: 'Governo', date: 'jan 2019', text: 'A ministra da Mulher, da Família e dos Direitos Humanos, Damares Alves: “Menino veste azul e menina veste rosa”.', src: 'Vídeo de 2/jan/2019' },
   { g: 'lgbt', k: 'a', who: 'Governo', date: 'abr 2019', text: 'O Decreto 9.759 extinguiu conselhos com participação da sociedade civil, entre eles colegiados de direitos LGBT.', status: 'O STF limitou o alcance do decreto.', src: 'Decreto 9.759/2019; STF, ADI 6121' },
-  { g: 'memoria', k: 'a', who: 'Governo', date: 'dez 2022', text: 'Extinguiu a Comissão Especial sobre Mortos e Desaparecidos Políticos, que buscava vítimas da ditadura.', status: 'Recriada em 2024.', src: 'Diário Oficial da União, dez/2022' }
+  { g: 'memoria', k: 'a', who: 'Governo', date: 'dez 2022', text: 'Extinguiu a Comissão Especial sobre Mortos e Desaparecidos Políticos, que buscava vítimas da ditadura.', status: 'Retomada em julho de 2024.', src: 'DOU, 30/dez/2022 (despacho que encerra a CEMDP); DOU, 4/jul/2024 (despacho que retoma a CEMDP)' }
 ];
 export const MIN_G: { id: string; label: string }[] = [{ id: 'mulheres', label: 'Mulheres' }, { id: 'negros', label: 'Negros e quilombolas' }, { id: 'indigenas', label: 'Indígenas' }, { id: 'lgbt', label: 'LGBT+' }, { id: 'memoria', label: 'Vítimas da ditadura' }];
 
 export const TACTICS: Tactic[] = [
   { id: 'ele', label: 'Desacreditar eleições', cases: [
-    ['Brasil', '1937', 'Vargas cancelou as eleições presidenciais de 1938 com o golpe do Estado Novo.', 'CPDOC/FGV'],
+    ['Brasil', '1937', 'Vargas cancelou as eleições presidenciais de 1938 com o golpe do Estado Novo.', 'Constituição de 1937; CPDOC/FGV, verbete “Plano Cohen” (DHBB)'],
     ['Brasil', '1965', 'O AI-2 acabou com a eleição direta para presidente.', 'Ato Institucional nº 2'],
     ['Peru', '2000', 'A terceira eleição de Fujimori teve denúncias de fraude; a missão da OEA deixou o país antes do segundo turno.', 'OEA, Missão de Observação Eleitoral no Peru (2000)'],
     ['Nicarágua', '2021', 'Antes da eleição, o governo Ortega prendeu sete pré-candidatos de oposição à Presidência.', 'CIDH, Relatório Anual 2021, cap. IV.B (Nicarágua)'],
@@ -140,7 +134,7 @@ export const TACTICS: Tactic[] = [
     ['Rússia', '2024', 'Candidatos de oposição foram barrados; Alexei Navalny morreu numa prisão no Ártico semanas antes da votação.', 'OSCE/ODIHR, missões eleitorais na Rússia']
   ], bolso: [0, 1, 3, 5, 6] },
   { id: 'jud', label: 'Atacar o Judiciário', cases: [
-    ['Brasil', '1969', 'Com base no AI-5, o regime aposentou à força três ministros do STF.', 'STF, Memória Jurisprudencial'],
+    ['Brasil', '1969', 'Com base no AI-5, o regime aposentou à força três ministros do STF.', 'CNV, Relatório final (2014), vol. I, cap. 2-3'],
     ['Argentina', '1976', 'A junta militar destituiu os juízes da Corte Suprema no dia do golpe.', 'Ata do Processo de Reorganização Nacional (Argentina, 24/mar/1976)'],
     ['Peru', '1992', 'No autogolpe, Fujimori dissolveu o Congresso e interveio no Judiciário.', 'Comisión de la Verdad y Reconciliación (Peru), Informe Final, t. III, cap. 2.3'],
     ['Venezuela', '2004', 'O Tribunal Supremo passou de 20 para 32 cadeiras, com magistrados escolhidos pela maioria governista.', 'CIDH, Relatório Anual 2004, cap. V (Venezuela)'],
@@ -149,9 +143,9 @@ export const TACTICS: Tactic[] = [
     ['Turquia', '2016', 'Após a tentativa de golpe, mais de 3.600 juízes foram demitidos, além de promotores.', 'Comissão de Veneza, parecer CDL-AD(2016)037 (Turquia)']
   ], bolsoJud: true },
   { id: 'ini', label: 'Inventar um inimigo', cases: [
-    ['Brasil', '1937', 'O Plano Cohen, falso complô comunista, serviu de pretexto para o Estado Novo.', 'CPDOC/FGV'],
+    ['Brasil', '1937', 'O Plano Cohen, falso complô comunista, serviu de pretexto para o Estado Novo.', 'CPDOC/FGV, verbete “Plano Cohen” (DHBB)'],
     ['Alemanha', '1933', 'O incêndio do Reichstag foi atribuído a comunistas e usado para suspender liberdades.', 'Bundesarchiv, Reichstagsbrandprozess'],
-    ['Brasil', '1964', 'O golpe foi justificado como defesa contra o comunismo.', 'Comissão Nacional da Verdade'],
+    ['Brasil', '1964', 'O golpe foi justificado como defesa contra o comunismo.', 'CNV, Relatório final (2014), vol. I, cap. 2-3'],
     ['Chile', '1973', 'A junta divulgou o “Plano Z”, que a Comissão da Verdade considerou genérico e pouco realista.', 'Comisión Nacional de Verdad y Reconciliación (Rettig), Informe (1991)'],
     ['Argentina', '1976', 'A ditadura chamou a repressão de “luta contra a subversão”.', 'CONADEP, Nunca Más (1984)'],
     ['Hungria', '2017', 'Campanha oficial contra George Soros como inimigo da nação.', 'Governo da Hungria, Consulta Nacional sobre o “Plano Soros” (2017)']
@@ -164,21 +158,21 @@ export const TACTICS: Tactic[] = [
     ['Peru', '1995', 'Lei de anistia beneficiou militares acusados de massacres; a Corte Interamericana a declarou sem efeito.', 'Corte IDH, Barrios Altos v. Peru (2001)']
   ] },
   { id: 'vio', label: 'Violência política', cases: [
-    ['Brasil', '1964–1985', 'A Comissão Nacional da Verdade registrou 434 mortos e desaparecidos políticos.', 'CNV, 2014'],
+    ['Brasil', '1946–1988', 'A Comissão Nacional da Verdade registrou 434 mortos e desaparecidos políticos, a maioria na ditadura de 1964–1985.', 'CNV, Relatório final (2014), vol. I, Conclusões'],
     ['Argentina', '1976–1983', 'A CONADEP documentou 8.961 desaparecidos; organizações de direitos humanos estimam 30 mil.', 'CONADEP, Nunca Más (1984)'],
     ['Chile', '1973–1990', 'Mais de 3 mil mortos e desaparecidos, segundo as comissões oficiais.', 'Comisión Nacional de Verdad y Reconciliación (Rettig), Informe (1991); Comisión Valech II (2011)'],
     ['Nicarágua', '2018', 'A repressão a protestos deixou 355 mortos, segundo a CIDH.', 'CIDH, Relatório Anual 2021, cap. IV.B (Nicarágua)']
   ] },
   { id: 'min', label: 'Perseguir minorias', cases: [
     ['Alemanha', '1935', 'As Leis de Nuremberg retiraram a cidadania de judeus.', 'USHMM, Leis de Nuremberg'],
-    ['Brasil', '1946–1988', 'A Comissão Nacional da Verdade estimou ao menos 8.350 indígenas mortos por ação ou omissão do Estado.', 'CNV, 2014, vol. II'],
+    ['Brasil', '1946–1988', 'A Comissão Nacional da Verdade estimou ao menos 8.350 indígenas mortos por ação ou omissão do Estado.', 'CNV, Relatório final (2014), vol. II, texto 5'],
     ['Rússia', '2013', 'Lei proibiu a “propaganda” LGBT para menores; em 2023 o “movimento LGBT” foi declarado extremista.', 'Lei federal russa 135-FZ (2013); Suprema Corte da Rússia, decisão de 30/nov/2023'],
     ['Hungria', '2021', 'Lei restringiu conteúdo LGBT para menores; em abril de 2026, o Tribunal de Justiça da UE condenou a Hungria.', 'TJUE, C-769/22 Comissão v. Hungria (2026)'],
     ['Polônia', '2019–2020', 'Mais de cem governos locais (regiões, condados e municípios) se declararam “zonas livres de ideologia LGBT”.', 'Parlamento Europeu, resolução de 11/mar/2021 (zona de liberdade LGBTIQ)']
   ] },
   { id: 'imp', label: 'Atacar a imprensa', cases: [
-    ['Brasil', '1939', 'Vargas criou o Departamento de Imprensa e Propaganda para censurar jornais.', 'CPDOC/FGV'],
-    ['Brasil', '1968', 'O AI-5 permitiu a censura prévia a jornais, livros e músicas.', 'Ato Institucional nº 5'],
+    ['Brasil', '1939', 'Vargas criou o Departamento de Imprensa e Propaganda para censurar jornais.', 'Decreto-Lei 1.915/1939; CPDOC/FGV, verbete “DIP” (DHBB)'],
+    ['Brasil', '1968', 'O AI-5 permitiu a censura prévia a jornais, livros e músicas.', 'Ato Institucional nº 5; Constituição de 1967'],
     ['Venezuela', '2007', 'O governo não renovou a concessão da RCTV.', 'Corte IDH, Granier e outros (RCTV) v. Venezuela (2015)'],
     ['Hungria', '2018', 'Centenas de veículos pró-governo reunidos numa só fundação.', 'Comissão Europeia, Relatório Estado de Direito 2020 (Hungria)'],
     ['Nicarágua', '2021', 'A polícia ocupou a redação do jornal La Prensa e, no dia seguinte, prendeu seu gerente-geral.', 'CIDH, Relatório Anual 2021, cap. IV.B (Nicarágua)'],
@@ -207,83 +201,45 @@ export const FLAVIO: FlavioItem[] = [
   { date: '4 out 2026', tag: 'Urna', title: '47,03%', text: 'Flávio termina o primeiro turno à frente de Lula, com 45,16%. O PL elege 121 deputados federais e 19 dos 54 senadores em disputa, mais que qualquer outro partido, e terá a maior bancada da Câmara e 28 senadores. O segundo turno é em 25 de outubro.', src: 'TSE, Resultados 2026 (Presidente, 1º turno); TSE, Resultados 2026 (Câmara e Senado); Agência Brasil, bancadas do PL (out/2026)', ph: 'Foto: apuração do 1º turno' }
 ];
 
-export const LINKS: [string, string][] = [
-  ['AP 2668', 'https://noticias.stf.jus.br/postsnoticias/stf-concluiu-julgamento-de-acoes-contra-reus-que-planejaram-golpe-de-estado/'],
-  ['SBT News', 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio'],
-  ['TV Globo', 'https://www.infomoney.com.br/politica/flavio-diz-que-buscara-anistia-para-bolsonaro-ainda-durante-governo-de-transicao/'],
-  ['Euronews', 'https://pt.euronews.com/2026/08/29/filho-de-bolsonaro-insiste-que-julgamento-do-pai-foi-uma-farsa-e-que-lhe-concedera-um-indu'],
-  ['CartaCapital', 'https://www.cartacapital.com.br/politica/flavio-bolsonaro-promete-a-cury-o-que-jair-nao-fez/'],
-  ['Evento do PL', 'https://www.abcmais.com/pais/flavio-bolsonaro-pode-conceder-perdao-presidencial-se-for-eleito-confira-o-que-dizem-especialistas-sobre-indulto-e-anistia/'],
-  ['InfoMoney', 'https://www.infomoney.com.br/politica/vitoria-de-flavio-abriria-caminho-para-libertar-bolsonaro-entenda-as-possibilidades/'],
-  ['Notícia iLtda', 'https://www.noticiasaominuto.com.br/politica/2418422/eleita-com-quase-2-milhoes-deputada-diz-que-feminicidio-nao-existe'],
-  ['FolhaMax', 'https://www.folhamax.com/politica/deputado-bolsonarista-alega-que-filha-nao-foi-morta-por-feminicidio-em-mt/576214'],
-  ['Metrópoles', 'https://www.metropoles.com/brasil/zanatta-minimiza-fala-de-figueiredo-e-diz-que-mulheres-votam-em-flavio'],
-  ['Agência Pública', 'https://apublica.org/2026/10/bingo-genero-e-trabalho-pl-da-misoginia-escala-6x1-aborto-e-mais/'],
-  ['Sumaúma', 'https://agenciabrasil.ebc.com.br/direitos-humanos/noticia/2023-02/em-2021-defesa-civil-de-roraima-alertou-damares-sobre-a-situacao-yanomami'],
-  ['Ministério da Saúde', 'https://www.nbcnews.com/news/latino/brazils-yanomami-region-looks-concentration-camp-says-official-rcna67281'],
-  ['CPMI', 'https://agenciabrasil.ebc.com.br/justica/noticia/2023-01/imagens-ineditas-de-cameras-de-seguranca-mostram-invasao-do-stf'],
-  ['Ato Institucional nº 1', 'https://www.planalto.gov.br/ccivil_03/ait/ait-01-64.htm'],
-  ['Ato Institucional nº 2', 'https://www.planalto.gov.br/ccivil_03/ait/ait-02-65.htm'],
-  ['Ato Institucional nº 3', 'https://www.planalto.gov.br/ccivil_03/ait/ait-03-66.htm'],
-  ['Ato Institucional nº 5', 'https://www.planalto.gov.br/ccivil_03/ait/ait-05-68.htm'],
-  ['Constituição de 1967', 'https://www.planalto.gov.br/ccivil_03/constituicao/constituicao67.htm'],
-  ['Constituição de 1937', 'https://www.planalto.gov.br/ccivil_03/constituicao/constituicao37.htm'],
-  ['Lei 6.683', 'https://www.planalto.gov.br/ccivil_03/leis/l6683.htm'],
-  ['Decreto 9.759', 'https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d9759.htm'],
-  ['Lei 14.214', 'https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14214.htm'],
-  ['MP 870', 'https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/mpv/mpv870.htm'],
-  ['Comissão Nacional da Verdade', 'http://cnv.memoriasreveladas.gov.br/'],
-  ['CNV', 'http://cnv.memoriasreveladas.gov.br/'],
-  ['CPDOC', 'https://pt.wikipedia.org/wiki/Plano_Cohen'],
-  ['Levitsky', 'https://en.wikipedia.org/wiki/How_Democracies_Die'],
-  ['Comissão Rettig', 'https://www.memoriachilena.gob.cl/602/w3-article-85787.html'],
-  ['Reichstagsbrand', 'https://en.wikipedia.org/wiki/Reichstag_Fire_Decree'],
-  ['Ermächtigungsgesetz', 'https://en.wikipedia.org/wiki/Enabling_Act_of_1933'],
-  ['Neubildung', 'https://en.wikipedia.org/wiki/Gleichschaltung'],
-  ['Museu do Holocausto', 'https://en.wikipedia.org/wiki/Nuremberg_Laws'],
-  ['Centro Carter', 'https://en.wikipedia.org/wiki/2024_Venezuelan_presidential_election'],
-  ['RCTV', 'https://en.wikipedia.org/wiki/RCTV'],
-  ['Granier', 'https://en.wikipedia.org/wiki/RCTV'],
-  ['Parlamento Europeu, resolução', 'https://www.europarl.europa.eu/'],
-  ['Barrios Altos', 'https://en.wikipedia.org/wiki/Barrios_Altos_massacre'],
-  ['Comissão da Verdade do Peru', 'https://en.wikipedia.org/wiki/1992_Peruvian_self-coup'],
-  ['CONADEP', 'https://en.wikipedia.org/wiki/National_Commission_on_the_Disappearance_of_Persons'],
-  ['Conselho da Europa', 'https://en.wikipedia.org/wiki/2016_Turkish_coup_attempt'],
-  ['Suprema Corte da Rússia', 'https://en.wikipedia.org/wiki/Russian_gay_propaganda_law'],
-  ['Parlamento Europeu, 2021', 'https://en.wikipedia.org/wiki/LGBT-free_zone'],
-  ['TSE', 'https://www.tse.jus.br/']
-];
 export const SIG_MEDIA: Record<string, string> = { '3': 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio', '4': 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio' };
-export const F_IMG: Record<number, [string, string]> = { 2: ['https://commons.wikimedia.org/wiki/Special:FilePath/Ataque_bolsonarista_ao_Congresso_Nacional_do_Brasil.png?width=1600', 'Wikimedia Commons · 8/jan/2023'] };
+export const F_IMG: Record<number, Img3> = {
+  0: ['https://commons.wikimedia.org/wiki/Special:FilePath/Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_%28v._AgSen%29.jpg?width=1600', 'Retrato oficial de senador, fev/2019 · Agência Senado', 'https://www25.senado.leg.br/web/senadores/senador/-/perfil/5894'],
+  2: ['https://imagens.ebc.com.br/lXEDhQ5mhlsEuLSFqvdf1dX92S4=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/manifestacao_mcamgo_abr_080120231818-11.jpg?itok=ZbPOzKMu', 'Marcelo Camargo/Agência Brasil · CC BY 3.0 BR · 8/jan/2023', 'https://agenciabrasil.ebc.com.br/foto/2023-01/manifestantes-invadem-congresso-stf-e-palacio-do-planalto-1673209159'],
+  3: ['https://commons.wikimedia.org/wiki/Special:FilePath/Fl%C3%A1vio_Dino_no_voto_da_A%C3%A7%C3%A3o_Penal_%28AP%29_2668.jpg?width=1600', 'Primeira Turma do STF na AP 2668, 9/set/2025 · Gustavo Moreno/STF', 'https://noticias.stf.jus.br/postsnoticias/segundo-a-votar-ministro-flavio-dino-defende-condenacao-de-reus-por-tentativa-de-golpe/'],
+  4: ['https://commons.wikimedia.org/wiki/Special:FilePath/Plen%C3%A1rio_do_Congresso_-_55284808151.jpg?width=1600', 'Flávio Bolsonaro na tribuna do Congresso, 21/mai/2026 · Andressa Anholete/Agência Senado · CC BY-SA 4.0', 'https://www.flickr.com/photos/agenciasenado/55284808151/'],
+  6: ['https://commons.wikimedia.org/wiki/Special:FilePath/Entrevistas_Diversas_-_Senador_Fl%C3%A1vio_Bolsonaro_%28PL-RJ%29_%2854611254764%29.jpg?width=1600', 'Flávio Bolsonaro no Senado, 24/jun/2025 · Carlos Moura/Agência Senado · CC BY 4.0', 'https://commons.wikimedia.org/wiki/File:Entrevistas_Diversas_-_Senador_Fl%C3%A1vio_Bolsonaro_%28PL-RJ%29_%2854611254764%29.jpg'],
+  7: ['https://commons.wikimedia.org/wiki/Special:FilePath/Plen%C3%A1rio_do_Congresso_-_55284808151.jpg?width=1600', 'Flávio Bolsonaro na tribuna do Congresso, 21/mai/2026 · Andressa Anholete/Agência Senado · CC BY-SA 4.0', 'https://www.flickr.com/photos/agenciasenado/55284808151/'],
+  8: ['https://commons.wikimedia.org/wiki/Special:FilePath/Elei%C3%A7%C3%B5es_2026_-_Primeiro_turno_%2855568483387%29.jpg?width=1600', 'Apuração do 1º turno no TSE, 4/out/2026 · Agência Senado · CC BY-SA 4.0', 'https://www.flickr.com/photos/agenciasenado/55568483387'],
+};
 
 export const SIG_RANK: Record<string, number[]> = { '1': [7, 0, 5, 3, 2, 4, 1, 6], '2': [1, 0, 3, 2], '3': [0, 1, 2, 4, 3], '4': [0, 2, 3, 1] };
 export const SIG_SHOW: number = 5;
-export const TANKS: Img3 = ['https://commons.wikimedia.org/wiki/Special:FilePath/Deposi%C3%A7%C3%A3o%20do%20Governo%20Jo%C3%A3o%20Goulart%20%E2%80%93%20Golpe%20de%201964%2015.tif?width=1200', 'Correio da Manhã/Arquivo Nacional', 'https://commons.wikimedia.org/wiki/File:Deposi%C3%A7%C3%A3o_do_Governo_Jo%C3%A3o_Goulart_%E2%80%93_Golpe_de_1964_15.tif'];
-export const CHILE: Img3 = ['https://commons.wikimedia.org/wiki/Special:FilePath/Golpe%20de%20Estado%201973.jpg?width=1200', 'Biblioteca del Congreso Nacional de Chile', 'https://commons.wikimedia.org/wiki/File:Golpe_de_Estado_1973.jpg'];
-export const YANO: Img3 = ['https://commons.wikimedia.org/wiki/Special:FilePath/CTEYANOMAMI%20-%20Comiss%C3%A3o%20Tempor%C3%A1ria%20Externa%20para%20acompanhar%20a%20situa%C3%A7%C3%A3o%20dos%20Yanomami%20e%20a%20sa%C3%ADda%20dos%20garimpeiros%20(52781830838).jpg?width=1200', 'Geraldo Magela/Agência Senado · CC BY 2.0', 'https://commons.wikimedia.org/wiki/File:CTEYANOMAMI_-_Comiss%C3%A3o_Tempor%C3%A1ria_Externa_para_acompanhar_a_situa%C3%A7%C3%A3o_dos_Yanomami_e_a_sa%C3%ADda_dos_garimpeiros_(52781830838).jpg'];
+export const TANKS: Img3 = ['https://commons.wikimedia.org/wiki/Special:FilePath/Deposi%C3%A7%C3%A3o%20do%20Governo%20Jo%C3%A3o%20Goulart%20%E2%80%93%20Golpe%20de%201964%2015.tif?width=1200', 'Correio da Manhã/Arquivo Nacional · domínio público', 'https://commons.wikimedia.org/wiki/File:Deposi%C3%A7%C3%A3o_do_Governo_Jo%C3%A3o_Goulart_%E2%80%93_Golpe_de_1964_15.tif'];
+export const CHILE: Img3 = ['https://commons.wikimedia.org/wiki/Special:FilePath/Golpe%20de%20Estado%201973.jpg?width=1200', 'Biblioteca del Congreso Nacional de Chile · CC BY 3.0 CL', 'https://commons.wikimedia.org/wiki/File:Golpe_de_Estado_1973.jpg'];
+export const YANO: Img3 = ['https://imagens.ebc.com.br/ErBWc4ZYHowNppfUM2ZhxMvbmRE=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/_mg_9008.jpg?itok=SL1kwV7Q', 'Fernando Frazão/Agência Brasil · CC BY 3.0 BR · Surucucu, TI Yanomami, 9/fev/2023', 'https://agenciabrasil.ebc.com.br/foto/2023-02/surucucu-na-terra-indigena-yanomami-1676154621'];
 export const ENEMY_X: EnemyExtra[] = [
-  { accuser: 'Governo Vargas', after: 'Golpe do Estado Novo: Congresso fechado e eleições canceladas', ph: 'Foto: Getúlio Vargas, 1937' },
-  { accuser: 'Governo Hitler', after: 'Liberdades civis suspensas no dia seguinte; prisões em massa de opositores', ph: 'Foto: Reichstag em chamas, 27/fev/1933' },
+  { accuser: 'Governo Vargas', after: 'Golpe do Estado Novo: Congresso fechado e eleições canceladas', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Getulio_Vargas_%281930%29.jpg?width=1600', 'Getúlio Vargas · Galeria de Presidentes/Presidência da República · domínio público', 'https://commons.wikimedia.org/wiki/File:Getulio_Vargas_%281930%29.jpg'] },
+  { accuser: 'Governo Hitler', after: 'Liberdades civis suspensas no dia seguinte; prisões em massa de opositores', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_183-R99859%2C_Berlin%2C_brennender_Reichstag_%28Reichstagsbrand%29.jpg', 'Bundesarchiv, Bild 183-R99859 · CC BY-SA 3.0 DE · chamas retocadas na foto original', 'https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-R99859%2C_Berlin%2C_brennender_Reichstag_%28Reichstagsbrand%29.jpg'] },
   { accuser: 'Militares e aliados civis', after: 'Goulart deposto; 21 anos de ditadura', img: TANKS },
   { accuser: 'Junta militar', after: 'Congresso fechado; mais de 3 mil mortos e desaparecidos até 1990, segundo as comissões oficiais', img: CHILE },
   { accuser: 'Governo Orbán', after: 'A Universidade Centro-Europeia, fundada por Soros, mudou-se para Viena em 2019', ph: 'Foto: cartaz do governo húngaro contra Soros, 2017' },
   { accuser: 'Jair Bolsonaro, candidato', after: 'Disse que era brincadeira; foi eleito dois meses depois', ph: 'Frame: comício em Rio Branco, 1º/set/2018' },
   { accuser: 'Jair Bolsonaro, candidato', after: 'Eleito presidente uma semana depois', ph: 'Foto: ato na Avenida Paulista, 21/out/2018' },
-  { accuser: 'Eduardo Bolsonaro, deputado', after: 'Pediu desculpas após a repercussão', ph: 'Frame: entrevista a Leda Nagle, out/2019' },
-  { accuser: 'Flávio Bolsonaro, candidato', after: 'Terminou o 1º turno à frente, com 47,03%; o 2º turno é em 25 de outubro', ph: 'Frame: sabatina na TV Globo, 28/ago/2026' }
+  { accuser: 'Eduardo Bolsonaro, deputado', after: 'Pediu desculpas após a repercussão', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Eduardo_Bolsonaro_em_maio_de_2019.jpg?width=1600', 'Eduardo Bolsonaro na Câmara, 9/mai/2019 · Michel Jesus/Câmara dos Deputados · CC BY 3.0', 'https://commons.wikimedia.org/wiki/File:Eduardo_Bolsonaro_em_maio_de_2019.jpg'] },
+  { accuser: 'Flávio Bolsonaro, candidato', after: 'Terminou o 1º turno à frente, com 47,03%; o 2º turno é em 25 de outubro', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Entrevistas_Diversas_-_Senador_Fl%C3%A1vio_Bolsonaro_%28PL-RJ%29_%2854611254764%29.jpg?width=1600', 'Flávio Bolsonaro no Senado, 24/jun/2025 · Carlos Moura/Agência Senado · CC BY 4.0', 'https://commons.wikimedia.org/wiki/File:Entrevistas_Diversas_-_Senador_Fl%C3%A1vio_Bolsonaro_%28PL-RJ%29_%2854611254764%29.jpg'] }
 ];
 export const MIN_DIAG: Record<string, MinDiag> = {
-  mulheres: { big: '5,6 mi', caption: 'estudantes e mulheres em situação de vulnerabilidade ficariam sem absorventes gratuitos com o veto de outubro de 2021. Cada quadrado representa 100 mil pessoas.', n: 56, s: '16px', r: '4px', gap: '5px', color: Y, legend: [[Y, '100 mil pessoas']], src: 'Lei 14.214/2021; Agência Senado', side: ['mar 2022', 'O Congresso derrubou o veto e a distribuição gratuita passou a valer.', 'Congresso Nacional'] },
-  negros: { big: '3 × 2', caption: 'A PGR denunciou Jair Bolsonaro por racismo pela fala sobre quilombolas. Em setembro de 2018, a Primeira Turma do STF rejeitou a denúncia por 3 votos a 2.', n: 5, s: '96px', r: '50%', gap: '10px', names: ['Barroso', 'Rosa Weber', 'Marco Aurélio', 'Moraes', 'Fux'], colors: [Y, Y, RED, RED, RED], legend: [[Y, 'Votaram para abrir a ação penal'], [RED, 'Votaram para rejeitar a denúncia']], src: 'STF, Inq 4694', side: ['7 arrobas', '“O afrodescendente mais leve lá pesava sete arrobas.” Arroba é a medida usada para pesar gado.', 'Palestra no Clube Hebraica, Rio, 3/abr/2017'] },
-  indigenas: { big: '570', caption: 'crianças Yanomami com menos de 5 anos mortas por causas evitáveis, 2019–2022. Cada ponto é uma criança.', n: 570, s: '7px', r: '50%', gap: '3px', color: Y, legend: [[Y, '1 criança']], src: 'Ministério da Saúde, via Lei de Acesso', side: ['0', 'terras indígenas homologadas em quatro anos de governo', 'Instituto Socioambiental · Funai'] },
-  lgbt: { big: '~700', caption: 'colegiados federais com participação da sociedade civil ameaçados pelo Decreto 9.759, entre eles o conselho de combate à discriminação LGBT. Cada ponto é um colegiado (estimativa do governo).', n: 700, s: '6px', r: '2px', gap: '3px', color: '#C9D2E8', legend: [['#C9D2E8', '1 colegiado']], src: 'Decreto 9.759/2019; Casa Civil', side: ['ADI 6121', 'Em junho de 2019, o STF decidiu que o decreto não podia extinguir conselhos criados por lei.', 'STF, ADI 6121'] },
-  memoria: { big: '434', caption: 'mortos e desaparecidos políticos reconhecidos pela Comissão Nacional da Verdade. Os 210 em vermelho são desaparecidos, buscados pela comissão extinta em dezembro de 2022.', n: 434, s: '8px', r: '50%', gap: '3px', color: Y, hi: 210, legend: [[RED, '210 desaparecidos'], [Y, '224 mortos']], src: 'Comissão Nacional da Verdade, 2014', side: ['2022 → 2024', 'A Comissão Especial sobre Mortos e Desaparecidos Políticos foi extinta no fim do governo e recriada em 2024.', 'Diário Oficial da União'] }
+  mulheres: { big: '5,6 mi', caption: 'estudantes e mulheres em situação de vulnerabilidade ficariam sem absorventes gratuitos com o veto de outubro de 2021, segundo estimativa da Câmara. Cada quadrado representa 100 mil pessoas.', n: 56, s: '16px', r: '4px', gap: '5px', color: Y, legend: [[Y, '100 mil pessoas']], src: 'Lei 14.214/2021; Agência Senado, 14/set/2021', side: ['mar 2022', 'O Congresso derrubou o veto e a distribuição gratuita passou a valer.', 'Agência Senado, 10/mar/2022'] },
+  negros: { big: '3 × 2', caption: 'A PGR denunciou Jair Bolsonaro por racismo pela fala sobre quilombolas. Em setembro de 2018, a Primeira Turma do STF rejeitou a denúncia por 3 votos a 2.', n: 5, s: '96px', r: '50%', gap: '10px', names: ['Barroso', 'Rosa Weber', 'Marco Aurélio', 'Moraes', 'Fux'], colors: [Y, Y, RED, RED, RED], legend: [[Y, 'Votaram para abrir a ação penal'], [RED, 'Votaram para rejeitar a denúncia']], src: 'STF, Inq 4694', side: ['7 arrobas', '“O afrodescendente mais leve lá pesava sete arrobas.” Arroba é a medida usada para pesar gado.', 'STF, acórdão do Inq 4694 (transcreve a palestra no Clube Hebraica, 3/abr/2017)'] },
+  indigenas: { big: '570', caption: 'crianças Yanomami com menos de 5 anos mortas por causas evitáveis, 2019–2022. Cada ponto é uma criança.', n: 570, s: '7px', r: '50%', gap: '3px', color: Y, legend: [[Y, '1 criança']], src: 'Sumaúma, 20/jan/2023 (dados do Ministério da Saúde via LAI)', side: ['0', 'terras indígenas homologadas em quatro anos de governo', 'Funai; DOU, 28/abr/2023 (primeiras homologações de TIs desde 2018)'] },
+  lgbt: { big: '~700', caption: 'colegiados federais com participação da sociedade civil ameaçados pelo Decreto 9.759, entre eles o conselho de combate à discriminação LGBT. Cada ponto é um colegiado (estimativa inicial do governo, nunca listada).', n: 700, s: '6px', r: '2px', gap: '3px', color: '#C9D2E8', legend: [['#C9D2E8', '1 colegiado']], src: 'Decreto 9.759/2019; Agência Brasil, 13/jun/2019', side: ['ADI 6121', 'Em junho de 2019, o STF decidiu, em liminar, que o decreto não podia extinguir conselhos previstos em lei.', 'STF, ADI 6121'] },
+  memoria: { big: '434', caption: 'mortos e desaparecidos políticos reconhecidos pela Comissão Nacional da Verdade. Os 210 em vermelho são desaparecidos, buscados pela comissão extinta em dezembro de 2022.', n: 434, s: '8px', r: '50%', gap: '3px', color: Y, hi: 210, legend: [[RED, '210 desaparecidos'], [Y, '224 mortos ou com restos já localizados']], src: 'CNV, Relatório final (2014), vol. I, Conclusões; CNV, Relatório final (2014), vol. III', side: ['2022 → 2024', 'A Comissão Especial sobre Mortos e Desaparecidos Políticos foi encerrada no fim do governo e retomada em julho de 2024.', 'DOU, 30/dez/2022 (despacho que encerra a CEMDP); DOU, 4/jul/2024 (despacho que retoma a CEMDP)'] }
 };
 export const TAC_IMG: Record<string, { ph?: string; img?: Img3 }> = {
-  ele: { ph: 'Foto: reunião com embaixadores, Palácio da Alvorada, 18/jul/2022' },
-  jud: { ph: 'Foto: plenário do STF depredado, 8/jan/2023' },
-  ini: { ph: 'Foto: Reichstag em chamas, 27/fev/1933' },
-  per: { ph: 'Foto: Daniel Silveira ou ato pela anistia' },
+  ele: { img: ['https://commons.wikimedia.org/wiki/Special:FilePath/18_07_2022_Encontro_com_chefes_de_miss%C3%A3o_diplom%C3%A1tica_%2852226051340%29.jpg?width=1600', 'Reunião com embaixadores, 18/jul/2022 · Clauber Cleber Caetano/PR · CC BY 2.0', 'https://commons.wikimedia.org/wiki/File:18_07_2022_Encontro_com_chefes_de_miss%C3%A3o_diplom%C3%A1tica_%2852226051340%29.jpg'] },
+  jud: { img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Imagens_dos_estragos_causados_por_vandalismo_no_edif%C3%ADcio-sede_do_STF_10-01-2023_05.jpg?width=1600', 'Plenário do STF depredado, 9/jan/2023 · Carlos Moura/SCO/STF', 'https://www.flickr.com/photos/192203401@N04/52620064416/'] },
+  ini: { img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_183-R99859%2C_Berlin%2C_brennender_Reichstag_%28Reichstagsbrand%29.jpg', 'Bundesarchiv, Bild 183-R99859 · CC BY-SA 3.0 DE · chamas retocadas na foto original', 'https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-R99859%2C_Berlin%2C_brennender_Reichstag_%28Reichstagsbrand%29.jpg'] },
+  per: { img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Daniel_Silveira_in_2021.jpg?width=1600', 'Plenário da Câmara na sessão sobre a prisão de Daniel Silveira, 19/fev/2021 · Michel Jesus/Câmara dos Deputados · CC BY 3.0', 'https://commons.wikimedia.org/wiki/File:Daniel_Silveira_in_2021.jpg'] },
   vio: { img: TANKS },
   min: { img: YANO },
   imp: { ph: 'Foto: redação do La Prensa ocupada, Manágua, 2021' }
