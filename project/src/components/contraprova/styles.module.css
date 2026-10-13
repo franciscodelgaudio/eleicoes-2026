@@ -1,8 +1,8 @@
-/* Página principal (design "Contraprova v2"): fundo claro, links azuis. */
-:global(body):has(.root) {
-  background: #fbf8ef;
-}
+/* Página principal (design "Contraprova v2"): fundo claro, links azuis.
+   O fundo fica só neste wrapper: o Next mantém a página anterior oculta no DOM
+   ao navegar, então uma regra em <body> vazaria para o Bolsonaro Hipotético. */
 .root {
+  min-height: 100vh;
   background: #fbf8ef;
   color: #10213f;
   overflow-x: clip;
