@@ -250,6 +250,7 @@ export const REFS: Record<string, Ref> = {
   "Receita Federal, Operação Carbono Oculto (28/08/2025)": { url: "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2025/agosto/operacao-carbono-oculto-rrb-e-orgaos-parceiros-combatem-organizacao-responsavel-por-sonegacao-e-lavagem-de-dinheiro-no-setor-de-combustiveis", oficial: true },
   "Rádio Senado, 12/05/2021": { url: "https://www12.senado.leg.br/radio/1/noticia/2021/05/12/impacto-de-declaracoes-de-bolsonaro-sobre-vacinas-cria-impasse-em-depoimento-de-ex-secretario-de-comunicacao", oficial: true },
   "Rádio Senado, PEC aprovada na CCJ (02/09/2026)": { url: "https://www12.senado.leg.br/radio/1/noticia/2026/09/02/pec-da-seguranca-publica-e-aprovada", oficial: true },
+  "Discurso em evento do PL em Santa Catarina, mai/2026": { url: "https://www.youtube.com/watch?v=bw2jJKgda_M&t=776s", oficial: false },
   "SBT News, 29/set/2026": { url: "https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio", oficial: false },
   "SantoFlow Podcast #471, 29/set/2026": { url: "https://www.youtube.com/watch?v=V4no0kRsngg&t=3146s", oficial: false },
   "SPM/PR, Pacto Nacional pelo Enfrentamento da Violência contra as Mulheres (2010)": { url: "https://repositorio.enap.gov.br/handle/1/266", oficial: true },
