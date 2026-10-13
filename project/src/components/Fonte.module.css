@@ -1,0 +1,20 @@
+/* Fonte recolhida: <details> sem o triângulo padrão do navegador. */
+.toggle > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-block;
+}
+.toggle > summary::-webkit-details-marker {
+  display: none;
+}
+.toggle > summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.chev {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.toggle[open] .chev {
+  transform: rotate(180deg);
+}

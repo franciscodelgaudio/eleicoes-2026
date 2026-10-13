@@ -127,7 +127,7 @@ const TALLY = [
 const ENEMY_STEPS = ENEMY.map((e, i) => {
   const x = ENEMY_X[i];
   const bol = e.where.startsWith('Brasil · ') && +e.y >= 2018;
-  return { ...e, i: String(i), tagColor: bol ? Y : '#FF8A8A', chipBg: bol ? '#4A3A12' : '#3A1218', accuser: x?.accuser || '', after: x?.after || '', img: x?.img?.[0] || '', credit: x?.img?.[1] || '', href: x?.img?.[2] || '', ph: x?.ph || '' };
+  return { ...e, i: String(i), tagColor: bol ? Y : '#FF8A8A', chipBg: bol ? '#4A3A12' : '#3A1218', accuser: x?.accuser || '', after: x?.after || '', img: x?.img?.[0] || '', credit: x?.img?.[1] || '', href: x?.img?.[2] || '', ph: x?.ph || '', pos: x?.pos };
 });
 
 type Steps = { grad: number; flavio: number };
@@ -538,7 +538,7 @@ export default function BolsonaroHipotetico() {
             return (
               <article key={e.i} id={'inimigo-' + e.i} data-reveal="1" style={{ ...reveal(), scrollMarginTop: 90, background: '#3A1218', borderRadius: 28, overflow: 'hidden', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,360px),1fr))' }}>
                 <div style={{ position: 'relative', minHeight: 280, background: '#2A0A0F', filter: 'grayscale(1) contrast(1.05)' }}>
-                  <ImageSlot src={e.img} credit={e.credit} creditHref={e.href} placeholder={e.ph} style={{ position: 'absolute', inset: 0 }} />
+                  <ImageSlot src={e.img} credit={e.credit} creditHref={e.href} placeholder={e.ph} position={e.pos} style={{ position: 'absolute', inset: 0 }} />
                 </div>
                 <div style={{ padding: 'clamp(20px,3vw,36px)', display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0 }}>
                   <div style={label(e.tagColor)}>{e.y} · {e.where}</div>

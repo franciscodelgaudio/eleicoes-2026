@@ -71,6 +71,20 @@
 .rowHover:hover {
   background: #f3efe3 !important;
 }
+/* Medidas efetivas e Diante da crise: <details> recolhido, abre ao clicar. */
+.measure > summary {
+  list-style: none;
+}
+.measure > summary::-webkit-details-marker {
+  display: none;
+}
+.chev {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.measure[open] .chev {
+  transform: rotate(180deg);
+}
 .cardHover:hover {
   background: #fbf8ef !important;
 }

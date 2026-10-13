@@ -9,7 +9,7 @@ export type Grad = { label: string; intro: string; steps: GradStep[] };
 export type Evidence = { who: string; date: string; text: string; src: string };
 export type Signal = { n: string; title: string; def: string; mediaKind: string; media: string; flavio: string; ev: Evidence[] };
 export type Enemy = { y: string; where: string; enemy: string; title: string; text: string; src: string };
-export type EnemyExtra = { accuser: string; after: string; ph?: string; img?: Img3 };
+export type EnemyExtra = { accuser: string; after: string; ph?: string; img?: Img3; pos?: string };
 export type MinItem = { g: string; k: 'f' | 'a'; who: string; date: string; text: string; src: string; status?: string };
 export type Tactic = { id: string; label: string; cases: Row4[]; bolso?: number[]; bolsoJud?: boolean };
 export type FlavioItem = { date: string; tag: string; title: string; text: string; src: string; ph: string; link?: string; audio?: string };
@@ -208,6 +208,8 @@ export const SIG_VIDEO: Record<string, SigVideo> = {
   '1': { src: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1c/Negacionismo_eleitoral_no_Alvorada_em_2022.webm/Negacionismo_eleitoral_no_Alvorada_em_2022.webm.720p.vp9.webm', start: 2230, page: 'https://commons.wikimedia.org/wiki/File:Negacionismo_eleitoral_no_Alvorada_em_2022.webm', credit: 'TV BrasilGov · CC BY 3.0 · via Wikimedia Commons' }
 };
 export const F_IMG: Record<number, Img3> = {
+  1: ['https://commons.wikimedia.org/wiki/Special:FilePath/Edif%C3%ADcio_Sede_do_STJ_%2854058218219%29.jpg?width=1600', 'Sede do STJ, que anulou as provas do caso em 2021 · Rafael Luz/STJ · CC BY 2.0', 'https://commons.wikimedia.org/wiki/File:Edif%C3%ADcio_Sede_do_STJ_%2854058218219%29.jpg'],
+  5: ['https://commons.wikimedia.org/wiki/Special:FilePath/Donald_Trump%2C_Eduardo_Bolsonaro%2C_Fl%C3%A1vio_Bolsonaro%2C_and_Paulo_Figueiredo.jpg?width=1600', 'Flávio e Eduardo Bolsonaro com Paulo Figueiredo e Donald Trump no Salão Oval, 26/mai/2026 · foto divulgada por Trump · domínio público', 'https://commons.wikimedia.org/wiki/File:Donald_Trump%2C_Eduardo_Bolsonaro%2C_Fl%C3%A1vio_Bolsonaro%2C_and_Paulo_Figueiredo.jpg'],
   0: ['https://commons.wikimedia.org/wiki/Special:FilePath/Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_%28v._AgSen%29.jpg?width=1600', 'Retrato oficial de senador, fev/2019 · Agência Senado', 'https://www25.senado.leg.br/web/senadores/senador/-/perfil/5894'],
   2: ['https://imagens.ebc.com.br/lXEDhQ5mhlsEuLSFqvdf1dX92S4=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/manifestacao_mcamgo_abr_080120231818-11.jpg?itok=ZbPOzKMu', 'Marcelo Camargo/Agência Brasil · CC BY 3.0 BR · 8/jan/2023', 'https://agenciabrasil.ebc.com.br/foto/2023-01/manifestantes-invadem-congresso-stf-e-palacio-do-planalto-1673209159'],
   3: ['https://commons.wikimedia.org/wiki/Special:FilePath/Fl%C3%A1vio_Dino_no_voto_da_A%C3%A7%C3%A3o_Penal_%28AP%29_2668.jpg?width=1600', 'Primeira Turma do STF na AP 2668, 9/set/2025 · Gustavo Moreno/STF', 'https://noticias.stf.jus.br/postsnoticias/segundo-a-votar-ministro-flavio-dino-defende-condenacao-de-reus-por-tentativa-de-golpe/'],
@@ -227,9 +229,9 @@ export const ENEMY_X: EnemyExtra[] = [
   { accuser: 'Governo Hitler', after: 'Liberdades civis suspensas no dia seguinte; prisões em massa de opositores', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_183-R99859%2C_Berlin%2C_brennender_Reichstag_%28Reichstagsbrand%29.jpg', 'Bundesarchiv, Bild 183-R99859 · CC BY-SA 3.0 DE · chamas retocadas na foto original', 'https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-R99859%2C_Berlin%2C_brennender_Reichstag_%28Reichstagsbrand%29.jpg'] },
   { accuser: 'Militares e aliados civis', after: 'Goulart deposto; 21 anos de ditadura', img: TANKS },
   { accuser: 'Junta militar', after: 'Congresso fechado; mais de 3 mil mortos e desaparecidos até 1990, segundo as comissões oficiais', img: CHILE },
-  { accuser: 'Governo Orbán', after: 'A Universidade Centro-Europeia, fundada por Soros, mudou-se para Viena em 2019', ph: 'Foto: cartaz do governo húngaro contra Soros, 2017' },
-  { accuser: 'Jair Bolsonaro, candidato', after: 'Disse que era brincadeira; foi eleito dois meses depois', ph: 'Frame: comício em Rio Branco, 1º/set/2018' },
-  { accuser: 'Jair Bolsonaro, candidato', after: 'Eleito presidente uma semana depois', ph: 'Foto: ato na Avenida Paulista, 21/out/2018' },
+  { accuser: 'Governo Orbán', after: 'A Universidade Centro-Europeia, fundada por Soros, mudou-se para Viena em 2019', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/NK_kerdoiv-page-001.jpg?width=1600', 'Questionário da “Consulta Nacional sobre o Plano Soros”, set/2017 · Governo da Hungria · domínio público', 'https://commons.wikimedia.org/wiki/File:NK_kerdoiv-page-001.jpg'], pos: 'top' },
+  { accuser: 'Jair Bolsonaro, candidato', after: 'Disse que era brincadeira; foi eleito dois meses depois', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Senador_Jos%C3%A9_Medeiros%2C_deputado_Jair_Bolsonaro_e_senador_Magno_Malta.jpg?width=1600', 'Jair Bolsonaro, então deputado, no Senado, 11/jul/2018 · Jefferson Rudy/Agência Senado · CC BY 2.0', 'https://commons.wikimedia.org/wiki/File:Senador_Jos%C3%A9_Medeiros%2C_deputado_Jair_Bolsonaro_e_senador_Magno_Malta.jpg'] },
+  { accuser: 'Jair Bolsonaro, candidato', after: 'Eleito presidente uma semana depois', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Jair_Bolsonaro_-_EBC_03.jpg?width=1600', 'Jair Bolsonaro, então deputado, na Câmara, 7/jun/2017 · Fabio Rodrigues Pozzebom/Agência Brasil · CC BY 2.0', 'https://commons.wikimedia.org/wiki/File:Jair_Bolsonaro_-_EBC_03.jpg'] },
   { accuser: 'Eduardo Bolsonaro, deputado', after: 'Pediu desculpas após a repercussão', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Eduardo_Bolsonaro_em_maio_de_2019.jpg?width=1600', 'Eduardo Bolsonaro na Câmara, 9/mai/2019 · Michel Jesus/Câmara dos Deputados · CC BY 3.0', 'https://commons.wikimedia.org/wiki/File:Eduardo_Bolsonaro_em_maio_de_2019.jpg'] },
   { accuser: 'Flávio Bolsonaro, candidato', after: 'Terminou o 1º turno à frente, com 47,03%; o 2º turno é em 25 de outubro', img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Entrevistas_Diversas_-_Senador_Fl%C3%A1vio_Bolsonaro_%28PL-RJ%29_%2854611254764%29.jpg?width=1600', 'Flávio Bolsonaro no Senado, 24/jun/2025 · Carlos Moura/Agência Senado · CC BY 4.0', 'https://commons.wikimedia.org/wiki/File:Entrevistas_Diversas_-_Senador_Fl%C3%A1vio_Bolsonaro_%28PL-RJ%29_%2854611254764%29.jpg'] }
 ];
@@ -247,5 +249,5 @@ export const TAC_IMG: Record<string, { ph?: string; img?: Img3 }> = {
   per: { img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Daniel_Silveira_in_2021.jpg?width=1600', 'Plenário da Câmara na sessão sobre a prisão de Daniel Silveira, 19/fev/2021 · Michel Jesus/Câmara dos Deputados · CC BY 3.0', 'https://commons.wikimedia.org/wiki/File:Daniel_Silveira_in_2021.jpg'] },
   vio: { img: TANKS },
   min: { img: YANO },
-  imp: { ph: 'Foto: redação do La Prensa ocupada, Manágua, 2021' }
+  imp: { img: ['https://commons.wikimedia.org/wiki/Special:FilePath/Encuentro_con_el_Presidente_Daniel_Ortega_Saavedra%2C_de_La_Rep%C3%BAblica_de_Nicaragua._01.jpg?width=1600', 'Daniel Ortega, presidente da Nicarágua, jan/2014 · Presidência do México · CC BY 2.0', 'https://commons.wikimedia.org/wiki/File:Encuentro_con_el_Presidente_Daniel_Ortega_Saavedra%2C_de_La_Rep%C3%BAblica_de_Nicaragua._01.jpg'] }
 };

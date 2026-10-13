@@ -3,17 +3,16 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import Logo from '../Logo';
-import ImageSlot from '../bolsonaro-hipotetico/ImageSlot';
 import Fonte from '../Fonte';
 import WordSphere from './WordSphere';
 import s from './styles.module.css';
 import {
-  Y, B, G, GOVS, AREAS, BANDS, BAND_BG, IND, MEAS, TONE, STANCE, LOGOS, PHOTOS, CRISES, PANDEMIC_TL, COVID_WORLD,
+  Y, B, G, GOVS, AREAS, BANDS, BAND_BG, IND, MEAS, TONE, STANCE, MEAS_TOP, CRISES, PANDEMIC_TL, COVID_WORLD,
   PLN, MODS, THEME_SHORT, nf, fmtI, ranksOf, rankBg,
   type Gov, type Ex, type Plans, type PlanKey, type Mod,
 } from './data';
 
-const INK = '#10213F', MUTED = '#5A6478', BODY = '#3C4760', CREAM = '#FBF8EF', NAVY = '#071C4D';
+const INK = '#10213F', MUTED = '#5A6478', BODY = '#3C4760', CREAM = '#FBF8EF', NAVY = '#071C4D', SAND = '#F2ECDB';
 const SERIF = 'Georgia, serif';
 const HIPO = '/bolsonaro-hipotetico';
 
@@ -113,32 +112,9 @@ function Hero() {
           <p style={{ fontSize: 'clamp(20px,2.2vw,26px)', lineHeight: 1.4, maxWidth: 600, margin: '28px 0 0', textWrap: 'pretty', fontWeight: 500 }}>Democracia não se defende sozinha. Ela depende de quem sai de casa no dia da eleição. Faltou no 1º turno? Ainda dá tempo.</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 36 }}>
             <a href="#votar" className={`${s.lift} ${s.press}`} style={ctaYellow(B)}>Onde eu voto? →</a>
-            <a href="#comparacao" className={s.btnLight} style={ctaWhite}>Por que este 2º turno importa</a>
+            <Link href={HIPO} className={s.btnLight} style={ctaWhite}>Por que este 2º turno importa</Link>
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-const RULES: [string, string, string, string, string][] = [
-  ['1', G, Y, 'Fonte oficial, com link', 'IBGE, Banco Central, Ipea, ministérios, Congresso, STF, TSE e organismos internacionais como FMI, Banco Mundial, OMS e FAO. O que não vem de órgão público é marcado como não oficial.'],
-  ['2', Y, B, 'Os dois lados do placar', 'Quando o indicador favorece o governo Bolsonaro, ele aparece com o mesmo destaque.'],
-  ['3', B, '#fff', 'Contexto junto do dado', 'Pandemia, guerra, juros globais e Banco Central autônomo explicam parte dos números.'],
-];
-
-function Rules() {
-  return (
-    <section style={{ maxWidth: 1240, margin: '0 auto', padding: '80px 28px 40px' }}>
-      <div style={kicker()}>Regras do jogo</div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 20, marginTop: 20 }}>
-        {RULES.map(([n, bg, fg, title, text]) => (
-          <div key={n} style={{ background: '#fff', borderRadius: 20, padding: 26, display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 12, background: bg, color: fg, display: 'grid', placeItems: 'center', fontSize: 22, fontWeight: 900 }}>{n}</div>
-            <div style={{ fontSize: 22, fontWeight: 800 }}>{title}</div>
-            <div style={{ fontSize: 17, lineHeight: 1.5, color: BODY, textWrap: 'pretty' }}>{text}</div>
-          </div>
-        ))}
       </div>
     </section>
   );
@@ -153,12 +129,15 @@ function Comparacao() {
   const [indId, setInd] = useState('pib');
   const [mode, setMode] = useState<'bars' | 'line'>('bars');
   const [wHover, setWHover] = useState<string | null>(null);
-  const [marea, setMarea] = useState('eco');
+  const [open, setOpen] = useState(false);
   const detailRef = useRef<HTMLDivElement>(null);
 
   const ind = IND.find(x => x.id === indId)!;
+  // O gráfico fica fechado até o usuário clicar numa linha do placar; clicar de novo na mesma linha fecha.
   const openInd = (id: string) => {
+    if (open && id === indId) { setOpen(false); return; }
     setInd(id);
+    setOpen(true);
     setTimeout(() => {
       const el = detailRef.current;
       if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 84, behavior: 'smooth' });
@@ -234,21 +213,10 @@ function Comparacao() {
     };
   })();
 
-  // Medidas efetivas
-  const ma = MEAS[marea] || MEAS.eco;
-  const mTimeline = GOVS.map(g => {
-    const its = (ma[g.k] || []).slice().sort((a, b) => +a[0] - +b[0]).map(([y, name, text, res, src]) => {
-      const [tone, stance] = STANCE[name] || ['pos', 'Iniciativa do governo.'];
-      return { id: slug(name), y, name, text, res, src, stance, tone };
-    });
-    const c = (k: string) => its.filter(i => i.tone === k).length;
-    return { g, count: countLabel([[c('pos'), 'positivo', 'positivos'], [c('mix'), 'misto', 'mistos'], [c('neg'), 'negativo', 'negativos']]), items: its };
-  });
-
   const sub = mode === 'line' ? 'Ano a ano, 2003–2024. As faixas marcam cada mandato.' : ind.sub;
 
   return (
-    <section id="comparacao" style={{ maxWidth: 1240, margin: '0 auto', padding: '40px 28px 100px' }}>
+    <section id="comparacao" style={{ background: SAND }}><div style={{ maxWidth: 1240, margin: '0 auto', padding: '72px 28px 96px' }}>
       <div style={kicker()}>Comparação · dois governos</div>
       <h2 style={h2('clamp(36px,5vw,60px)', 900)}>Lula e Bolsonaro, lado a lado</h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,260px),1fr))', gap: 10, marginTop: 24 }}>
@@ -276,7 +244,7 @@ function Comparacao() {
             {GOVS.map(g => <div key={g.k} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 13, fontWeight: 900, padding: '4px 2px', textAlign: 'center' }}><Dot color={g.color} size={10} />{g.gov}</div>)}
           </div>
           {board.map(({ x, cells }) => (
-            <button key={x.id} onClick={() => openInd(x.id)} className={s.rowHover} style={{ border: 'none', cursor: 'pointer', background: x.id === ind.id ? CREAM : 'transparent', borderRadius: 14, padding: 6, display: 'grid', gridTemplateColumns: 'minmax(96px,1.3fr) repeat(2,minmax(0,1fr))', gap: 6, alignItems: 'stretch', textAlign: 'left', color: INK }}>
+            <button key={x.id} onClick={() => openInd(x.id)} className={s.rowHover} style={{ border: 'none', cursor: 'pointer', background: open && x.id === ind.id ? CREAM : 'transparent', borderRadius: 14, padding: 6, display: 'grid', gridTemplateColumns: 'minmax(96px,1.3fr) repeat(2,minmax(0,1fr))', gap: 6, alignItems: 'stretch', textAlign: 'left', color: INK }}>
               <div style={{ padding: '6px 4px', display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: 0 }}><span style={{ fontSize: 'clamp(14px,1.5vw,17px)', fontWeight: 900, lineHeight: 1.15 }}>{x.label}</span><span style={{ fontSize: 12, color: MUTED }}>{x.area}</span></div>
               {cells.map((c, i) => (
                 <div key={i} style={{ background: c.bg, border: c.border, boxSizing: 'border-box', borderRadius: 10, padding: '10px 4px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 3, fontSize: 'clamp(13px,1.6vw,19px)', fontWeight: 900, color: c.fg, whiteSpace: 'nowrap', minWidth: 0 }}>{c.icon}{c.txt}{c.warn}</div>
@@ -284,13 +252,15 @@ function Comparacao() {
             </button>
           ))}
         </div>
-        <div style={{ fontSize: 13, color: MUTED, marginTop: 14 }}>▲ marca o melhor resultado de cada linha, seja o número maior ou menor. Clique numa linha para ver o gráfico.</div>
+        <div style={{ fontSize: 13, color: MUTED, marginTop: 14 }}>▲ marca o melhor resultado de cada linha, seja o número maior ou menor. Clique numa linha para ver o gráfico e o contexto.</div>
       </div>
 
       {/* Detalhe do indicador */}
-      <div ref={detailRef} style={{ background: '#fff', borderRadius: 28, padding: 'clamp(16px,3vw,36px)', marginTop: 20 }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+      {open ? (
+      <div ref={detailRef} className={s.popFast} style={{ background: '#fff', borderRadius: 28, padding: 'clamp(16px,3vw,36px)', marginTop: 20 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
           {IND.map(x => <button key={x.id} onClick={() => setInd(x.id)} style={tab(x.id === ind.id)}>{x.label}</button>)}
+          <button onClick={() => setOpen(false)} style={tab(false, { marginLeft: 'auto', background: 'transparent', color: MUTED })}>Fechar ✕</button>
         </div>
         <div key={ind.id + mode} className={s.pop} style={{ marginTop: 24 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 14, flexWrap: 'wrap' }}>
@@ -391,35 +361,64 @@ function Comparacao() {
           ) : null}
         </div>
       </div>
+      ) : null}
+    </div></section>
+  );
+}
 
-      {/* Medidas efetivas */}
-      <div style={{ marginTop: 64 }}>
+// ---------------------------------------------------------------- medidas efetivas
+
+function Medidas() {
+  const [marea, setMarea] = useState('eco');
+  const [mMore, setMMore] = useState<string[]>([]);
+
+  const ma = MEAS[marea] || MEAS.eco;
+  const mTimeline = GOVS.map(g => {
+    const its = (ma[g.k] || []).slice().sort((a, b) => +a[0] - +b[0]).map(([y, name, text, res, src]) => {
+      const [tone, stance] = STANCE[name] || ['pos', 'Iniciativa do governo.'];
+      return { id: slug(name), y, name, text, res, src, stance, tone };
+    });
+    const c = (k: string) => its.filter(i => i.tone === k).length;
+    // Listas longas mostram só as principais até o usuário pedir o resto.
+    const key = marea + '-' + g.k, open = mMore.includes(key);
+    const top = its.length <= 5 ? its : its.filter(i => MEAS_TOP.has(i.name));
+    return { g, count: countLabel([[c('pos'), 'positivo', 'positivos'], [c('mix'), 'misto', 'mistos'], [c('neg'), 'negativo', 'negativos']]), items: open ? its : top, key, open, extra: its.length - top.length };
+  });
+
+  return (
+    <section id="medidas" style={{ maxWidth: 1240, margin: '0 auto', padding: '88px 28px 96px' }}>
+      <div>
         <div style={kicker()}>Medidas efetivas</div>
         <div style={{ fontSize: 'clamp(26px,3vw,38px)', fontWeight: 900, lineHeight: 1.05, marginTop: 8 }}>O que cada governo fez e o que aconteceu depois</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 20 }}>
           {Object.entries(MEAS).map(([id, x]) => <button key={id} onClick={() => setMarea(id)} style={outlineTab(id === marea)}>{x.label}</button>)}
         </div>
         <div key={marea} className={s.pop} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,460px),1fr))', gap: 20, marginTop: 24, alignItems: 'start' }}>
-          {mTimeline.map(({ g, count, items }) => (
-            <div key={g.k} style={{ display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0 }}>
+          {mTimeline.map(({ g, count, items, key, open, extra }) => (
+            <div key={g.k} style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
               <GovHeader g={g} count={count} per />
               {items.map(i => (
-                <article key={i.id} style={{ background: '#fff', borderRadius: 18, overflow: 'hidden', display: 'grid', gridTemplateColumns: '96px minmax(0,1fr)' }}>
-                  <div style={{ position: 'relative', background: '#F3EFE3', minHeight: 96 }}>
-                    <ImageSlot src={(LOGOS[i.name] || PHOTOS[i.name])?.[0]} credit={(LOGOS[i.name] || PHOTOS[i.name])?.[1]} creditHref={(LOGOS[i.name] || PHOTOS[i.name])?.[2]} fit={LOGOS[i.name] ? 'contain' : 'cover'} compact placeholder={i.name} style={{ position: 'absolute', inset: LOGOS[i.name] || !PHOTOS[i.name] ? 8 : 0, width: 'auto', height: 'auto' }} />
-                  </div>
-                  <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
-                    <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}><YearChip y={i.y} /><span style={{ fontSize: 18, fontWeight: 900, lineHeight: 1.2 }}>{i.name}</span><ToneBadge tone={i.tone} /></div>
-                    <TwoBoxes a="O que fez" aText={i.text} bText={i.res} tone={i.tone} min={170} />
-                    <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', borderLeft: `4px solid ${TONE[i.tone][2]}`, padding: '2px 0 2px 10px' }}><p style={{ fontSize: 14, lineHeight: 1.45, margin: 0, color: INK, textWrap: 'pretty' }}><strong style={{ fontWeight: 900 }}>Posição do governo:</strong> {i.stance}</p></div>
-                    <Fonte src={i.src} color={MUTED} />
-                  </div>
-                </article>
+                  <details key={i.id} className={s.measure} style={{ background: '#fff', borderRadius: 14, overflow: 'hidden' }}>
+                    <summary className={s.rowHover} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: 12, alignItems: 'center', padding: '12px 14px', cursor: 'pointer' }}>
+                      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', minWidth: 0 }}><YearChip y={i.y} /><span style={{ fontSize: 16, fontWeight: 900, lineHeight: 1.2 }}>{i.name}</span><ToneBadge tone={i.tone} /></div>
+                      <span className={s.chev} aria-hidden style={{ fontSize: 18, fontWeight: 900, color: MUTED, padding: '0 6px' }}>▾</span>
+                    </summary>
+                    <div style={{ padding: '4px 16px 16px', display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
+                      <TwoBoxes a="O que fez" aText={i.text} bText={i.res} tone={i.tone} min={170} />
+                      <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', borderLeft: `4px solid ${TONE[i.tone][2]}`, padding: '2px 0 2px 10px' }}><p style={{ fontSize: 14, lineHeight: 1.45, margin: 0, color: INK, textWrap: 'pretty' }}><strong style={{ fontWeight: 900 }}>Posição do governo:</strong> {i.stance}</p></div>
+                      <Fonte src={i.src} color={MUTED} />
+                    </div>
+                  </details>
               ))}
+              {extra > 0 ? (
+                <button onClick={() => setMMore(m => open ? m.filter(k => k !== key) : [...m, key])} className={s.btnLight} style={{ alignSelf: 'flex-start', border: `2px solid ${B}`, background: 'transparent', color: B, borderRadius: 99, padding: '8px 16px', fontSize: 14, fontWeight: 800, cursor: 'pointer' }}>
+                  {open ? 'Ver menos ▴' : `Ver mais ${extra} ${extra === 1 ? 'medida' : 'medidas'} ▾`}
+                </button>
+              ) : null}
             </div>
           ))}
         </div>
-        <div style={{ fontSize: 13, color: MUTED, marginTop: 14 }}>Logotipos e fotos de acervos oficiais. Passe o mouse sobre a imagem para ver o crédito.</div>
+        <div style={{ fontSize: 13, color: MUTED, marginTop: 14 }}>Clique numa medida para ver o que foi feito, o resultado e a fonte.</div>
       </div>
     </section>
   );
@@ -437,7 +436,7 @@ const cMax = Math.max(...COVID_WORLD.map(x => x[1]));
 
 function Crises() {
   return (
-    <section id="crises" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 28px 100px' }}>
+    <section id="crises" style={{ background: SAND }}><div style={{ maxWidth: 1240, margin: '0 auto', padding: '88px 28px 100px' }}>
       <div style={kicker()}>Diante da crise</div>
       <h2 style={h2('clamp(36px,5vw,60px)', 900)}>Como cada presidente reagiu</h2>
       <div style={{ ...grid(460, 20, 28), alignItems: 'start' }}>
@@ -445,14 +444,19 @@ function Crises() {
           const its = CRISES[g.k];
           const c = (k: string) => its.filter(i => i.tone === k).length;
           return (
-            <div key={g.k} style={{ display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0 }}>
+            <div key={g.k} style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
               <GovHeader g={g} count={countLabel([[c('pos'), 'positiva', 'positivas'], [c('mix'), 'mista', 'mistas'], [c('neg'), 'negativa', 'negativas']])} />
               {its.map(i => (
-                <article key={i.title} style={{ background: '#fff', borderRadius: 18, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}><YearChip y={i.y} /><span style={{ fontSize: 19, fontWeight: 900, lineHeight: 1.2 }}>{i.title}</span><ToneBadge tone={i.tone} /></div>
-                  <TwoBoxes a="Como reagiu" aText={i.how} bText={i.res} tone={i.tone} min={180} />
-                  <Fonte src={i.src} color={MUTED} />
-                </article>
+                <details key={i.title} className={s.measure} style={{ background: '#fff', borderRadius: 14, overflow: 'hidden' }}>
+                  <summary className={s.rowHover} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: 12, alignItems: 'center', padding: '12px 14px', cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', minWidth: 0 }}><YearChip y={i.y} /><span style={{ fontSize: 16, fontWeight: 900, lineHeight: 1.2 }}>{i.title}</span><ToneBadge tone={i.tone} /></div>
+                    <span className={s.chev} aria-hidden style={{ fontSize: 18, fontWeight: 900, color: MUTED, padding: '0 6px' }}>▾</span>
+                  </summary>
+                  <div style={{ padding: '4px 16px 16px', display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
+                    <TwoBoxes a="Como reagiu" aText={i.how} bText={i.res} tone={i.tone} min={180} />
+                    <Fonte src={i.src} color={MUTED} />
+                  </div>
+                </details>
               ))}
             </div>
           );
@@ -464,14 +468,20 @@ function Crises() {
         <div style={{ fontSize: 'clamp(28px,3.6vw,46px)', fontWeight: 900, lineHeight: 1, marginTop: 10, fontStretch: '110%', maxWidth: 900 }}>Governo Bolsonaro contra a ciência</div>
         <div style={{ ...grid(200, 12, 28) }}>
           {PANDEMIC_STATS.map(([n, color, text, src]) => (
-            <div key={n} style={{ background: 'rgba(255,255,255,.08)', borderRadius: 18, padding: 18 }}>
-              <div style={{ fontSize: 'clamp(36px,4.5vw,56px)', fontWeight: 900, fontStretch: '115%', lineHeight: 0.9, color }}>{n}</div>
+            <div key={n} style={{ background: 'rgba(255,255,255,.08)', borderRadius: 18, padding: 18, containerType: 'inline-size' }}>
+              {/* Tamanho limitado pela largura do card para o número caber numa linha. */}
+              <div style={{ fontSize: `min(clamp(36px,4.5vw,56px), ${(150 / n.length).toFixed(1)}cqi)`, fontWeight: 900, fontStretch: '115%', lineHeight: 0.9, color, whiteSpace: 'nowrap' }}>{n}</div>
               <div style={{ fontSize: 14, fontWeight: 700, marginTop: 8, color: '#E6EBF6' }}>{text}</div>
-              <Fonte src={src} size={11} color='#C9D2E8' style={{ marginTop: 8 }} />
+              <Fonte src={src} size={11} color='#C9D2E8' style={{ marginTop: 8 }} collapsed />
             </div>
           ))}
         </div>
-        <div style={{ ...grid(420, 28, 36), alignItems: 'start' }}>
+        {/* Linha do tempo e comparação internacional ficam recolhidas; só os números aparecem. */}
+        <details className={s.measure} style={{ marginTop: 20 }}>
+          <summary style={{ display: 'inline-flex', alignItems: 'center', gap: 8, cursor: 'pointer', border: `2px solid ${Y}`, color: Y, borderRadius: 99, padding: '8px 16px', fontSize: 14, fontWeight: 800 }}>
+            O que o presidente disse e fez, e o Brasil no mundo <span className={s.chev} aria-hidden>▾</span>
+          </summary>
+        <div style={{ ...grid(420, 28, 28), alignItems: 'start' }}>
           <div>
             <div style={{ fontSize: 18, fontWeight: 900 }}>O que o presidente disse e fez</div>
             <div style={{ display: 'flex', flexDirection: 'column', marginTop: 14, borderLeft: '3px solid rgba(255,255,255,.2)', paddingLeft: 18, gap: 16 }}>
@@ -508,8 +518,9 @@ function Crises() {
             <Fonte src='OMS, painel da covid-19; Banco Mundial, população 2022; OMS, estimativas de excesso de mortalidade (2020-2021)' color='#C9D2E8' style={{ marginTop: 8 }} />
           </div>
         </div>
+        </details>
       </div>
-    </section>
+    </div></section>
   );
 }
 
@@ -555,7 +566,8 @@ const bar = (width: string, color: string, h = 12): ReactNode => (
 
 function Propostas() {
   const [D, setPlans] = useState<Plans | null>(null);
-  const [mod, setMod] = useState<Mod>('words');
+  // Nenhuma aba aberta de início: o conteúdo só aparece quando o usuário escolhe uma.
+  const [mod, setMod] = useState<Mod | null>(null);
   const [wmode, setWmode] = useState<'words' | 'conc'>('words');
   const [wsel, setWsel] = useState<Partial<Record<PlanKey, string>>>({});
   const [theme, setTheme] = useState('eco');
@@ -582,9 +594,10 @@ function Propostas() {
         ))}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 28 }}>
-        {MODS.map(([k, l], i) => <button key={k} onClick={() => setMod(k)} style={outlineTab(mod === k, { padding: '10px 16px', fontSize: 15, display: 'flex', gap: 8, alignItems: 'center' })}><span style={{ opacity: 0.6 }}>{i + 1}</span>{l}</button>)}
+        {MODS.map(([k, l], i) => <button key={k} onClick={() => setMod(m => m === k ? null : k)} aria-expanded={mod === k} style={outlineTab(mod === k, { padding: '10px 16px', fontSize: 15, display: 'flex', gap: 8, alignItems: 'center' })}><span style={{ opacity: 0.6 }}>{i + 1}</span>{l}</button>)}
       </div>
-      {!D ? <div style={{ marginTop: 24, background: '#fff', borderRadius: 22, padding: 40, textAlign: 'center', fontWeight: 700, color: MUTED }}>Carregando os planos…</div> : (
+      {!mod ? <div style={{ fontSize: 13, color: MUTED, marginTop: 14 }}>Escolha um dos itens acima para ver a análise.</div>
+        : !D ? <div style={{ marginTop: 24, background: '#fff', borderRadius: 22, padding: 40, textAlign: 'center', fontWeight: 700, color: MUTED }}>Carregando os planos…</div> : (
         <div key={mod} className={s.popFast} style={{ marginTop: 28 }}>
           {mod === 'words' && <Words D={D} wmode={wmode} setWmode={setWmode} wsel={wsel} setWsel={setWsel} />}
           {mod === 'themes' && <Themes D={D} theme={theme} setTheme={setTheme} />}
@@ -908,16 +921,20 @@ const METHOD = [
 
 function Metodo() {
   return (
-    <section id="metodo" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 28px 96px' }}>
-      <div style={{ background: '#fff', borderRadius: 28, padding: 'clamp(22px,4vw,44px)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,280px),1fr))', gap: 28 }}>
-        <div>
-          <div style={kicker()}>Método</div>
-          <h2 style={{ fontSize: 36, lineHeight: 1, margin: '10px 0 0', fontWeight: 900 }}>Como checamos</h2>
-        </div>
-        <ol style={{ margin: 0, paddingLeft: 22, display: 'flex', flexDirection: 'column', gap: 12, fontSize: 17, lineHeight: 1.5, color: BODY, listStyle: 'decimal' }}>
+    <section id="metodo" style={{ maxWidth: 1240, margin: '0 auto', padding: '72px 28px 96px' }}>
+      <details className={s.measure} style={{ background: '#fff', borderRadius: 28, overflow: 'hidden' }}>
+        <summary className={s.rowHover} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: 16, alignItems: 'center', padding: 'clamp(22px,4vw,36px) clamp(22px,4vw,44px)', cursor: 'pointer' }}>
+          <div>
+            <div style={kicker()}>Método</div>
+            <h2 style={{ fontSize: 36, lineHeight: 1, margin: '10px 0 0', fontWeight: 900 }}>Como checamos</h2>
+            <div style={{ fontSize: 16, color: MUTED, marginTop: 10 }}>Mesma métrica e mesma fonte para os dois governos, com link para o original.</div>
+          </div>
+          <span className={s.chev} aria-hidden style={{ fontSize: 24, fontWeight: 900, color: MUTED }}>▾</span>
+        </summary>
+        <ol style={{ margin: 0, padding: '0 clamp(22px,4vw,44px) clamp(22px,4vw,44px) calc(clamp(22px,4vw,44px) + 22px)', display: 'flex', flexDirection: 'column', gap: 12, fontSize: 17, lineHeight: 1.5, color: BODY, listStyle: 'decimal' }}>
           {METHOD.map(m => <li key={m}>{m}</li>)}
         </ol>
-      </div>
+      </details>
     </section>
   );
 }
@@ -947,8 +964,8 @@ export default function Contraprova() {
     <div className={s.root} style={{ fontFamily: 'var(--font-archivo), system-ui, sans-serif' }}>
       <Header />
       <Hero />
-      <Rules />
       <Comparacao />
+      <Medidas />
       <Crises />
       <Hipotetico />
       <Propostas />
