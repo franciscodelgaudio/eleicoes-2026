@@ -1,0 +1,158 @@
+/* Estados de hover do design (style-hover) e o <image-slot>. As propriedades
+   que mudam no hover ficam aqui, e não inline, para o :hover poder vencer. */
+
+.slot {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font: 13px/1.3 system-ui, -apple-system, sans-serif;
+}
+.slotFrame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: rgba(127, 127, 127, 0.08);
+}
+.slotImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.slotEmpty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+  font-weight: 500;
+  opacity: 0.75;
+}
+.credit {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  max-width: calc(100% - 12px);
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font: 10px/1.2 system-ui, -apple-system, sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  backdrop-filter: blur(6px);
+}
+.credit a {
+  color: inherit;
+  text-decoration: none;
+}
+.credit a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.navLink {
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 11px;
+  border-radius: 99px;
+}
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+.navLinkRed,
+.navLinkRed:hover {
+  color: #ff8a8a;
+  font-weight: 800;
+}
+.navLinkCta {
+  color: #071c4d;
+  background: #ffd21f;
+  font-weight: 800;
+}
+.navLinkCta:hover {
+  color: #071c4d;
+  background: #ffe36b;
+}
+
+.srcLink {
+  display: inline-block;
+  color: #c9d2e8;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 210, 31, 0.6);
+  text-underline-offset: 3px;
+}
+.srcLink:hover {
+  color: #ffd21f;
+}
+
+.plainLink {
+  color: #c9d2e8;
+}
+.plainLink:hover {
+  color: #ffd21f;
+}
+
+.yellowBtn {
+  background: #ffd21f;
+  color: #071c4d;
+  text-decoration: none;
+  font-weight: 800;
+  border-radius: 99px;
+}
+.yellowBtn:hover {
+  background: #ffe36b;
+  color: #071c4d;
+}
+
+.moreBtn {
+  border: 2px solid #ffd21f;
+  background: transparent;
+  color: #ffd21f;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 8px 14px;
+  border-radius: 99px;
+}
+.moreBtn:hover {
+  background: #ffd21f;
+  color: #071c4d;
+}
+
+.enemyChip {
+  text-decoration: none;
+  color: #fff;
+  background: var(--chip-bg);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.enemyChip:hover {
+  background: #4a1820;
+  color: #fff;
+}
+
+.ghostBtn {
+  background: transparent;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 99px;
+}
+.ghostBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
