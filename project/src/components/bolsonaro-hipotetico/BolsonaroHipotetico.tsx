@@ -21,7 +21,7 @@ const reveal = (dist = 24, dur = 0.8, delay = 0, axis: 'X' | 'Y' = 'Y'): CSSProp
   transition: delay ? `opacity ${dur}s ease ${delay}s,transform ${dur}s ease ${delay}s` : `opacity ${dur}s ease,transform ${dur}s ease`,
 });
 const bigNumber = (stroke: string): CSSProperties => ({ fontSize: 'clamp(90px,14vw,220px)', fontWeight: 900, fontStretch: '125%', lineHeight: 0.75, color: 'transparent', WebkitTextStroke: `2px ${stroke}` });
-const h2Style = (maxWidth?: number): CSSProperties => ({ fontSize: 'clamp(40px,6vw,88px)', lineHeight: 0.92, margin: '14px 0 0', fontWeight: 900, fontStretch: '120%', letterSpacing: '-0.03em', maxWidth });
+const h2Style = (maxWidth?: number): CSSProperties => ({ fontSize: 'clamp(34px,6vw,88px)', lineHeight: 0.92, margin: '14px 0 0', fontWeight: 900, fontStretch: '120%', letterSpacing: '-0.03em', maxWidth });
 const tag = (w: string) => { const c = WHO[whoKey(w)]; return { tagBg: c[0], tagFg: c[1] }; };
 const scrollItem = (i: number, cur: number): CSSProperties => ({ opacity: i === cur ? 1 : 0.28, transform: i === cur ? 'none' : 'translateY(12px)' });
 
@@ -54,7 +54,7 @@ function Target({ name, role, method, img, credit, creditHref }: { name: string;
   const line: CSSProperties = { position: 'absolute', background: RED, pointerEvents: 'none' };
   return (
     <div data-reveal="1" style={{ ...reveal(), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, textAlign: 'center' }}>
-      <div style={{ position: 'relative', width: 'min(220px,26vw)', aspectRatio: '1' }}>
+      <div style={{ position: 'relative', width: 'clamp(180px,26vw,220px)', aspectRatio: '1' }}>
         <ImageSlot shape="circle" src={img} style={{ filter: 'grayscale(1)' }} />
         <div style={{ position: 'absolute', inset: -10, borderRadius: '50%', border: `3px solid ${RED}`, pointerEvents: 'none' }} />
         <div style={{ ...line, left: '50%', top: -22, bottom: -22, width: 2, marginLeft: -1 }} />
@@ -73,7 +73,7 @@ function Tabs<T extends { key: string; label: string; n?: string }>({ items, act
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap, marginTop: mt }}>
       {items.map(t => (
-        <button key={t.key} onClick={() => onSelect(t.key)} style={{ border: 'none', cursor: 'pointer', padding: '11px 16px', fontSize: 15, fontWeight: 800, borderRadius: 99, background: t.key === active ? Y : 'rgba(255,255,255,.1)', color: t.key === active ? NAVY : '#fff', display: 'flex', gap: 8, alignItems: 'center' }}>
+        <button key={t.key} onClick={() => onSelect(t.key)} className={s.tab} style={{ border: 'none', cursor: 'pointer', padding: '11px 16px', fontSize: 15, fontWeight: 800, borderRadius: 99, background: t.key === active ? Y : 'rgba(255,255,255,.1)', color: t.key === active ? NAVY : '#fff', display: 'flex', gap: 8, alignItems: 'center' }}>
           {t.label}{t.n ? <span style={{ fontSize: 12, opacity: 0.7 }}>{t.n}</span> : null}
         </button>
       ))}
@@ -148,6 +148,7 @@ export default function BolsonaroHipotetico() {
   useEffect(() => {
     const root = rootRef.current!;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const narrow = window.matchMedia('(max-width: 760px)');
     let raf: number | null = null;
     const update = () => {
       raf = null;
@@ -173,9 +174,11 @@ export default function BolsonaroHipotetico() {
       $$('[data-grow]').forEach(el => {
         if (reduce || el.getBoundingClientRect().top < vh * 0.92) el.style.width = el.dataset.grow!;
       });
+      // No celular o painel fixo cobre a metade de cima; o passo ativo é o que está mais abaixo.
+      const focus = narrow.matches ? vh * 0.7 : vh / 2;
       const best = (g: string) => {
         let b = 0, bd = Infinity;
-        $$('[data-sg="' + g + '"]').forEach((el, i) => { const r = el.getBoundingClientRect(); const d = Math.abs(r.top + r.height / 2 - vh / 2); if (d < bd) { bd = d; b = i; } });
+        $$('[data-sg="' + g + '"]').forEach((el, i) => { const r = el.getBoundingClientRect(); const d = Math.abs(r.top + r.height / 2 - focus); if (d < bd) { bd = d; b = i; } });
         return b;
       };
       const next = { grad: best('grad'), flavio: best('flavio') };
@@ -226,16 +229,16 @@ export default function BolsonaroHipotetico() {
   };
 
   return (
-    <div ref={rootRef} style={{ fontFamily: ARCHIVO }}>
+    <div ref={rootRef} className={s.root} style={{ fontFamily: ARCHIVO }}>
       {/* Barra fixa: progresso + navegação */}
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 30, pointerEvents: 'none' }}>
         <div style={{ height: 4, background: 'rgba(255,255,255,.08)' }}><div data-progress="1" style={{ height: '100%', width: 0, background: Y }} /></div>
-        <div style={{ maxWidth: 1320, margin: '0 auto', padding: '14px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-          <Link href="/" style={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 10, color: '#fff', textDecoration: 'none', background: 'rgba(7,28,77,.78)', backdropFilter: 'blur(8px)', padding: '8px 14px 8px 10px', borderRadius: 99 }}>
+        <div className={s.topbar} style={{ maxWidth: 1320, margin: '0 auto', padding: '14px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+          <Link href="/" aria-label="Contraprova" style={{ pointerEvents: 'auto', flex: 'none', display: 'flex', alignItems: 'center', gap: 10, color: '#fff', textDecoration: 'none', background: 'rgba(7,28,77,.78)', backdropFilter: 'blur(8px)', padding: '8px 14px 8px 10px', borderRadius: 99 }}>
             <span style={{ width: 14, height: 14, background: Y, transform: 'rotate(45deg)' }} />
-            <span style={{ fontSize: 15, fontWeight: 800, fontStretch: '110%' }}>Contraprova</span>
+            <span className={s.brandText} style={{ fontSize: 15, fontWeight: 800, fontStretch: '110%' }}>Contraprova</span>
           </Link>
-          <nav style={{ pointerEvents: 'auto', display: 'flex', gap: 2, background: 'rgba(7,28,77,.78)', backdropFilter: 'blur(8px)', padding: 5, borderRadius: 99, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+          <nav className={s.nav} style={{ pointerEvents: 'auto', display: 'flex', gap: 2, background: 'rgba(7,28,77,.78)', backdropFilter: 'blur(8px)', padding: 5, borderRadius: 99, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <a href="#sinais" className={s.navLink}>4 sinais</a>
             <a href="#plano" className={`${s.navLink} ${s.navLinkRed}`}>O plano</a>
             <a href="#inimigo" className={s.navLink}>O inimigo</a>
@@ -247,7 +250,7 @@ export default function BolsonaroHipotetico() {
       </div>
 
       {/* Abertura */}
-      <section style={{ position: 'relative', height: '100vh', minHeight: 640, overflow: 'hidden', background: '#04122F' }}>
+      <section style={{ position: 'relative', height: '100svh', minHeight: 560, overflow: 'hidden', background: '#04122F' }}>
         <div data-hero-img="1" style={{ position: 'absolute', inset: 0, transformOrigin: 'center' }}>
           <ImageSlot src="https://commons.wikimedia.org/wiki/Special:FilePath/Ataque%20bolsonarista%20ao%20Congresso%20Nacional%20do%20Brasil.png?width=1920" credit="Wikimedia Commons · 8/jan/2023" creditHref="https://commons.wikimedia.org/wiki/File:Ataque_bolsonarista_ao_Congresso_Nacional_do_Brasil.png" placeholder="Foto de abertura: Praça dos Três Poderes, 8 de janeiro de 2023" />
         </div>
@@ -255,7 +258,7 @@ export default function BolsonaroHipotetico() {
         <div data-hero-title="1" style={{ position: 'absolute', left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
           <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 24px 80px' }}>
             <div style={{ display: 'inline-flex', background: Y, color: NAVY, padding: '7px 13px', borderRadius: 99, ...label(), }}>Especial Contraprova</div>
-            <h1 style={{ fontSize: 'clamp(64px,12vw,200px)', lineHeight: 0.82, margin: '20px 0 0', fontWeight: 900, fontStretch: '125%', letterSpacing: '-0.045em' }}>Bolsonaro<br /><span style={{ color: Y }}>Hipotético</span></h1>
+            <h1 style={{ fontSize: 'clamp(36px,12vw,200px)', lineHeight: 0.82, margin: '20px 0 0', fontWeight: 900, fontStretch: '125%', letterSpacing: '-0.045em' }}>Bolsonaro<br /><span style={{ color: Y }}>Hipotético</span></h1>
             <p style={{ fontFamily: SERIF, fontSize: 'clamp(20px,2.2vw,28px)', lineHeight: 1.4, maxWidth: 660, margin: '28px 0 0', color: '#E6EBF6', textWrap: 'pretty' }}>O que a história das ditaduras e a ciência política dizem sobre as falas, os atos e as promessas da família Bolsonaro.</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 40, fontSize: 14, fontWeight: 700, color: '#C9D2E8' }}>
               <span style={{ display: 'inline-block', animation: 'bob 1.6s ease-in-out infinite', fontSize: 20 }}>↓</span> Role para começar
@@ -364,25 +367,26 @@ export default function BolsonaroHipotetico() {
           <div style={label(Y)}>Não acontece da noite para o dia</div>
           <div style={{ fontSize: 'clamp(28px,3vw,40px)', fontWeight: 900, lineHeight: 1.05, marginTop: 8, maxWidth: 760 }}>Escolha um país e desça a escada, degrau por degrau</div>
           <Tabs items={Object.entries(GRAD).map(([k, v]) => ({ key: k, label: v.label }))} active={grad} onSelect={setGrad} />
+          <div className={s.mobileOnly} style={{ fontSize: 15, lineHeight: 1.5, color: '#C9D2E8', marginTop: 20, textWrap: 'pretty' }}>{gd.intro}</div>
         </div>
-        <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 24px 40px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'clamp(20px,4vw,56px)' }}>
-          <div>
-            <div style={{ position: 'sticky', top: 90, height: 'calc(100vh - 120px)', minHeight: 460, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 20 }}>
-              <div key={grad + gi} style={{ fontSize: 'clamp(56px,7vw,104px)', fontWeight: 900, fontStretch: '125%', lineHeight: 0.85, color: Y, letterSpacing: '-0.03em', animation: 'swap .5s ease both' }}>{gd.steps[gi].date}</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div className={s.scrolly} style={{ maxWidth: 1320, margin: '0 auto', padding: '0 24px 40px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'clamp(20px,4vw,56px)' }}>
+          <div className={s.stickyCell}>
+            <div className={s.gradPanel} style={{ position: 'sticky', top: 90, height: 'calc(100vh - 120px)', minHeight: 460, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 20 }}>
+              <div key={grad + gi} className={s.gradDate} style={{ fontSize: 'clamp(56px,7vw,104px)', fontWeight: 900, fontStretch: '125%', lineHeight: 0.85, color: Y, letterSpacing: '-0.03em', animation: 'swap .5s ease both' }}>{gd.steps[gi].date}</div>
+              <div className={s.ladder} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {gd.steps.map((st, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: (i * 7) + '%', transition: 'margin .5s ease' }}>
-                    <div style={{ height: 34, width: (100 - i * 16) + 'px', borderRadius: 6, background: i < gi ? RED : i === gi ? Y : 'rgba(255,255,255,.12)', transition: 'background .4s,width .6s ease' }} />
-                    <span style={{ fontSize: 13, fontWeight: 700, color: i <= gi ? '#fff' : MUTED, whiteSpace: 'nowrap', transition: 'color .4s' }}>{st.date}</span>
+                    <div className={s.ladderBar} style={{ height: 34, width: (100 - i * 16) + 'px', borderRadius: 6, background: i < gi ? RED : i === gi ? Y : 'rgba(255,255,255,.12)', transition: 'background .4s,width .6s ease' }} />
+                    <span className={s.ladderLabel} style={{ fontSize: 13, fontWeight: 700, color: i <= gi ? '#fff' : MUTED, whiteSpace: 'nowrap', transition: 'color .4s' }}>{st.date}</span>
                   </div>
                 ))}
               </div>
-              <div style={{ fontSize: 14, color: '#C9D2E8', maxWidth: 440, textWrap: 'pretty' }}>{gd.intro}</div>
+              <div className={s.desktopOnly} style={{ fontSize: 14, color: '#C9D2E8', maxWidth: 440, textWrap: 'pretty' }}>{gd.intro}</div>
             </div>
           </div>
           <div>
             {gd.steps.map((st, i) => (
-              <div key={grad + i} data-sg="grad" style={{ minHeight: '72vh', display: 'flex', alignItems: 'center' }}>
+              <div key={grad + i} data-sg="grad" className={s.scrollStep} style={{ minHeight: '72vh', display: 'flex', alignItems: 'center' }}>
                 <div style={{ ...scrollItem(i, gi), transition: 'opacity .5s ease,transform .5s ease', display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 520 }}>
                   <div style={label(Y)}>Degrau {i + 1} · {st.date}</div>
                   <h3 style={{ fontSize: 'clamp(26px,2.8vw,38px)', lineHeight: 1.08, margin: 0, fontWeight: 900, textWrap: 'balance' }}>{st.title}</h3>
@@ -404,14 +408,14 @@ export default function BolsonaroHipotetico() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', marginTop: 24 }}>
             <span style={{ fontFamily: MONO, fontSize: 15, color: '#C99A9A', textDecoration: 'line-through', textDecorationColor: RED, textDecorationThickness: 3 }}>Fox_2017.docx</span>
             <span style={{ fontSize: 20, color: RED }}>→</span>
-            <span style={{ fontFamily: MONO, fontSize: 'clamp(18px,2.4vw,28px)', color: '#fff', background: '#FF5A5A1F', border: `2px solid ${RED}`, padding: '8px 14px', borderRadius: 10 }}>Punhal Verde e Amarelo.docx</span>
+            <span style={{ fontFamily: MONO, fontSize: 'clamp(15px,2.4vw,28px)', overflowWrap: 'anywhere', color: '#fff', background: '#FF5A5A1F', border: `2px solid ${RED}`, padding: '8px 14px', borderRadius: 10 }}>Punhal Verde e Amarelo.docx</span>
           </div>
           <div style={{ fontSize: 14, color: '#C99A9A', marginTop: 10 }}>O arquivo foi renomeado e impresso no Palácio do Planalto, segundo a Polícia Federal.</div>
         </div>
 
         <div style={{ maxWidth: 1120, margin: '0 auto', padding: '80px 24px 24px' }}>
           <div style={{ ...label('#FF8A8A', '.12em'), textAlign: 'center' }}>Os alvos · data marcada: 15 de dezembro de 2022</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 'clamp(16px,4vw,56px)', marginTop: 48 }}>
+          <div className={s.targets} style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 'clamp(16px,4vw,56px)', marginTop: 48 }}>
             <Target name="Lula" role="Presidente eleito" method="Envenenamento" img="https://commons.wikimedia.org/wiki/Special:FilePath/Foto%20oficial%20de%20Luiz%20In%C3%A1cio%20Lula%20da%20Silva%20(3x4%20cropped).jpg?width=600" credit="Foto: Ricardo Stuckert/PR" creditHref="https://commons.wikimedia.org/wiki/File:Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_(3x4_cropped).jpg" />
             <Target name="Geraldo Alckmin" role="Vice eleito" method="Execução" img="https://commons.wikimedia.org/wiki/Special:FilePath/Vice%20Presidente%20da%20Rep%C3%BAblica%20do%20Brasil%2C%20Geraldo%20Alckmin%20em%202023.jpg?width=600" credit="Foto: Cadu Gomes/VPR" creditHref="https://commons.wikimedia.org/wiki/File:Vice_Presidente_da_Rep%C3%BAblica_do_Brasil%2C_Geraldo_Alckmin_em_2023.jpg" />
             <Target name="Alexandre de Moraes" role="Presidente do TSE" method="Explosivo ou veneno" img="https://commons.wikimedia.org/wiki/Special:FilePath/Ministro%20Alexandre%20de%20Moraes%20como%20presidente%20do%20TSE.jpg?width=600" credit="Foto: Isac Nóbrega · CC BY 2.0" creditHref="https://commons.wikimedia.org/wiki/File:Ministro_Alexandre_de_Moraes_como_presidente_do_TSE.jpg" />
@@ -469,12 +473,12 @@ export default function BolsonaroHipotetico() {
           <div style={label('#FF8A8A', '.12em')}>As penas no STF, em anos de prisão</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 24 }}>
             {PENAS.map(([name, role, years, txt, color]) => (
-              <div key={name} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,240px) minmax(0,1fr)', gap: 16, alignItems: 'center' }}>
+              <div key={name} className={s.penaRow} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px,240px) minmax(0,1fr)', gap: 16, alignItems: 'center' }}>
                 <div>
                   <div style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.2 }}>{name}</div>
                   <div style={{ fontSize: 12, color: '#C99A9A' }}>{role}</div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div className={s.penaBar} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div data-grow={(years / 27.25 * 82).toFixed(1) + '%'} style={{ height: 26, width: 0, background: color, borderRadius: 6, transition: 'width 1.2s cubic-bezier(.2,.8,.2,1)' }} />
                   <span style={{ fontSize: 15, fontWeight: 900, whiteSpace: 'nowrap' }}>{txt}</span>
                 </div>
@@ -656,9 +660,9 @@ export default function BolsonaroHipotetico() {
           <div style={bigNumber(Y)}>06</div>
           <h2 style={h2Style()}>Flávio, 2018–2026</h2>
         </div>
-        <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 24px 80px', display: 'grid', gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,1fr)', gap: 'clamp(20px,4vw,56px)' }}>
-          <div>
-            <div style={{ position: 'sticky', top: 80, height: 'calc(100vh - 110px)', minHeight: 480, display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div className={s.scrolly} style={{ maxWidth: 1320, margin: '0 auto', padding: '0 24px 80px', display: 'grid', gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,1fr)', gap: 'clamp(20px,4vw,56px)' }}>
+          <div className={s.stickyCell}>
+            <div className={s.flavioPanel} style={{ position: 'sticky', top: 80, height: 'calc(100vh - 110px)', minHeight: 480, display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div style={{ position: 'relative', flex: 1, borderRadius: 24, overflow: 'hidden', background: '#04122F' }}>
                 {FLAVIO.map((f, i) => (
                   <div key={i} style={{ position: 'absolute', inset: 0, opacity: i === fi ? 1 : 0, transform: i === fi ? 'scale(1.04)' : 'scale(1)', transition: 'opacity .7s ease,transform 1.2s ease', pointerEvents: i === fi ? 'auto' : 'none' }}>
@@ -674,7 +678,7 @@ export default function BolsonaroHipotetico() {
           </div>
           <div>
             {FLAVIO.map((f, i) => (
-              <div key={i} data-sg="flavio" style={{ minHeight: '86vh', display: 'flex', alignItems: 'center' }}>
+              <div key={i} data-sg="flavio" className={s.scrollStep} style={{ minHeight: '86vh', display: 'flex', alignItems: 'center' }}>
                 <div style={{ ...scrollItem(i, fi), transition: 'opacity .5s ease,transform .5s ease', display: 'flex', flexDirection: 'column', gap: 14, maxWidth: 520 }}>
                   <div style={label(f.link ? Y : MUTED)}>{f.date} · {f.tag}</div>
                   <h3 style={{ fontSize: 'clamp(28px,3vw,42px)', lineHeight: 1.05, margin: 0, fontWeight: 900, letterSpacing: '-0.015em', textWrap: 'balance' }}>{f.title}</h3>

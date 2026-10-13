@@ -156,3 +156,114 @@
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
+
+/* ---- Responsivo ----
+   Quase tudo é estilo inline; abaixo de 760px estas classes sobrescrevem
+   com !important (o inline venceria qualquer regra de classe normal). */
+
+.root {
+  overflow-x: clip;
+}
+.mobileOnly {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+  .nav {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    overflow-x: auto;
+    min-width: 0;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+  .navLink {
+    font-size: 12px;
+    padding: 6px 9px;
+    white-space: nowrap;
+  }
+  .tab {
+    padding: 9px 13px !important;
+    font-size: 14px !important;
+  }
+
+  /* Blocos com painel fixo + passos: viram uma coluna, com o painel grudado no topo */
+  .scrolly {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+  }
+  .stickyCell {
+    display: contents;
+  }
+  .gradPanel,
+  .flavioPanel {
+    top: 58px !important;
+    z-index: 5;
+    min-height: 0 !important;
+    margin: 0 -24px;
+    padding: 10px 24px 14px;
+    background: #071c4d;
+    /* a sombra de cima tapa o texto que passa por trás da barra de navegação */
+    box-shadow: 0 -80px 0 #071c4d, 0 14px 18px -10px #071c4d;
+  }
+  .gradPanel {
+    height: auto !important;
+    gap: 10px !important;
+  }
+  .gradDate {
+    font-size: 44px !important;
+  }
+  .ladder {
+    gap: 3px !important;
+  }
+  .ladderBar {
+    height: 10px !important;
+  }
+  .ladderLabel {
+    font-size: 11px !important;
+  }
+  .flavioPanel {
+    height: 40vh !important;
+    height: 40svh !important;
+    gap: 10px !important;
+  }
+  .scrollStep {
+    min-height: 62vh !important;
+  }
+  .desktopOnly {
+    display: none !important;
+  }
+  .mobileOnly {
+    display: block;
+  }
+
+  .targets {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 56px !important;
+  }
+  .penaRow {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 6px !important;
+  }
+  /* barra e rótulo em linhas separadas, para a barra manter a proporção */
+  .penaBar {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+  .penaBar > :first-child {
+    height: 18px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .brandText {
+    display: none;
+  }
+}
