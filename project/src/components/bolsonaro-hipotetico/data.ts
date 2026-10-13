@@ -64,7 +64,7 @@ export const SIGNALS: Signal[] = [
     { who: 'PL', date: 'nov 2022', text: 'A coligação do PL pediu a verificação extraordinária, e a invalidação dos votos, de urnas de modelos anteriores a 2020 no segundo turno. O TSE rejeitou o pedido e multou a coligação em R$ 22,9 milhões por litigância de má-fé; a multa recaiu sobre o PL e foi confirmada pelo plenário em dezembro.', src: 'TSE, decisão de 23/nov/2022; TSE, plenário, 15/dez/2022' },
     { who: 'Jair', date: 'set 2025', text: 'Condenado pelo STF a 27 anos e 3 meses por tentativa de golpe de Estado. Decisão definitiva desde novembro de 2025.', src: 'STF, AP 2668' }
   ]},
-  { n: '2', title: 'Negar a legitimidade dos adversários', def: 'Tratar oponentes, juízes ou jornalistas como inimigos ou criminosos, e não como adversários legítimos.', mediaKind: 'VÍDEO A INSERIR', media: 'Sabatina de Flávio Bolsonaro na TV Globo, 28/ago/2026', flavio: 'Registrado. Chamou o julgamento do pai de “farsa” e os ministros do STF de “inimigos”.', ev: [
+  { n: '2', title: 'Negar a legitimidade dos adversários', def: 'Tratar oponentes, juízes ou jornalistas como inimigos ou criminosos, e não como adversários legítimos.', mediaKind: 'VÍDEO', media: 'Sabatina de Flávio Bolsonaro na TV Globo, 28/ago/2026', flavio: 'Registrado. Chamou o julgamento do pai de “farsa” e os ministros do STF de “inimigos”.', ev: [
     { who: 'Jair', date: 'out 2018', text: '“Esses marginais vermelhos serão banidos de nossa pátria”, em vídeo transmitido a apoiadores na Avenida Paulista.', src: 'Discurso de 21/out/2018' },
     { who: 'Eduardo', date: '2018', text: 'Disse em palestra que, para fechar o STF, bastaria mandar “um soldado e um cabo”.', src: 'Câmara, Representação 11/2019 (Eduardo Bolsonaro)' },
     { who: 'Flávio', date: 'set 2025', text: 'Sobre a condenação do pai: um processo cujo resultado todos conheciam antes de começar.', src: 'Publicação no X, 11/set/2025' },
@@ -201,10 +201,12 @@ export const FLAVIO: FlavioItem[] = [
 ];
 
 export const SIG_MEDIA: Record<string, string> = { '3': 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio', '4': 'https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio' };
-// Vídeos tocados no próprio card: arquivo no Wikimedia Commons, começando no trecho citado (start em segundos).
-export type SigVideo = { src: string; start: number; page: string; credit: string };
+// Vídeos tocados no próprio card, começando no trecho citado (start em segundos):
+// arquivo do Wikimedia Commons (src) ou vídeo do YouTube (yt = id do vídeo).
+export type SigVideo = { src?: string; yt?: string; start: number; page: string; credit: string };
 export const SIG_VIDEO: Record<string, SigVideo> = {
-  '1': { src: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1c/Negacionismo_eleitoral_no_Alvorada_em_2022.webm/Negacionismo_eleitoral_no_Alvorada_em_2022.webm.720p.vp9.webm', start: 2230, page: 'https://commons.wikimedia.org/wiki/File:Negacionismo_eleitoral_no_Alvorada_em_2022.webm', credit: 'TV BrasilGov · CC BY 3.0 · via Wikimedia Commons' }
+  '1': { src: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1c/Negacionismo_eleitoral_no_Alvorada_em_2022.webm/Negacionismo_eleitoral_no_Alvorada_em_2022.webm.720p.vp9.webm', start: 2230, page: 'https://commons.wikimedia.org/wiki/File:Negacionismo_eleitoral_no_Alvorada_em_2022.webm', credit: 'TV BrasilGov · CC BY 3.0 · via Wikimedia Commons' },
+  '2': { yt: 'PuETSRCWSS8', start: 57, page: 'https://www.youtube.com/watch?v=PuETSRCWSS8&t=57s', credit: 'g1 · sabatina da TV Globo, 28/ago/2026 · YouTube' }
 };
 export const F_IMG: Record<number, Img3> = {
   1: ['https://commons.wikimedia.org/wiki/Special:FilePath/Edif%C3%ADcio_Sede_do_STJ_%2854058218219%29.jpg?width=1600', 'Sede do STJ, que anulou as provas do caso em 2021 · Rafael Luz/STJ · CC BY 2.0', 'https://commons.wikimedia.org/wiki/File:Edif%C3%ADcio_Sede_do_STJ_%2854058218219%29.jpg'],

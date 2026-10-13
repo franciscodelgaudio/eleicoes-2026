@@ -323,7 +323,11 @@ export default function BolsonaroHipotetico() {
                     <h3 style={{ fontSize: 'clamp(26px,2.8vw,36px)', lineHeight: 1.08, margin: 0, fontWeight: 900, textWrap: 'balance' }}>{sig.title}</h3>
                     <p style={{ fontFamily: SERIF, fontSize: 18, lineHeight: 1.55, margin: 0, color: '#C9D2E8', textWrap: 'pretty' }}>{sig.def}</p>
                     {video && playing[sig.n] ? (
-                      <video src={`${video.src}#t=${video.start}`} controls autoPlay playsInline preload="metadata" style={{ width: '100%', aspectRatio: '16/9', borderRadius: 18, background: '#000', display: 'block' }} />
+                      video.yt ? (
+                        <iframe src={`https://www.youtube-nocookie.com/embed/${video.yt}?start=${video.start}&autoplay=1&rel=0`} title={sig.media} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen style={{ width: '100%', aspectRatio: '16/9', border: 0, borderRadius: 18, background: '#000', display: 'block' }} />
+                      ) : (
+                        <video src={`${video.src}#t=${video.start}`} controls autoPlay playsInline preload="metadata" style={{ width: '100%', aspectRatio: '16/9', borderRadius: 18, background: '#000', display: 'block' }} />
+                      )
                     ) : (
                       <div onClick={video ? () => setPlaying(x => ({ ...x, [sig.n]: true })) : undefined} onKeyDown={video ? e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPlaying(x => ({ ...x, [sig.n]: true })); } } : undefined} role={video ? 'button' : undefined} tabIndex={video ? 0 : undefined} aria-label={video ? `Assistir: ${sig.media}` : undefined} style={{ position: 'relative', aspectRatio: '16/9', borderRadius: 18, overflow: 'hidden', background: 'repeating-linear-gradient(135deg,#0F3380 0 12px,#0D2E74 12px 24px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 16, cursor: video ? 'pointer' : undefined }}>
                         <div style={{ fontFamily: MONO, fontSize: 12, color: '#C9D2E8' }}>{video ? `${sig.mediaKind} · a partir de ${Math.floor(video.start / 60)}:${String(video.start % 60).padStart(2, '0')}` : sig.mediaKind}</div>
