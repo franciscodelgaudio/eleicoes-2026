@@ -109,8 +109,7 @@ function Hero() {
     <section id="topo" style={{ background: G, color: '#fff', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', padding: '96px 28px 88px', position: 'relative', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,460px),1fr))', gap: 56, alignItems: 'center' }}>
         <div style={{ order: 1, minWidth: 0 }}>
-          <div style={pill(B, Y)}>A democracia se decide em quem aparece</div>
-          <h1 style={{ fontSize: 'clamp(52px,7.5vw,112px)', lineHeight: 0.88, margin: '24px 0 0', fontWeight: 900, fontStretch: '120%', letterSpacing: '-0.035em', color: Y, textWrap: 'balance' }}>Quem não vota também escolhe.</h1>
+          <h1 style={{ fontSize: 'clamp(52px,7.5vw,112px)', lineHeight: 0.88, margin: 0, fontWeight: 900, fontStretch: '120%', letterSpacing: '-0.035em', color: Y, textWrap: 'balance' }}>Quem não vota também escolhe.</h1>
           <p style={{ fontSize: 'clamp(20px,2.2vw,26px)', lineHeight: 1.4, maxWidth: 600, margin: '28px 0 0', textWrap: 'pretty', fontWeight: 500 }}>Democracia não se defende sozinha. Ela depende de quem sai de casa no dia da eleição. Faltou no 1º turno? Ainda dá tempo.</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 36 }}>
             <a href="#votar" className={`${s.lift} ${s.press}`} style={ctaYellow(B)}>Onde eu voto? →</a>
