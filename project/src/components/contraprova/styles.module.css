@@ -51,6 +51,10 @@
     padding: 6px 10px !important;
     white-space: nowrap;
   }
+  /* menos respiro entre o menu e o título do topo */
+  .heroInner {
+    padding-top: 36px !important;
+  }
 }
 .lift:hover {
   transform: translateY(-2px);
