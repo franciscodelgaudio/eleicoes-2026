@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Source_Serif_4, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -35,7 +36,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={`${archivo.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
