@@ -715,7 +715,7 @@ export default function BolsonaroHipotetico() {
             <Link href="/" className={s.ghostBtn} style={{ padding: '16px 24px', border: '3px solid #fff' }}>Voltar ao comparador</Link>
             <button onClick={share} className={s.ghostBtn} style={{ border: '3px solid rgba(255,255,255,.4)', padding: '15px 24px' }}>{shared ? 'Link copiado!' : 'Compartilhar'}</button>
           </div>
-          <div style={{ marginTop: 72, fontSize: 13, lineHeight: 1.6, color: MUTED, maxWidth: 760 }}>Modelo inicial: datas, citações e números precisam ser conferidos nas fontes indicadas antes de publicar. Fotos, áudios e vídeos de arquivo devem ter licença ou ser de domínio público.</div>
+          <div style={{ marginTop: 72, fontSize: 13, lineHeight: 1.6, color: MUTED, maxWidth: 760 }}>Cada fonte leva ao documento original. Damos preferência a registros oficiais: leis, decisões judiciais, relatórios do Congresso, dados do TSE e de órgãos públicos. Falas que só foram registradas pela imprensa ou em redes sociais aparecem marcadas como não oficiais. As fotos são de acervos públicos, com autor e licença no crédito.</div>
         </div>
       </section>
     </div>
