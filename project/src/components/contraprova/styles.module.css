@@ -1,0 +1,93 @@
+/* Página principal (design "Contraprova v2"): fundo claro, links azuis. */
+:global(body):has(.root) {
+  background: #fbf8ef;
+}
+.root {
+  background: #fbf8ef;
+  color: #10213f;
+  overflow-x: clip;
+}
+.root a {
+  color: #0b2a6f;
+  text-underline-offset: 3px;
+}
+.root a:hover {
+  color: #00873e;
+}
+
+/* Estados de hover/active do design (style-hover / style-active). */
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: #fff !important;
+}
+.navLinkHi:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: #ffd21f !important;
+}
+.lift:hover {
+  transform: translateY(-2px);
+  color: #0b2a6f !important;
+}
+.press:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #0b2a6f !important;
+}
+.btnLight:hover {
+  background: #e9f4ec !important;
+  color: #0b2a6f !important;
+}
+.rowHover:hover {
+  background: #f3efe3 !important;
+}
+.cardHover:hover {
+  background: #fbf8ef !important;
+}
+.chapterLink:hover {
+  color: #ffd21f !important;
+}
+.pageChip:hover {
+  background: #0b2a6f !important;
+  color: #fff !important;
+}
+.tseLink:hover {
+  color: #ffd21f !important;
+}
+.shareGreen:hover {
+  background: #fff !important;
+  color: #00873e !important;
+}
+.shareFooter:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+.footerCta:hover {
+  background: #ffe36b !important;
+  color: #0b2a6f !important;
+}
+
+/* Animações */
+@keyframes pop {
+  0% { transform: scale(0.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes growY {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+.pop {
+  animation: pop 0.35s ease-out;
+}
+.popFast {
+  animation: pop 0.3s ease-out;
+}
+.growX {
+  transform-origin: left;
+  animation: grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.growY {
+  transform-origin: bottom;
+  animation: growY 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}

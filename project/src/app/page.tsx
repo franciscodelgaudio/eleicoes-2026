@@ -1,5 +1,5 @@
-import BolsonaroHipotetico from "@/components/bolsonaro-hipotetico/BolsonaroHipotetico";
+import Contraprova from "@/components/contraprova/Contraprova";
 
 export default function Home() {
-  return <BolsonaroHipotetico />;
+  return <Contraprova />;
 }

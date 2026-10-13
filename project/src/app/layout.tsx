@@ -23,9 +23,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bolsonaro Hipotético · Contraprova",
+  title: "Contraprova · Eleições 2026",
   description:
-    "O que a história das ditaduras e a ciência política dizem sobre as falas, os atos e as promessas da família Bolsonaro.",
+    "Lula e Bolsonaro lado a lado, com dados oficiais, os planos de governo e o que saber para votar no 2º turno.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
