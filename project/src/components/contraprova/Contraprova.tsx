@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, 
 import Link from 'next/link';
 import Logo from '../Logo';
 import ImageSlot from '../bolsonaro-hipotetico/ImageSlot';
+import Fonte from '../Fonte';
 import WordSphere from './WordSphere';
 import s from './styles.module.css';
 import {
@@ -122,7 +123,7 @@ function Hero() {
 }
 
 const RULES: [string, string, string, string, string][] = [
-  ['1', G, Y, 'Só fonte oficial', 'IBGE, Banco Central, INPE, FAO, TSE, STF e Fórum Brasileiro de Segurança Pública.'],
+  ['1', G, Y, 'Fonte oficial, com link', 'IBGE, Banco Central, Ipea, ministérios, Congresso, STF, TSE e organismos internacionais como FMI, Banco Mundial, OMS e FAO. O que não vem de órgão público é marcado como não oficial.'],
   ['2', Y, B, 'Os dois lados do placar', 'Quando o indicador favorece o governo Bolsonaro, ele aparece com o mesmo destaque.'],
   ['3', B, '#fff', 'Contexto junto do dado', 'Pandemia, guerra, juros globais e Banco Central autônomo explicam parte dos números.'],
 ];
@@ -215,7 +216,7 @@ function Comparacao() {
     });
     const best = rks[0].pos === rks[1].pos ? -1 : rks[0].pos < rks[1].pos ? 0 : 1;
     return {
-      lo: fw(wmn), hi: fw(wmx), note: wrow.wNote || '',
+      lo: fw(wmn), hi: fw(wmx), note: wrow.wNote || '', wSrc: wrow.wSrc || '',
       dirLabel: ind.better === 'high' ? 'melhor →' : '← melhor', dirJustify: ind.better === 'high' ? 'flex-end' : 'flex-start',
       verdict: best < 0 ? 'Mesma posição nos dois governos' : 'Brasil mais bem colocado com ' + GOVS[best].gov,
       vColor: best < 0 ? '#9AA3B5' : GOVS[best].color,
@@ -353,7 +354,7 @@ function Comparacao() {
           {ind.warn ? (
             <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginTop: 20, background: '#FFF6CC', border: '2px dashed #C9A400', borderRadius: 12, padding: '10px 14px', fontSize: 14, fontWeight: 600, lineHeight: 1.45 }}><span>⚠</span><span>{ind.warn}</span></div>
           ) : null}
-          <div style={{ fontSize: 13, color: MUTED, marginTop: 18 }}>Fonte: {ind.src}</div>
+          <Fonte src={ind.src} size={13} color={MUTED} style={{ marginTop: 18 }} />
 
           {world ? (
             <div style={{ marginTop: 20, background: CREAM, borderRadius: 20, padding: 'clamp(14px,2.5vw,24px)' }}>
@@ -386,6 +387,7 @@ function Comparacao() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, fontWeight: 700, color: MUTED, margin: '0 10px' }}><span>{world.lo}</span><span>{world.hi}</span></div>
               </div>
               <div style={{ fontSize: 12, lineHeight: 1.5, color: MUTED, marginTop: 12, textWrap: 'pretty' }}>{world.note}</div>
+              <Fonte src={world.wSrc} color={MUTED} style={{ marginTop: 6 }} />
             </div>
           ) : null}
         </div>
@@ -411,7 +413,7 @@ function Comparacao() {
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}><YearChip y={i.y} /><span style={{ fontSize: 18, fontWeight: 900, lineHeight: 1.2 }}>{i.name}</span><ToneBadge tone={i.tone} /></div>
                     <TwoBoxes a="O que fez" aText={i.text} bText={i.res} tone={i.tone} min={170} />
                     <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', borderLeft: `4px solid ${TONE[i.tone][2]}`, padding: '2px 0 2px 10px' }}><p style={{ fontSize: 14, lineHeight: 1.45, margin: 0, color: INK, textWrap: 'pretty' }}><strong style={{ fontWeight: 900 }}>Posição do governo:</strong> {i.stance}</p></div>
-                    <div style={{ fontSize: 12, color: MUTED }}>{i.src}</div>
+                    <Fonte src={i.src} color={MUTED} />
                   </div>
                 </article>
               ))}
@@ -426,11 +428,11 @@ function Comparacao() {
 
 // ---------------------------------------------------------------- crises
 
-const PANDEMIC_STATS: [string, string, string][] = [
-  ['694 mil', Y, 'mortes por covid até dezembro de 2022'],
-  ['~400 mil', '#FF8A8A', 'mortes que poderiam ter sido evitadas, segundo estimativa apresentada à CPI'],
-  ['2,7% → 10%', '#fff', 'da população mundial e das mortes por covid registradas no mundo até 2022'],
-  ['4', '#fff', 'ministros da Saúde: Mandetta, Teich, Pazuello e Queiroga'],
+const PANDEMIC_STATS: [string, string, string, string][] = [
+  ['694 mil', Y, 'mortes por covid até dezembro de 2022', 'Ministério da Saúde, Boletim Epidemiológico 146 (SE 52/2022)'],
+  ['~400 mil', '#FF8A8A', 'mortes que poderiam ter sido evitadas, segundo estimativa apresentada à CPI', 'Senado, Relatório final da CPI da Pandemia (2021); Agência Senado, 24/06/2021'],
+  ['2,6% → 10%', '#fff', 'da população mundial e das mortes por covid registradas no mundo até 2022', 'OMS, painel da covid-19; Banco Mundial, população 2022'],
+  ['4', '#fff', 'ministros da Saúde: Mandetta, Teich, Pazuello e Queiroga', 'DOU, Decretos de 16/abr/2020; Agência Brasil, 15/05/2020; Agência Brasil, 16/09/2020; Agência Brasil, 23/03/2021'],
 ];
 const cMax = Math.max(...COVID_WORLD.map(x => x[1]));
 
@@ -450,7 +452,7 @@ function Crises() {
                 <article key={i.title} style={{ background: '#fff', borderRadius: 18, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}><YearChip y={i.y} /><span style={{ fontSize: 19, fontWeight: 900, lineHeight: 1.2 }}>{i.title}</span><ToneBadge tone={i.tone} /></div>
                   <TwoBoxes a="Como reagiu" aText={i.how} bText={i.res} tone={i.tone} min={180} />
-                  <div style={{ fontSize: 12, color: MUTED }}>{i.src}</div>
+                  <Fonte src={i.src} color={MUTED} />
                 </article>
               ))}
             </div>
@@ -462,10 +464,11 @@ function Crises() {
         <div style={{ ...kicker(Y), fontSize: 13 }}>A pandemia, 2020–2022</div>
         <div style={{ fontSize: 'clamp(28px,3.6vw,46px)', fontWeight: 900, lineHeight: 1, marginTop: 10, fontStretch: '110%', maxWidth: 900 }}>Governo Bolsonaro contra a ciência</div>
         <div style={{ ...grid(200, 12, 28) }}>
-          {PANDEMIC_STATS.map(([n, color, text]) => (
+          {PANDEMIC_STATS.map(([n, color, text, src]) => (
             <div key={n} style={{ background: 'rgba(255,255,255,.08)', borderRadius: 18, padding: 18 }}>
               <div style={{ fontSize: 'clamp(36px,4.5vw,56px)', fontWeight: 900, fontStretch: '115%', lineHeight: 0.9, color }}>{n}</div>
               <div style={{ fontSize: 14, fontWeight: 700, marginTop: 8, color: '#E6EBF6' }}>{text}</div>
+              <Fonte src={src} size={11} color='#C9D2E8' style={{ marginTop: 8 }} />
             </div>
           ))}
         </div>
@@ -473,7 +476,7 @@ function Crises() {
           <div>
             <div style={{ fontSize: 18, fontWeight: 900 }}>O que o presidente disse e fez</div>
             <div style={{ display: 'flex', flexDirection: 'column', marginTop: 14, borderLeft: '3px solid rgba(255,255,255,.2)', paddingLeft: 18, gap: 16 }}>
-              {PANDEMIC_TL.map(([d, tag, title, text]) => {
+              {PANDEMIC_TL.map(([d, tag, title, text, src]) => {
                 const c = tag === 'Fala' ? '#FF8A8A' : Y;
                 return (
                   <div key={d} style={{ position: 'relative' }}>
@@ -481,6 +484,7 @@ function Crises() {
                     <div style={{ display: 'flex', gap: 8, alignItems: 'baseline', flexWrap: 'wrap' }}><span style={{ fontSize: 13, fontWeight: 900, color: Y }}>{d}</span><span style={{ fontSize: 11, fontWeight: 900, letterSpacing: '.08em', textTransform: 'uppercase', background: c, color: NAVY, padding: '2px 7px', borderRadius: 99 }}>{tag}</span></div>
                     <div style={{ fontSize: 17, fontWeight: 900, lineHeight: 1.25, marginTop: 4 }}>{title}</div>
                     <div style={{ fontSize: 14, lineHeight: 1.45, color: '#C9D2E8', marginTop: 2, textWrap: 'pretty' }}>{text}</div>
+                    <Fonte src={src} size={11} color='#8E9BBE' style={{ marginTop: 4 }} />
                   </div>
                 );
               })}
@@ -501,7 +505,8 @@ function Crises() {
                 );
               })}
             </div>
-            <p style={{ fontSize: 13, lineHeight: 1.5, color: '#C9D2E8', margin: '16px 0 0', textWrap: 'pretty' }}>O Brasil teve a segunda maior taxa do grupo, perto de EUA, Reino Unido e Itália. China, Rússia e Índia registraram menos mortes do que as estimativas de excesso de mortalidade indicam. Fonte: Our World in Data, com dados da OMS. Valores arredondados, a conferir.</p>
+            <p style={{ fontSize: 13, lineHeight: 1.5, color: '#C9D2E8', margin: '16px 0 0', textWrap: 'pretty' }}>O Brasil teve a maior taxa do grupo, praticamente empatado com os EUA e perto de Reino Unido e Itália. Rússia e Índia notificaram bem menos mortes do que o excesso de mortalidade estimado pela OMS. Mortes até 31/12/2022, divididas pela população de 2022.</p>
+            <Fonte src='OMS, painel da covid-19; Banco Mundial, população 2022; OMS, estimativas de excesso de mortalidade (2020-2021)' color='#C9D2E8' style={{ marginTop: 8 }} />
           </div>
         </div>
       </div>

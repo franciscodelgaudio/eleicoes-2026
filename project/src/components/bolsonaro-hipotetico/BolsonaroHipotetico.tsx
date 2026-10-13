@@ -3,11 +3,12 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import ImageSlot from './ImageSlot';
+import Fonte from '../Fonte';
 import Logo from '../Logo';
 import s from './styles.module.css';
 import {
   Y, G, RED, MUTED, WHO, GRAD, SIGNALS, ENEMY, ENEMY_X, MIN, MIN_G, MIN_DIAG, TACTICS, TAC_BOLSO, TAC_IMG,
-  FLAVIO, F_IMG, SIG_MEDIA, SIG_RANK, SIG_SHOW, whoKey, yr, lk,
+  FLAVIO, F_IMG, SIG_MEDIA, SIG_RANK, SIG_SHOW, whoKey, yr,
 } from './data';
 
 const NAVY = '#071C4D';
@@ -26,12 +27,9 @@ const h2Style = (maxWidth?: number): CSSProperties => ({ fontSize: 'clamp(34px,6
 const tag = (w: string) => { const c = WHO[whoKey(w)]; return { tagBg: c[0], tagFg: c[1] }; };
 const scrollItem = (i: number, cur: number): CSSProperties => ({ opacity: i === cur ? 1 : 0.28, transform: i === cur ? 'none' : 'translateY(12px)' });
 
-// Linha de fonte: link sublinhado quando a fonte tem URL conhecida, texto com "link a confirmar" quando não.
+// Linha de fonte: cada trecho vira link para o documento original (registro em src/lib/fontes.ts).
 function Src({ src, size = 12, mt, muted = MUTED, style }: { src?: string; size?: number; mt?: number | string; muted?: string; style?: CSSProperties }) {
-  const l = lk(src);
-  if (l.hasUrl) return <a href={l.url} target="_blank" rel="noopener" className={s.srcLink} style={{ fontSize: size, marginTop: mt, ...style }}>{src} ↗</a>;
-  if (l.noUrl) return <div style={{ fontSize: size, color: muted, marginTop: mt, ...style }}>{src} · <span style={{ opacity: 0.7 }}>link a confirmar</span></div>;
-  return null;
+  return <Fonte src={src} label="" size={size} color={muted} style={{ marginTop: mt, ...style }} />;
 }
 
 function ChapterCover({ n, title, maxWidth, img }: { n: string; title: string; maxWidth: number; img: { src: string; credit: string; href: string; ph: string } }) {
@@ -99,16 +97,16 @@ const introDots = (() => {
 })();
 const introYears = [1999, 2010, 2018, 2022, 2026];
 
-const ARSENAL = ['Veneno', 'Explosivo', 'Pistolas', 'Fuzis', 'Metralhadora', 'Lança-granadas'];
-const PLAN_TL: [string, string, string, number][] = [
-  ['30 out 2022', 'Lula vence o segundo turno.', '#fff', 14],
-  ['12 nov 2022', 'Reunião na casa do general Braga Netto apresenta o “planejamento operacional” dos kids pretos.', '#FF8A8A', 18],
-  ['12 dez 2022', 'O TSE diploma Lula e Alckmin.', '#fff', 14],
-  ['15 dez 2022', 'Data marcada para os assassinatos. O plano é abortado quando uma sessão do STF é suspensa.', RED, 24],
-  ['8 jan 2023', 'Invasão das sedes dos Três Poderes.', '#FF8A8A', 18],
-  ['19 nov 2024', 'Operação Contragolpe: a PF prende um general, três militares e um policial federal.', '#fff', 14],
-  ['16 dez 2025', 'O STF condena Mário Fernandes, autor do plano, a 26 anos e 6 meses.', Y, 18],
-  ['abr 2026', 'Fim dos recursos: os condenados do núcleo 2 passam a presos definitivos.', Y, 14],
+const ARSENAL = ['Veneno', 'Explosivo', 'Pistolas', 'Fuzis', 'Metralhadora', 'Lança-granadas', 'Lançador de foguetes antitanque'];
+const PLAN_TL: [string, string, string, number, string][] = [
+  ['30 out 2022', 'Lula vence o segundo turno.', '#fff', 14, 'TSE, Resultados 2022 (Presidente, 2º turno)'],
+  ['12 nov 2022', 'Na casa do general Braga Netto, “kids pretos” discutem a operação “Copa 2022” para “neutralizar” Moraes.', '#FF8A8A', 18, 'PGR, denúncia na Pet 12.100 (18/fev/2025)'],
+  ['12 dez 2022', 'O TSE diploma Lula e Alckmin.', '#fff', 14, 'STF, voto do relator na AP 2668 (9/set/2025)'],
+  ['15 dez 2022', 'Militares se posicionam perto da casa de Moraes. A ação é abortada quando o STF adia uma votação e encerra a sessão.', RED, 24, 'PGR, denúncia na Pet 12.100 (18/fev/2025)'],
+  ['8 jan 2023', 'Invasão das sedes dos Três Poderes.', '#FF8A8A', 18, 'STF, AP 2668 (condenação, 11/set/2025)'],
+  ['19 nov 2024', 'Operação Contragolpe: a PF prende um general, três militares e um policial federal.', '#fff', 14, ''],
+  ['16 dez 2025', 'O STF condena Mário Fernandes, autor do plano, a 26 anos e 6 meses.', Y, 18, 'STF, AP 2693 (núcleo 2, 16/dez/2025)'],
+  ['abr 2026', 'Fim dos recursos: os condenados do núcleo 2 passam a presos definitivos.', Y, 14, ''],
 ];
 const PENAS: [string, string, number, string, string][] = [
   ['Jair Bolsonaro', 'Ex-presidente', 27.25, '27 anos e 3 meses', Y],
@@ -212,7 +210,6 @@ export default function BolsonaroHipotetico() {
   const minItems = minAll.filter(m => m.k === minK);
   const showMin = minItems.length ? minItems : minAll;
   const md = MIN_DIAG[minG];
-  const mdLink = lk(md.src);
 
   const tacObj = TACTICS.find(t => t.id === tac)!;
   const tacBolso = TAC_BOLSO[tac] || [];
@@ -408,17 +405,18 @@ export default function BolsonaroHipotetico() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', marginTop: 24 }}>
             <span style={{ fontFamily: MONO, fontSize: 15, color: '#C99A9A', textDecoration: 'line-through', textDecorationColor: RED, textDecorationThickness: 3 }}>Fox_2017.docx</span>
             <span style={{ fontSize: 20, color: RED }}>→</span>
-            <span style={{ fontFamily: MONO, fontSize: 'clamp(15px,2.4vw,28px)', overflowWrap: 'anywhere', color: '#fff', background: '#FF5A5A1F', border: `2px solid ${RED}`, padding: '8px 14px', borderRadius: 10 }}>Punhal Verde e Amarelo.docx</span>
+            <span style={{ fontFamily: MONO, fontSize: 'clamp(15px,2.4vw,28px)', overflowWrap: 'anywhere', color: '#fff', background: '#FF5A5A1F', border: `2px solid ${RED}`, padding: '8px 14px', borderRadius: 10 }}>Plj.docx</span>
           </div>
-          <div style={{ fontSize: 14, color: '#C99A9A', marginTop: 10 }}>O arquivo foi renomeado e impresso no Palácio do Planalto, segundo a Polícia Federal.</div>
+          <div style={{ fontSize: 14, color: '#C99A9A', marginTop: 10 }}>O arquivo foi renomeado e impresso no Palácio do Planalto. O título interno era “Planejamento Punhal Verde Amarelo”.</div>
+          <Src src={'PGR, denúncia na Pet 12.100 (18/fev/2025); STF, voto do relator na AP 2668 (9/set/2025)'} muted='#C99A9A' mt={6} />
         </div>
 
         <div style={{ maxWidth: 1120, margin: '0 auto', padding: '80px 24px 24px' }}>
-          <div style={{ ...label('#FF8A8A', '.12em'), textAlign: 'center' }}>Os alvos · data marcada: 15 de dezembro de 2022</div>
+          <div style={{ ...label('#FF8A8A', '.12em'), textAlign: 'center' }}>Os alvos · ação contra Moraes marcada para 15 de dezembro de 2022</div>
           <div className={s.targets} style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 'clamp(16px,4vw,56px)', marginTop: 48 }}>
             <Target name="Lula" role="Presidente eleito" method="Envenenamento" img="https://commons.wikimedia.org/wiki/Special:FilePath/Foto%20oficial%20de%20Luiz%20In%C3%A1cio%20Lula%20da%20Silva%20(3x4%20cropped).jpg?width=600" credit="Foto: Ricardo Stuckert/PR" creditHref="https://commons.wikimedia.org/wiki/File:Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_(3x4_cropped).jpg" />
-            <Target name="Geraldo Alckmin" role="Vice eleito" method="Execução" img="https://commons.wikimedia.org/wiki/Special:FilePath/Vice%20Presidente%20da%20Rep%C3%BAblica%20do%20Brasil%2C%20Geraldo%20Alckmin%20em%202023.jpg?width=600" credit="Foto: Cadu Gomes/VPR" creditHref="https://commons.wikimedia.org/wiki/File:Vice_Presidente_da_Rep%C3%BAblica_do_Brasil%2C_Geraldo_Alckmin_em_2023.jpg" />
-            <Target name="Alexandre de Moraes" role="Presidente do TSE" method="Explosivo ou veneno" img="https://commons.wikimedia.org/wiki/Special:FilePath/Ministro%20Alexandre%20de%20Moraes%20como%20presidente%20do%20TSE.jpg?width=600" credit="Foto: Isac Nóbrega · CC BY 2.0" creditHref="https://commons.wikimedia.org/wiki/File:Ministro_Alexandre_de_Moraes_como_presidente_do_TSE.jpg" />
+            <Target name="Geraldo Alckmin" role="Vice eleito" method="Método não detalhado" img="https://commons.wikimedia.org/wiki/Special:FilePath/Vice%20Presidente%20da%20Rep%C3%BAblica%20do%20Brasil%2C%20Geraldo%20Alckmin%20em%202023.jpg?width=600" credit="Foto: Cadu Gomes/VPR" creditHref="https://commons.wikimedia.org/wiki/File:Vice_Presidente_da_Rep%C3%BAblica_do_Brasil%2C_Geraldo_Alckmin_em_2023.jpg" />
+            <Target name="Alexandre de Moraes" role="Presidente do TSE" method="Tiro, explosivo ou veneno" img="https://commons.wikimedia.org/wiki/Special:FilePath/Ministro%20Alexandre%20de%20Moraes%20como%20presidente%20do%20TSE.jpg?width=600" credit="Foto: Isac Nóbrega · CC BY 2.0" creditHref="https://commons.wikimedia.org/wiki/File:Ministro_Alexandre_de_Moraes_como_presidente_do_TSE.jpg" />
           </div>
         </div>
 
@@ -439,18 +437,19 @@ export default function BolsonaroHipotetico() {
               <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
                 {Array.from({ length: 6 }, (_, i) => <div key={i} style={{ width: 40, height: 40, borderRadius: '50%', background: '#5A1A22', display: 'grid', placeItems: 'center', fontFamily: MONO, fontSize: 11, color: '#F1DADA' }}>?</div>)}
               </div>
-              <div style={{ fontSize: 15, lineHeight: 1.5, color: '#F1DADA', marginTop: 14, textWrap: 'pretty' }}>Militares das Forças Especiais, os “kids pretos”, usavam codinomes de países da Copa para monitorar Moraes.</div>
+              <div style={{ fontSize: 15, lineHeight: 1.5, color: '#F1DADA', marginTop: 14, textWrap: 'pretty' }}>Militares das Forças Especiais, os “kids pretos”, usavam codinomes de países (Alemanha, Argentina, Áustria, Brasil, Gana e Japão) para monitorar Moraes.</div>
+              <Src src={'PGR, denúncia na Pet 12.100 (18/fev/2025)'} muted='#C99A9A' mt={10} />
             </div>
             <div data-reveal="1" style={{ ...reveal(16, 0.6, 0.1), background: RED, color: '#2A0A0F', borderRadius: 22, padding: 24 }}>
-              <div style={label()}>Conclusão da PF</div>
-              <div style={{ fontSize: 'clamp(24px,2.6vw,32px)', fontWeight: 900, lineHeight: 1.15, marginTop: 8, textWrap: 'balance' }}>Bolsonaro tinha “pleno conhecimento” do plano.</div>
-              <a href="https://www.band.com.br/politica/bolsonaro-sabia-de-plano-para-matar-lula-alckmin-e-moraes-diz-pf" target="_blank" rel="noopener" style={{ display: 'inline-block', fontSize: 12, color: '#2A0A0F', marginTop: 12 }}>Relatório da PF, nov/2024 · Band ↗</a>
+              <div style={label()}>Acusação da PGR</div>
+              <div style={{ fontSize: 'clamp(24px,2.6vw,32px)', fontWeight: 900, lineHeight: 1.15, marginTop: 8, textWrap: 'balance' }}>O plano foi “levado ao conhecimento do Presidente da República, que a ele anuiu”.</div>
+              <Src src={'PGR, denúncia na Pet 12.100 (18/fev/2025)'} muted='#2A0A0F' mt={12} style={{ color: '#2A0A0F' }} />
             </div>
             <div data-reveal="1" style={{ ...reveal(16, 0.6, 0.2), background: '#2A0A0F', borderRadius: 22, padding: 24 }}>
               <div style={label('#FF8A8A')}>O autor admitiu</div>
               <div style={{ fontSize: 'clamp(24px,2.6vw,32px)', fontWeight: 900, lineHeight: 1.15, marginTop: 8 }}>“Pensamento digitalizado”</div>
               <div style={{ fontSize: 15, lineHeight: 1.5, color: '#F1DADA', marginTop: 10, textWrap: 'pretty' }}>Assim o general Mário Fernandes descreveu o plano ao STF, em julho de 2025, ao reconhecer a autoria.</div>
-              <a href="https://www.metropoles.com/brasil/stf-impoe-a-general-segunda-maior-condenacao-da-trama-golpista" target="_blank" rel="noopener" style={{ display: 'inline-block', fontSize: 12, color: '#C99A9A', marginTop: 12 }}>Metrópoles ↗</a>
+              <Src src='Metrópoles, jul/2025 (interrogatório de Mário Fernandes)' muted='#C99A9A' mt={12} />
             </div>
           </div>
         </div>
@@ -459,11 +458,12 @@ export default function BolsonaroHipotetico() {
           <div style={label('#FF8A8A', '.12em')}>A contagem regressiva</div>
           <div style={{ position: 'relative', marginTop: 28, paddingLeft: 40 }}>
             <div style={{ position: 'absolute', left: 11, top: 6, bottom: 6, width: 3, background: '#5A1A22', borderRadius: 2 }} />
-            {PLAN_TL.map(([date, text, color, size]) => (
+            {PLAN_TL.map(([date, text, color, size, src]) => (
               <div key={date} data-reveal="1" style={{ ...reveal(-16, 0.6, 0, 'X'), position: 'relative', padding: '0 0 30px' }}>
                 <div style={{ position: 'absolute', left: -38, top: 2, width: size, height: size, borderRadius: '50%', background: color, boxShadow: '0 0 0 5px #160407' }} />
                 <div style={{ fontFamily: MONO, fontSize: 13, color }}>{date}</div>
                 <div style={{ fontSize: 'clamp(19px,2vw,24px)', fontWeight: 800, lineHeight: 1.25, marginTop: 4, textWrap: 'pretty' }}>{text}</div>
+                <Src src={src} muted='#C99A9A' mt={6} />
               </div>
             ))}
           </div>
@@ -485,7 +485,7 @@ export default function BolsonaroHipotetico() {
               </div>
             ))}
           </div>
-          <div style={{ fontSize: 12, color: '#C99A9A', marginTop: 16 }}>Fontes: <a href="https://noticias.stf.jus.br/postsnoticias/stf-concluiu-julgamento-de-acoes-contra-reus-que-planejaram-golpe-de-estado/" target="_blank" rel="noopener" style={{ color: '#F1DADA' }}>STF ↗</a> · <a href="https://agenciabrasil.ebc.com.br/justica/noticia/2025-12/reus-do-nucleo-2-da-trama-golpista-recebem-penas-entre-8-e-26-anos" target="_blank" rel="noopener" style={{ color: '#F1DADA' }}>Agência Brasil ↗</a> · <a href="https://www.congressoemfoco.com.br/noticia/115325/relembre-o-julgamento-historico-da-condenacao-de-bolsonaro-no-stf" target="_blank" rel="noopener" style={{ color: '#F1DADA' }}>Congresso em Foco ↗</a></div>
+          <Src src='STF, AP 2668; STF, AP 2693 (núcleo 2, 16/dez/2025); Agência Brasil, 16/dez/2025' muted='#C99A9A' mt={16} />
         </div>
 
         <div style={{ maxWidth: 1120, margin: '0 auto', padding: '40px 24px 120px' }}>
@@ -493,7 +493,7 @@ export default function BolsonaroHipotetico() {
             <div style={{ fontSize: 'clamp(32px,4.5vw,60px)', fontWeight: 900, fontStretch: '115%', lineHeight: 0.95, letterSpacing: '-0.02em' }}>“Vou dar indulto para todo mundo.”</div>
             <div>
               <div style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.45, textWrap: 'pretty' }}>Flávio Bolsonaro, sobre os condenados pelo 8 de janeiro e pela trama golpista, se a anistia não passar no Congresso.</div>
-              <a href="https://sbtnews.sbt.com.br/noticia/politica/8-1-sem-anistia-darei-indulto-a-todo-mundo-diz-flavio" target="_blank" rel="noopener" style={{ display: 'inline-block', fontSize: 13, fontWeight: 800, color: NAVY, marginTop: 12 }}>SBT News, 29/set/2026 ↗</a>
+              <Src src='SBT News, 29/set/2026' size={13} muted={NAVY} mt={12} style={{ color: NAVY, fontWeight: 800 }} />
             </div>
           </div>
         </div>
@@ -572,8 +572,7 @@ export default function BolsonaroHipotetico() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 16px', marginTop: 14, fontSize: 13, fontWeight: 700, color: '#E6EBF6' }}>
                 {md.legend.map(([c, t]) => <Dot key={t} color={c} radius="3px">{t}</Dot>)}
               </div>
-              {mdLink.hasUrl ? <a href={mdLink.url} target="_blank" rel="noopener" className={s.plainLink} style={{ display: 'inline-block', fontSize: 12, marginTop: 12 }}>{md.src} ↗</a> : null}
-              {mdLink.noUrl ? <div style={{ fontSize: 12, color: MUTED, marginTop: 12 }}>{md.src} · <span style={{ opacity: 0.7 }}>link a confirmar</span></div> : null}
+              <Src src={md.src} mt={12} />
             </div>
             <div style={{ flex: '1 1 240px', background: Y, color: NAVY, borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 12 }}>
               <div style={{ fontSize: 'clamp(44px,5.5vw,80px)', fontWeight: 900, fontStretch: '120%', lineHeight: 0.85, overflowWrap: 'anywhere' }}>{md.side[0]}</div>
