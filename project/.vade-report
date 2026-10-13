@@ -1,0 +1,43 @@
+# Vercel Web Analytics Installation
+
+Successfully installed and configured Vercel Web Analytics for this Next.js project.
+
+## Changes Made
+
+### 1. Package Installation
+- Installed `@vercel/analytics` version 2.0.1
+- Updated `package.json` to include the new dependency
+- Updated `package-lock.json` with the new package and its dependencies
+
+### 2. Analytics Configuration
+- Modified `src/app/layout.tsx` to integrate Vercel Web Analytics
+- Added import statement: `import { Analytics } from "@vercel/analytics/next"`
+- Added `<Analytics />` component inside the `<body>` tag in the root layout
+
+## Implementation Details
+
+The implementation follows the official Vercel documentation for Next.js App Router:
+- Documentation was fetched from: https://vercel.com/docs/analytics/quickstart
+- Used the framework-specific instructions for Next.js App Router
+- Analytics component was added to the root layout file as recommended
+- Preserved all existing code structure and formatting
+
+## Testing & Verification
+
+✓ Build completed successfully with no errors
+✓ Linter ran without issues
+✓ TypeScript compilation passed
+✓ All route pages generated correctly (/, /_not-found, /bolsonaro-hipotetico)
+
+## Next Steps
+
+To enable Web Analytics in production:
+1. Deploy this project to Vercel
+2. Enable Web Analytics in the Vercel dashboard under the Analytics section
+3. After deployment, analytics routes will be available at `/_vercel/insights/*`
+
+## Files Modified
+
+- `package.json` - Added @vercel/analytics dependency
+- `package-lock.json` - Updated with new package dependencies
+- `src/app/layout.tsx` - Added Analytics component
